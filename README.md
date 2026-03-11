@@ -1,7 +1,8 @@
 # Descripción del proyecto
-
+Repositorio para la extracción de datos solicitados por el área de Bien Común en la UPAEP 
 
 <br>
+
 # Estructura del proyecto
 
 ```
