@@ -1,0 +1,38 @@
+# Descripción del proyecto
+
+
+<br>
+# Estructura del proyecto
+
+```
+/DataExtractionGP
+│
+├── /config                 # Credenciales de las fuentes y rutas de salida
+│
+├── /core                   # Código compartido
+│   ├── excel_writer.py     # Lógica centralizada para exportar a Excel
+│   ├── logger.py           # Para registrar errores y éxitos
+│   └── base.py   # Plantilla base para los 7 scripts
+│
+├── /extractors             # Los 7 scripts individuales
+│   ├── script1.py
+│   ├── script2.py
+│   └── ...
+│
+├── /outputs                # (Opcional) Carpeta local donde se guardan los Excel
+│
+└── requirements.txt        # Dependencias (pandas, openpyxl, etc.)
+```
+<br>
+
+# Contenido de los scripts
+
+|Nombre del archivo|Base de datos|Fuente|Descripción|
+| :--- | :---: | :---: | ---: |
+|script1.py|Perfiles legislativos||Datos básicos de cada diputado del congreso de Puebla|
+|script2.py|Votaciones|https://www.congresopuebla.gob.mx/index.php?option=com_content&view=article&id=12718|Votaciones de los diputados en sesiones sobre acuerdos o propuestas|
+|script3.py|Unidad y participación|...|...|
+|script4.py|Sesiones y cronometría|...|...|
+|script5.py|Iniciativas y puntos de acuerdo|...|...|
+|script6.py|Comisiones legislativas|...|...|
+|script7.py|Registro de asistencias|...|...|
