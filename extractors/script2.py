@@ -8,6 +8,7 @@ from bs4 import BeautifulSoup
 import json
 import time # Añadido para la pausa ética
 from lib.DateFormatter import DateFormatter
+from lib.EventClassifier import EventClassifier
 
 # Establecer parámetros iniciales
 domain = 'https://www.congresopuebla.gob.mx'
@@ -16,6 +17,7 @@ browser = "edge"
 parser = "html.parser"
 
 date_formatter = DateFormatter()
+classifier = EventClassifier()
 
 print("Accediendo a la página de votaciones")
 
@@ -64,6 +66,11 @@ if response.status_code == 200:
                 # Obtener todas las tablas de asistencia (son varias porque se dividen por meses)
                 tables = year_soup.find_all('table', class_='tablaAsistencia')
 
+
+                # Variables de control para determiar las votaciones que se hacen en un día
+                previous_date = ''
+                day_votation_counter = 0
+
                 for table in tables:
                     # Seleccionar el cuerpo de la tabla para eliminar margen de error
                     tbody = table.find('tbody')
@@ -104,30 +111,47 @@ if response.status_code == 200:
                             
                             # Validación: Confirmar que la página cargó bien y tiene la cabecera
                             if record_header:
-                                record_ps = record_header.find_all('p')
-
-                                topic = record_header.find('h2').text.strip()
-                                date = record_ps[0].find('strong').next_sibling.text.strip()
-                                date = date_formatter.format(date)
-                                session = record_ps[2].find('strong').next_sibling.text.strip()
-                                description = record_ps[1].find('strong').next_sibling.text.strip()
-
+                                record_ps = record_header.find_all('p') 
+                                
                                 # Validación: Evitar IndexError si faltan párrafos
                                 if len(record_ps) >= 3:
+                                    
+                                    # Captura de todos los datos a exportar
+                                    topic = record_header.find('h2').text.strip()
+                                    date = record_ps[0].find('strong').next_sibling.strip()
+                                    date = date_formatter.format(date)      # Formatear la fecha a dd/mm/aa
+                                    session = record_ps[2].find('strong').next_sibling.strip()
+                                    description = record_ps[1].find('strong').next_sibling.strip()
+
+                                    # Obtener número de votación del día
+                                    # Comparar si se esta evaluando un mismo día
+                                    if previous_date == date:
+                                        day_votation_counter += 1
+                                    else: 
+                                        day_votation_counter = 1
+
+                                    # Obtener el tipo de votación (Iniciativa - 1, Punto de Acuerdo - 2)
+                                    vote_type = classifier.classify_vote(description)
+
+                                    # Obtener el periodo en el que se hizo la votación
+                                    period = classifier.classify_per_period(date)
+
                                     new_record = {
                                         "tema" : topic,
                                         "fecha" : date,
                                         "sesion" : session,
-                                        "votacion" : "",
+                                        "votacion" : day_votation_counter,
                                         "descripcion" : description,
-                                        "tipo" : "",
-                                        "periodo": "",
+                                        "tipo" : vote_type,
+                                        "periodo": period,
                                         "votaciones" : []
                                     }
 
                                     data["registros"].append(new_record)
                                     print(f"Registro extraído: {new_record['tema'][:50]}...")
                                     total_records += 1
+
+                                    previous_date = date
                         
                         # Pausa de 1 segundo para no saturar el servidor del Congreso
                         time.sleep(1)
