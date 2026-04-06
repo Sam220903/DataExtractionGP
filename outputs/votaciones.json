@@ -1,0 +1,32 @@
+{
+    "registros": [
+        {
+            "fecha": "2024-09-10",
+            "sesion": "Previa",
+            "votacion": 1,
+            "tema": "Elección de la Primera Mesa Directiva de la Sexagésima Segunda Legislatura del Congreso del Estado de Puebla...",
+            "tipo": 1,
+            "periodo": 1,
+            "votaciones": [
+                {
+                    "diputado": "Soledad Amieva",
+                    "partido" : "MORENA",
+                    "codigo_voto": "1",
+                    "voto_texto": "A favor"
+                },
+                {
+                    "diputado": "Beatriz Manrique",
+                    "partido" : "PVEM",
+                    "codigo_voto": "3",
+                    "voto_texto": "Abstención"
+                },
+                {
+                    "diputado": "Nombre de otro Diputado",
+                    "partido" : "partido de ejemplo",
+                    "codigo_voto": "-",
+                    "voto_texto": "diputado con licencia"
+                }
+            ]
+        }
+    ]
+}   
