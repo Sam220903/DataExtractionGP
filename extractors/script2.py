@@ -131,20 +131,58 @@ if response.status_code == 200:
                                         day_votation_counter = 1
 
                                     # Obtener el tipo de votación (Iniciativa - 1, Punto de Acuerdo - 2)
-                                    vote_type = classifier.classify_vote(description)
+                                    vote_classification = classifier.classify_vote(description)
 
                                     # Obtener el periodo en el que se hizo la votación
                                     period = classifier.classify_per_period(date)
+
+                                    vote_type = record_ps[3].find('strong').next_sibling.strip()
+
+                                    # Iniciar una lista para contener los votos de cada diputado del congreso
+                                    vote_list = []
+
+                                    # Obtener el conteo de resultados de los votos de la página
+                                    vote_results = record_header.find('div', class_="resultados-votacion")
+                                    in_favor = int(vote_results.find('div', class_="favor").find('strong').next_sibling.strip())
+                                    against = int(vote_results.find('div', class_="contra").find('strong').next_sibling.strip())
+                                    abstentions = int(vote_results.find('div', class_="abstencion").find('strong').next_sibling.strip())
+
+                                    if vote_type.lower() == 'secreta':
+                                        pass
+
+                                    else:
+                                        attendances_table = record_soup.find('table', class_='tablaAsistencia')
+                                        attendances_tbody =  attendances_table.find('tbody')
+                                        attendances = attendances_tbody.find_all('tr')
+
+                                        for attendance in attendances:
+                                            attendance_data = attendance.find_all('td')
+
+                                            member_name = attendance_data[2].find('span').text.strip()
+                                            member_political_party = attendance_data[1].find('img')['alt']
+                                            member_vote = attendance_data[3].text.strip()
+
+                                            new_congress_member = {
+                                                "diputado" : member_name,
+                                                "partido" : member_political_party,
+                                                "voto" : member_vote
+                                            }
+
+                                            vote_list.append(new_congress_member)
 
                                     new_record = {
                                         "tema" : topic,
                                         "fecha" : date,
                                         "sesion" : session,
-                                        "votacion" : day_votation_counter,
+                                        "numero_votacion" : day_votation_counter,   # Número de votación en el día
                                         "descripcion" : description,
-                                        "tipo" : vote_type,
+                                        "clasificacion" : vote_classification,    # Se clasifica si es Iniciativa o Punto de Acuerdo
                                         "periodo": period,
-                                        "votaciones" : []
+                                        "tipo_votacion" : vote_type,            # El tipo de votación, si fue nominal o secreta         
+                                        "votaciones" : vote_list,
+                                        "a_favor" : in_favor,
+                                        "en_contra" : against,
+                                        "abstenciones" : abstentions
                                     }
 
                                     data["registros"].append(new_record)
@@ -159,7 +197,7 @@ if response.status_code == 200:
         with open('votaciones.json', 'w', encoding='utf-8') as file:
             # json.dump convierte tu diccionario de Python a formato JSON
             # indent=4 lo formatea bonito para que sea legible por humanos
-            json.dump(data, file, ensure_ascii=False, indent=4)
+            json.dump(data, file, ensure_ascii=False, indent=5)
 
         print("\n¡Archivo JSON guardado con éxito!")
         print(f"\nRegistros extraídos: {total_records}")
