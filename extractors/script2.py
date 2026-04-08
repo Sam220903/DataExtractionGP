@@ -147,20 +147,40 @@ if response.status_code == 200:
                                     against = int(vote_results.find('div', class_="contra").find('strong').next_sibling.strip())
                                     abstentions = int(vote_results.find('div', class_="abstencion").find('strong').next_sibling.strip())
 
+                                    # Inicializar el resto de contadores de votos
+                                    abscences = 0
+                                    secret_votes = 0
+                                    total_votes = 0
+
                                     if vote_type.lower() == 'secreta':
-                                        pass
+                                        secret_votes = in_favor + against + abstentions
+                                        total_votes = secret_votes
 
                                     else:
                                         attendances_table = record_soup.find('table', class_='tablaAsistencia')
                                         attendances_tbody =  attendances_table.find('tbody')
                                         attendances = attendances_tbody.find_all('tr')
 
+                                        # Iniciar contadores manuales de votos para compararlos con el conteo de la página
+                                        temp_in_favor = 0
+                                        temp_against = 0
+                                        temp_abstentions = 0
+
                                         for attendance in attendances:
                                             attendance_data = attendance.find_all('td')
 
                                             member_name = attendance_data[2].find('span').text.strip()
                                             member_political_party = attendance_data[1].find('img')['alt']
-                                            member_vote = attendance_data[3].text.strip()
+                                            member_vote = attendance_data[3].text.strip().lower()
+
+                                            if member_vote == 'favor':
+                                                temp_in_favor += 1
+                                            elif member_vote == 'contra':
+                                                temp_against += 1
+                                            elif member_vote == 'abstencion':
+                                                temp_abstentions += 1
+                                            else: 
+                                                abscences += 1
 
                                             new_congress_member = {
                                                 "diputado" : member_name,
@@ -169,6 +189,16 @@ if response.status_code == 200:
                                             }
 
                                             vote_list.append(new_congress_member)
+
+                                        # Verificar que el conteo manual de votos sea el mismo que el mostrado en la página de la votación
+                                        # Si el conteo manual es mayor, priorizar siempre el manual
+                                        in_favor = in_favor if in_favor >= temp_in_favor else temp_in_favor
+                                        against = against if against >= temp_against else temp_against
+                                        abstentions = abstentions if abstentions >= temp_abstentions else temp_abstentions
+
+                                        total_votes = in_favor + against + abstentions + abscences
+
+
 
                                     new_record = {
                                         "tema" : topic,
@@ -182,7 +212,10 @@ if response.status_code == 200:
                                         "votaciones" : vote_list,
                                         "a_favor" : in_favor,
                                         "en_contra" : against,
-                                        "abstenciones" : abstentions
+                                        "abstenciones" : abstentions,
+                                        "en_secreto" : secret_votes,
+                                        "ausencias": abscences,
+                                        "total_votos" : total_votes
                                     }
 
                                     data["registros"].append(new_record)
