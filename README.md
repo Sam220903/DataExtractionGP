@@ -9,6 +9,8 @@ Repositorio para la extracción de datos solicitados por el área de Bien Común
 /DataExtractionGP
 │
 ├── /config                 # Credenciales de las fuentes y rutas de salida
+|
+├── /data                   # Archivos JSON de salida de los extractores
 │
 ├── /core                   # Código compartido
 │   ├── excel_writer.py     # Lógica centralizada para exportar a Excel
@@ -19,7 +21,9 @@ Repositorio para la extracción de datos solicitados por el área de Bien Común
 │   ├── script1.py
 │   ├── script2.py
 │   └── ...
-│
+|
+├── /lib                    # Funciones reusables dentro del proyecto
+|
 ├── /outputs                # (Opcional) Carpeta local donde se guardan los Excel
 │
 └── requirements.txt        # Dependencias (pandas, openpyxl, etc.)

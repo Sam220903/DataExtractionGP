@@ -227,9 +227,18 @@ if response.status_code == 200:
                         # Pausa de 1 segundo para no saturar el servidor del Congreso
                         time.sleep(1)
 
-        with open('votaciones.json', 'w', encoding='utf-8') as file:
+        folder = 'data'
+
+        # Creamos la carpeta si no existe (exist_ok=True evita errores si ya fue creada antes)
+        os.makedirs(folder, exist_ok=True)
+        
+        # Construimos la ruta segura cruzando plataformas (Windows usa '\', Mac/Linux usan '/')
+        ruta_archivo = os.path.join(folder, 'votaciones.json')
+
+        # Usamos la nueva ruta en el 'with open'
+        with open(ruta_archivo, 'w', encoding='utf-8') as file:
             # json.dump convierte tu diccionario de Python a formato JSON
-            # indent=4 lo formatea bonito para que sea legible por humanos
+            # indent=5 lo formatea bonito para que sea legible por humanos
             json.dump(data, file, ensure_ascii=False, indent=5)
 
         print("\n¡Archivo JSON guardado con éxito!")
