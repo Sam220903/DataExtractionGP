@@ -1,3 +1,4 @@
 *.html
 /tests
 __pycache__/
+*.pdf

@@ -33,7 +33,7 @@ if response.status_code == 200:
         "registros" : []
     }
 
-    # Crear un conjunto paracontener los enlaces y visitarlos uns sola vez
+    # Crear un conjunto para contener los enlaces y visitarlos uns sola vez
     visited_links = set()
 
     # Mapeo de página
@@ -248,3 +248,4 @@ if response.status_code == 200:
         print("La estructura de la página cambió, no se encontró el contenedor de años.")
 else:
     print(f"Error accediendo a la página inicial: {response.status_code}")
+    

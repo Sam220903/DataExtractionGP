@@ -36,7 +36,7 @@ Repositorio para la extracción de datos solicitados por el área de Bien Común
 | :--- | :---: | :---: | ---: |
 |script1.py|Perfiles legislativos||Datos básicos de cada diputado del congreso de Puebla|
 |script2.py|Votaciones|https://www.congresopuebla.gob.mx/index.php?option=com_content&view=article&id=12718|Votaciones de los diputados en sesiones sobre acuerdos o propuestas|
-|script3.py|Unidad y participación|...|...|
+|script3.py|Unidad y participación|https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=itemlist&layout=category&task=category&id=345|Desglose de resultados de votaciones en cada evento del congreso|
 |script4.py|Sesiones y cronometría|...|...|
 |script5.py|Iniciativas y puntos de acuerdo|...|...|
 |script6.py|Comisiones legislativas|...|...|
