@@ -17,7 +17,12 @@ Repositorio para la extracción de datos solicitados por el área de Bien Común
 │   ├── logger.py           # Para registrar errores y éxitos
 │   └── base.py   # Plantilla base para los 7 scripts
 │
-├── /extractors             # Los 7 scripts individuales
+├── /extractors             # Los 7 scripts individuales de recolección de datos
+│   ├── script1.py
+│   ├── script2.py
+│   └── ...
+│
+├── /writers            # Los 7 scripts individuales de escritura de datos en excel
 │   ├── script1.py
 │   ├── script2.py
 │   └── ...
