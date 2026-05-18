@@ -27,6 +27,10 @@ Repositorio para la extracción de datos solicitados por el área de Bien Común
 │   ├── script2.py
 │   └── ...
 |
+├── /analyzers          # Analizadores de cada tipo de archivo con IA
+|   ├── gacetas_analyzer.py
+|
+|
 ├── /lib                    # Funciones reusables dentro del proyecto
 |
 ├── /outputs                # (Opcional) Carpeta local donde se guardan los Excel

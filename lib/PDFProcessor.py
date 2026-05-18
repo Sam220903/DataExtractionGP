@@ -1,28 +1,55 @@
 import fitz  # PyMuPDF: Asegúrate de instalarlo con 'pip install PyMuPDF'
 import re
 import os
+from curl_cffi import requests
+import time
 
 class PDFProcessor:
-    def __init__(self):
-        # PASO 3: DICCIONARIO DE TRADUCCIÓN DETERMINISTA
-        # Convertimos la redacción legal (texto) a números (enteros) para poder hacer cálculos.
-        self.NUMBER_MAP = {
-            "CERO": 0, "UN": 1, "UNO": 1, "UNA": 1, "DOS": 2, "TRES": 3, 
-            "CUATRO": 4, "CINCO": 5, "SEIS": 6, "SIETE": 7, "OCHO": 8, 
-            "NUEVE": 9, "DIEZ": 10, "ONCE": 11, "DOCE": 12, "TRECE": 13,
-            "CATORCE": 14, "QUINCE": 15, "DIECISÉIS": 16, "DIECISIETE": 17, 
-            "DIECIOCHO": 18, "DIECINUEVE": 19, "VEINTE": 20, "TREINTA": 30, 
-            "CUARENTA": 40, "CUARENTA Y UN": 41, "CUARENTA Y UNA": 41,
-            "CUARENTA Y DOS": 42
-        }
 
-    def text_to_int(self, text_number: str) -> int:
+    def download_pdf(pdf_url: str, save_dir: str, browser: str) -> str:
         """
-        Convierte texto en mayúsculas a número entero basado en NUMBER_MAP.
-        Si encuentra algo raro, devuelve 0 de forma segura.
+        Descarga un archivo PDF y lo guarda en el directorio especificado.
+        Retorna la ruta absoluta del archivo descargado.
         """
-        text_clean = text_number.strip().upper()
-        return self.NUMBER_MAP.get(text_clean, 0)
+        # NUEVA LÓGICA DE NOMBRE DE ARCHIVO:
+        # Buscamos el ID numérico en la URL (ej. id=56242) usando Expresiones Regulares
+        match = re.search(r'id=(\d+)', pdf_url)
+        
+        if match:
+            filename = f"acta_{match.group(1)}.pdf"
+        else:
+            # Plan B: Si no encuentra el ID, limpia todos los caracteres especiales
+            nombre_crudo = pdf_url.split('/')[-1]
+            filename = "".join(c for c in nombre_crudo if c.isalnum() or c in ('_', '-')) + ".pdf"
+            
+        filepath = os.path.join(save_dir, filename)
+
+        # REGLA: Idempotencia. Si ya lo descargamos antes, nos saltamos la red.
+        if os.path.exists(filepath):
+            print(f" -> El archivo ya existe localmente: {filename}")
+            return filepath
+
+        try:
+            # REGLA: Resiliencia de red y manejo de excepciones
+            response = requests.get(pdf_url, impersonate=browser, timeout=15)
+            
+            if response.status_code == 200:
+                # Guardamos en modo binario ('wb')
+                with open(filepath, 'wb') as f:
+                    f.write(response.content)
+                    
+                # REGLA: Pausa ética
+                time.sleep(1) 
+                print(f" -> ✓ PDF descargado y guardado en: {filepath}")
+                return filepath
+            else:
+                print(f" -> Advertencia: Código HTTP {response.status_code} al intentar descargar {pdf_url}")
+                return ""
+                
+        except Exception as e:
+            print(f" -> Error de red al descargar {pdf_url}: {e}")
+            return ""
+
 
     def extract_text(self, pdf_path: str) -> str:
         """
@@ -47,25 +74,34 @@ class PDFProcessor:
 
     def clean_text(self, raw_text: str) -> str:
         """
-        PASO 2: LIMPIEZA Y CONTINUIDAD
-        Elimina encabezados, pies de página y une los párrafos rotos.
+        PASO 2: LIMPIEZA Y CONTINUIDAD (VERSIÓN RESILIENTE)
+        Elimina basura sin importar el orden en que aparezca en el PDF.
         """
         if not raw_text:
             return ""
 
-        # 1. Eliminar el indicador de página (ej. "--- PAGE 5 ---")
-        texto_limpio = re.sub(r'--- PAGE \d+ ---', ' ', raw_text, flags=re.IGNORECASE)
+        # 1. Eliminar indicadores de página de PyMuPDF
+        texto = re.sub(r'--- PAGE \d+ ---', ' ', raw_text, flags=re.IGNORECASE)
 
-        # 2. Reemplazar saltos de línea con un espacio. 
-        # ESTO ES VITAL: Convierte todo el documento en un solo bloque continuo.
-        texto_limpio = texto_limpio.replace("\n", " ")
+        # 2. Convertir todo a una sola línea (vital para que la votación sea continua)
+        texto = texto.replace("\n", " ")
 
-        # 3. Limpiar encabezados repetitivos basados en los patrones de las actas de Puebla.
-        # Quitamos frases como "TADOS UNIDOS MEXICA... H. CONGRESO DEL ESTADO..."
-        texto_limpio = re.sub(r'TADOS UNIDOS MEXICA.*?H\. CONGRESO DEL ESTADO.*?PUEBLA', ' ', texto_limpio, flags=re.IGNORECASE)
-        texto_limpio = re.sub(r'DOS UNIDOS MEXICAN.*?H\. CONGRESO DEL ESTADO.*?PUEBLA', ' ', texto_limpio, flags=re.IGNORECASE)
-        
-        # 4. Reducir múltiples espacios consecutivos a un solo espacio limpio
-        texto_limpio = re.sub(r'\s+', ' ', texto_limpio)
+        # 3. Diccionario de "Frases Basura". 
+        frases_basura = [
+            r'H\. CONGRESO DEL ESTADO',
+            r'P\s*U\s*E\s*B\s*L\s*A',           
+            r'Secretaría General',
+            r'ACTA',
+            r'[A-Z]*TADOS UNIDOS MEXICA[A-Z]*', # <-- ¡OJO! La coma debe ir AQUÍ, antes del comentario.
+            r'Marzo\.\s*Mes\s+de\s+las\s+Mujeres', # Usamos \s+ por si hay múltiples espacios
+            r'Av\.\s+32\s+Oriente.*?72290',        # Simplificamos la dirección: "Av. 32 Oriente" seguido de lo que sea hasta "72290"
+            r'www\.congresopuebla\.gob\.mx'
+        ]
 
-        return texto_limpio.strip()
+        for frase in frases_basura:
+            texto = re.sub(frase, ' ', texto, flags=re.IGNORECASE)
+
+        # 4. Reducir múltiples espacios consecutivos a uno solo
+        texto = re.sub(r'\s+', ' ', texto)
+
+        return texto.strip()
