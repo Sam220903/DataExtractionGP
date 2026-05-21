@@ -11,18 +11,19 @@ import time
 from dotenv import load_dotenv
 
 from lib.PDFProcessor import PDFProcessor
-from extractors.gaceta_extractor import GacetaExtractor # Asegúrate de que el nombre del archivo coincida
+from extractors.ai.gaceta_extractor import GacetaExtractor # Asegúrate de que el nombre del archivo coincida
+from extractors.GacetaProcessor import GacetaProcessor
 
-# Cargar variables de entorno
-load_dotenv()
-api_key = os.getenv("GROQ_API_KEY")
+# # Cargar variables de entorno
+# load_dotenv()
+# api_key = os.getenv("GROQ_API_KEY")
 
-if not api_key:
-    print("Error: No se encontró la api_key en el archivo .env")
-    exit()
+# if not api_key:
+#     print("Error: No se encontró la api_key en el archivo .env")
+#     exit()
 
-# Pasar la api_key a la instancia del extractor
-g_extractor = GacetaExtractor(api_key=api_key)
+# # Pasar la api_key a la instancia del extractor
+# g_extractor = GacetaExtractor(api_key=api_key)
 
 # Establecer parámetros iniciales
 domain = 'https://www.congresopuebla.gob.mx'
@@ -41,10 +42,6 @@ if response.status_code == 200:
     }
 
     downloaded_minutes = set()
-    
-    # LIMITE DE REGISTROS PARA TESTING
-    LIMITE_REGISTROS = 5
-    contador_registros = 0
 
     soup = BeautifulSoup(response.text, parser)
     subcategories_section = soup.find('div', class_='itemListSubCategories')
@@ -54,10 +51,7 @@ if response.status_code == 200:
         
         if subcategories:
             for sc in subcategories:
-                # Verificar si alcanzamos el limite antes de procesar nueva subcategoría
-                if contador_registros >= LIMITE_REGISTROS:
-                    break
-                    
+
                 header = sc.find('h4')
                 print(f"\nProcesando la subcategoría: {header.text.strip()}")
 
@@ -82,11 +76,10 @@ if response.status_code == 200:
 
                     all_minutes = leading_minutes + primary_minutes
 
+                    # Iniciamos el objeto para procesar la información de las gacetas
+                    gaceta_processor = GacetaProcessor()
+
                     for minute in all_minutes:
-                        # Verificar si alcanzamos el limite de registros
-                        if contador_registros >= LIMITE_REGISTROS:
-                            print(f"\nLímite de {LIMITE_REGISTROS} registros alcanzado. Deteniendo análisis para testing...")
-                            break
                         
                         a_tag = minute.find('a')
                         if not a_tag:
@@ -101,37 +94,37 @@ if response.status_code == 200:
                         local_pdf_path = pdf_processor.download_pdf(download_link, pdf_dir, browser)
 
                         if local_pdf_path: 
-                            downloaded_minutes.add(download_link)
-                            contador_registros += 1
-                            
-                            print(f"Procesando archivo {contador_registros} de {LIMITE_REGISTROS}")
-                            
-                            # --- AQUÍ EMPIEZA LA MAGIA DE LA INTEGRACIÓN ---
+                            downloaded_minutes.add(download_link)                            
                             
                             # 1. Leer el PDF
                             raw_text = pdf_processor.extract_text(local_pdf_path)
                             
                             # 2. Limpiar el texto
                             clean_text = pdf_processor.clean_text(raw_text)
+
                             
                             if clean_text:
-                                # 3. Mandar el texto limpio a la IA para extraer los datos
-                                nuevos_registros = g_extractor.get_data(clean_text)
+                                # # 3. Mandar el texto limpio a la IA para extraer los datos
+                                # nuevos_registros = g_extractor.get_data(clean_text)
                                 
                                 # 4. Si la IA encontró datos, los sumamos a nuestro diccionario principal
-                                if nuevos_registros:
-                                    data["registros"].extend(nuevos_registros)
+                                # if nuevos_registros:
+                                #     data["registros"].extend(nuevos_registros)
+
+                                
+                                new_records = gaceta_processor.process_file(clean_text)
+
+                                for record in new_records:
+                                    data['registros'].append(record)
                                     
     else:
         print("La estructura de la página cambió, no se encotraron subcategorías de actas para analizar.")
 
-    # ==============================================================
-    # GUARDADO FINAL DEL JSON CUANDO TERMINAN TODAS LAS EXTRACCIONES
-    # ==============================================================
+
     if data["registros"]:
         output_dir = os.path.join(os.path.dirname(__file__), '..', 'data')
         os.makedirs(output_dir, exist_ok=True)
-        json_path = os.path.join(output_dir, 'actas_extraidas_ia.json')
+        json_path = os.path.join(output_dir, 'unidad_participacion_test.json')
         
         try:
             with open(json_path, 'w', encoding='utf-8') as f:

@@ -33,7 +33,7 @@ class PDFProcessor:
                     f.write(response.content)
                     
                 time.sleep(1) 
-                print(f" -> ✓ PDF descargado y guardado en: {filepath}")
+                print(f" ->PDF descargado y guardado en: {filepath}")
                 return filepath
             else:
                 print(f" -> Advertencia: Código HTTP {response.status_code} al intentar descargar {pdf_url}")
@@ -84,3 +84,4 @@ class PDFProcessor:
         texto = re.sub(r'\s+', ' ', texto)
 
         return texto.strip()
+    
