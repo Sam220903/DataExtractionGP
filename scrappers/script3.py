@@ -11,7 +11,6 @@ import time
 from dotenv import load_dotenv
 
 from lib.PDFProcessor import PDFProcessor
-from extractors.ai.gaceta_extractor import GacetaExtractor # Asegúrate de que el nombre del archivo coincida
 from extractors.GacetaProcessor import GacetaProcessor
 
 # # Cargar variables de entorno

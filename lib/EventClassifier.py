@@ -46,12 +46,15 @@ class EventClassifier:
 
     def classify_per_period(self, date : str):
         """
-        Recibe una fecha en texto 'dd/mm/aa' y devuelve a qué periodo pertenece (1, 2 o 3)
+        Recibe una fecha y devuelve a qué periodo pertenece (1, 2 o 3).
+        Soporta los formatos 'YYYY-MM-DD' y 'DD/MM/YY'.
         """
         try:
-            # 1. Convertir el texto "dd/mm/aa" a un objeto de fecha real en Python
-            # %d es día, %m es mes, %y es año a dos dígitos
-            date_obj = datetime.strptime(date, "%d/%m/%y")
+            # 1. Convertir el texto a un objeto de fecha real en Python
+            if '-' in date:
+                date_obj = datetime.strptime(date, "%Y-%m-%d")
+            else:
+                date_obj = datetime.strptime(date, "%d/%m/%y")
         except ValueError:
             return "Formato de fecha no compatible" # Por si alguna fecha viene vacía o corrupta
 
@@ -80,3 +83,34 @@ class EventClassifier:
         # Caso por defecto, como todos los casos anteriores se complementan, no debería llegarse hasta este punto
         else:
             return 0
+
+
+    def classify_per_year(self, date: str):
+        """
+        Calcula si la fecha corresponde al primer (1), segundo (2) o tercer (3) año legislativo.
+        Considera que el año inicia el 15 de septiembre y las legislaturas duran 3 años (regla 3n + 2).
+        Soporta formatos 'YYYY-MM-DD' y 'DD/MM/YY'.
+        """
+        try:
+            if '-' in date:
+                date_obj = datetime.strptime(date, "%Y-%m-%d")
+            else:
+                date_obj = datetime.strptime(date, "%d/%m/%y")
+        except ValueError:
+            return 0  # Retorna 0 si la fecha no es válida
+
+        # 1. Ajustar el "año de ciclo" basado en el 15 de septiembre
+        # Si es antes del 15 de sep, pertenece al ciclo legislativo que inició el año anterior
+        if (date_obj.month, date_obj.day) >= (9, 15):
+            cycle_year = date_obj.year
+        else:
+            cycle_year = date_obj.year - 1
+
+        # 2. Calcular el año en que inició la legislatura actual
+        # Tomando 2024 como base comprobada de la regla 3n + 2
+        term_start_year = cycle_year - ((cycle_year - 2024) % 3)
+
+        # 3. Calcular qué año de la legislatura es (1, 2 o 3)
+        legislative_year = cycle_year - term_start_year + 1
+
+        return legislative_year
