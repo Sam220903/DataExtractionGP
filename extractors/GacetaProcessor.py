@@ -110,7 +110,7 @@ if __name__ == '__main__':
     processor = GacetaProcessor()
 
     # Extraer y limpiar texto
-    text = pdf_processor.extract_text('C:\\Users\\WARNE\\OneDrive\\Escritorio\\Projects\\Python\\DataExtractionGP\\data\\pdfs\\minutes\\acta_54938.pdf')
+    text = pdf_processor.extract_text('C:\\Users\\WARNE\\OneDrive\\Escritorio\\Projects\\Python\\DataExtractionGP\\data\\pdfs\\minutes\\acta_62488.pdf')
     cleaned_text = pdf_processor.clean_text(text)
 
     # Procesar datos
