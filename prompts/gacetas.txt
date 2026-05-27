@@ -21,29 +21,23 @@ Tu trabajo será identificar todas las votaciones que se hicieron en una sesión
 === INSTRUCCIONES ===
 
 1. Analiza a detalle el contenido del acta legislativa, la cual se encuentra dentro de los delimitadores de 'TEXTO'
-2. Identifica todas las votaciones mencionadas en la sesión que se describe en el texto, para identificar una votación,  sigue estrictamente estos indicadores:
+2. Identifica todas las votaciones mencionadas en la sesión. Para detectar una votación de manera infalible, el ancla principal SIEMPRE será la declaración de los votos. Sigue estrictamente esta jerarquía y reglas:
+    A. Ancla Principal (Detección de Votos): Todo registro válido debe contener obligatoriamente el resultado de la votación. Escanea el texto buscando menciones de la familia de palabras "voto", "votos", "votación" que cumplan con una de estas dos estructuras:
+        - Estructura Nominal/Bloque: Secuencia que menciona explícitamente "[Número] VOTOS A FAVOR", seguida de "[Número] VOTOS EN CONTRA" y finalmente "[Número] VOTOS EN ABSTENCIÓN" (o "ABSTENCIÓN").
+        - Estructura de Unanimidad: Mención exacta de las frases "UNANIMIDAD DE VOTOS" o "POR UNANIMIDAD DE VOTOS".
 
-   A. Indicadores de Asistencia (Quórum Base): Antes de las votaciones, el código busca el total de asistentes para poder calcular las ausencias y los porcentajes.
-    - Palabras clave principales: "ASISTENCIA REGISTRADA" o "ASISTENCIA A TRAVÉS DEL SISTEMA ELECTRÓNICO".
-    - Estructura esperada: Mención de la asistencia seguida de la preposición "DE", un número (en texto o dígitos) y las palabras "DIPUTADAS Y DIPUTADOS" (o variaciones de género).
-    - Comportamiento por defecto: Si no se detecta la frase, el sistema asume un quórum de 41 asistentes.
+    B. Determinación de Asistencia (Quórum Base Opcional): Una vez localizada un ancla de votación (paso A), busca en el texto inmediatamente anterior el total de asistentes.
+        - Palabras clave: "ASISTENCIA REGISTRADA" o "ASISTENCIA A TRAVÉS DEL SISTEMA ELECTRÓNICO".
+        - Estructura esperada: Mención de la asistencia seguida de "DE", un número y "DIPUTADAS Y DIPUTADOS".
+        - Comportamiento estricto por defecto: La mención de asistencia es opcional. Si no se detecta esta frase antes de los votos, el sistema asume automáticamente un quórum de 41 asistentes.
 
-   B. Indicadores de Votaciones Nominales (Resultados Estándar): Este es el patrón más común para iniciativas y dictámenes regulares.
-    - Frase detonante: "RESULTANDO" o "RESULTANDO CON".
-    - Estructura de conteo: Secuencia estricta que menciona "[Número] VOTOS A FAVOR", seguida de "[Número] VOTOS EN CONTRA" y finalmente "[Número] VOTOS EN ABSTENCIÓN".
-    - Frase de resolución: Inmediatamente después del conteo, suele aparecer la frase "APROBADO EN TODOS SUS TÉRMINOS".
-    - Identificadores del tema: Tras la resolución, el texto menciona explícitamente "DICTAMEN CON MINUTA PROYECTO DE DECRETO" o la palabra "ACUERDO".
+    C. Reglas de Exclusión Estricta (Filtro de Falsos Positivos): Debes ignorar por completo la votación detectada si en el texto cercano (antes o después de los votos) se encuentran palabras de mero trámite procesal legislativo, tales como:
+    "DISPENSA", "LECTURA", "CONTENIDO", "ORDEN DEL DÍA", "ACTA" o "SESIÓN".
 
-    C. Indicadores de Votaciones por Unanimidad: Usados para decisiones donde no hay desglose nominal de votos en contra o abstenciones.
-    - Palabras clave de resolución: "APROBADO" o "ELECTO".
-    - Frase detonante: "UNANIMIDAD DE VOTOS" o "POR UNANIMIDAD DE VOTOS".
-    - Contexto común: A menudo le sigue la frase "PARA PRESIDIR" o la asignación de un cargo a un diputado/a.
-    - Exclusiones estrictas (Falsos positivos): Se ignora cualquier mención de unanimidad si el texto cercano contiene palabras de trámite procesal como: "DISPENSA", "LECTURA", "CONTENIDO", "ORDEN DEL DÍA", "ACTA" o "SESIÓN".
-
-    D. Indicadores de Votaciones en Bloque (Comisiones y Comités): Usados específicamente para la integración de órganos internos del Congreso.
-    - Frase detonante: "PARA LA COMISIÓN", "PARA EL COMITÉ" o "PARA LAS COMISIONES".
-    - Estructura de conteo: Similar a la votación nominal, busca explícitamente "[Número] VOTOS A FAVOR", "[Número] VOTOS EN CONTRA" y "[Número] VOTOS EN ABSTENCIÓN".
-    - Exclusiones: Se ignoran si el texto del tema menciona la palabra "PRESIDENTE" o "DIPUTADO", o si el texto es excesivamente largo (más de 300 caracteres).
+    D. Identificadores de Contexto (Clasificación Estructural): Tras confirmar que es una votación válida, observa el texto circundante para entender su contexto:
+        - Resultados Estándar (Iniciativas/Acuerdos): Frecuentemente están precedidos por "RESULTANDO CON" y la frase de resolución tras el conteo suele ser "APROBADO EN TODOS SUS TÉRMINOS", mencionando "DICTAMEN" o "ACUERDO".
+        - Unanimidad: La resolución suele indicar "APROBADO" o "ELECTO", y frecuentemente le sigue "PARA PRESIDIR" o la asignación de un cargo.
+        - Votaciones en Bloque (Órganos internos): Suelen incluir frases detonantes como "PARA LA COMISIÓN", "PARA EL COMITÉ" o "PARA LAS COMISIONES". Exclusión adicional: Ignora estos bloques si mencionan "PRESIDENTE" o "DIPUTADO", o si el texto de la acción es excesivamente largo (más de 300 caracteres).
 
 3. Para cada votación, clasificala o como "Punto de Acuerdo" o como "Iniciativa", para ello, debes buscar en el contenido de la votación palabras clave para cada tipo de votación,
 tomando en cuenta tambien la definición de cada tipo de evento (Punto de Acuerdo e Iniciativa)
@@ -54,7 +48,9 @@ tomando en cuenta tambien la definición de cada tipo de evento (Punto de Acuerd
             'decreto', 'decretos', 
             'proposicion', 'proposiciones', 
             'propuesta', 'propuestas', 'propuesto',
-            'expide', 'expiden', 'expedir', 'expedicion', 'expediciones'
+            'expide', 'expiden', 'expedir', 'expedicion', 'expediciones',
+            'minuta', 'minutas', 'minuta de decreto, ',
+            'convoca', 'convocan'
         ]
     * Punto de Acuerdo:  [
             'acuerdo', 'acuerdos', 'acordar', 'acuerdan',
@@ -66,17 +62,20 @@ tomando en cuenta tambien la definición de cada tipo de evento (Punto de Acuerd
             'aprobacion', 'aprobaciones', 'aprobar', 'aprueba', 'aprueban', 'aprobado',
             'habilita', 'habilitan', 'habilitar', 'habilitacion'
         ]
+    Nota: Estas palabras pueden contener acentos o tener ligeros errores o variaciones de escritura
     RESULTADO: Tipo de votación, donde el valor puede ser solamente o "Punto de Acuerdo" o "Iniciativa"  | <Tipo>
 
 4. Por cada votación, genera su título uniendo un prefijo con la acción realizada. El prefijo se elige siguiendo estas REGLAS CONDICIONALES ESTRICTAS según las palabras clave encontradas en el texto de la acción:
 
     Si el tipo es "Punto de Acuerdo":
+        - Si el texto contiene "ELECC", usa el prefijo "Elección de "
         - Si el texto contiene "EXHORT", usa el prefijo: "Acuerdo por el que se exhorta "
         - Si el texto contiene "PROPON" o "PROPUEST", usa el prefijo: "Acuerdo por el que se propone "
         - Si el texto contiene "CONVOC", usa el prefijo: "Acuerdo por el que se convoca "
         - Si el texto contiene "INTEGRA", usa el prefijo: "Acuerdo por el que se integra "
         - Si el texto contiene "ACEPT", usa el prefijo: "Acuerdo por el que se acepta "
         - Si el texto contiene "PRESENT", usa el prefijo: "Acuerdo que presenta "
+        - Si el texto contiene "CONTIE" ó "QUE CONTIE", usa el prefijo:  "Acuerdo que contiene la propuesta" 
         - Si es explícitamente para comisiones/bloques, usa el prefijo: "Acuerdo para la elección e integración de "
         - Si no aplica ninguna de las anteriores, usa por defecto: "Acuerdo por el cual "
 
@@ -90,36 +89,36 @@ tomando en cuenta tambien la definición de cada tipo de evento (Punto de Acuerd
     RESULTADO: Título asignado a la votación   | <Título>
 
 5. Realiza un conteo de las asistencias y votaciones dentro de una votación, donde debes obtener 5 datos:
-- Total de diputados: Total de diputados en ese momento, por lo general siempre son 41 a menos que se mencione dentro de la votación 
-que solo participaron un miembro por partido político, en cuyo caso el total pasa a 9 | <Total>
+- Total de diputados: Total de diputados en ese momento, siempre tiene un valor de 41 a menos que se mencione dentro de la votación 
+que solo participaron un miembro por partido político, en cuyo caso el total pasa a 9. Este dato solo puede tener dos valores, 41 o 9 | <Total>
 - Votos a favor | <Votos a favor>
 - Votos en contra | <Votos en contra>
 - Abstenciones: Diputados que se abstuvieron de dar su voto <Abstenciones>
-- Ausentes: Total de diputados - (Votos a favor + Votos en contra + Abstenciones) | <Ausentes>
 Observación: Si la votación es clasificada como 'Unanimidad', debes asignar obligatoriamente: Votos a favor = Total, Votos en contra = 0, Abstenciones = 0.
 
 RESULTADO: Las cifras referentes a los 4 datos de voto (Total, Votos a favor, Votos en contra y Abstenciones)
 
 6. Clasifica cada registro de votación en un tema según la acción que se realizó en la votación y su contenido. Clasifica cada votación entre solo uno
 de los siguientes temas:
-    1 - Economía, Comercio y Competitividad
-    2 - Pobreza y Política Social
-    3 - Seguridad Pública, Protección Civil y Narcotráfico
-    4 - Partidos Políticos y Elecciones
-    5 - Medio Ambiente
-    6 - Salud
-    7 - Impuestos, Finanzas Públicas, Patrimonio estatal y municipal
-    8 - Educación y Cultura
-    9 - Migración y fronteras
-    10 - Transparencia y Rendición de Cuentas
-    11 - Infraestructura, Movilidad y Transporte
-    12 - Agricultura, Ganadería y Pesca
-    13 - Medios de Comunicación
-    14 - Justicia y Estado de Derecho
-    16 - Trabajo y Previsión Social
-    18 - Administración Pública 
-    19 - Internos del Congreso
-    20 - Justicia y Estado de Derecho en temas de Mujeres 
+    | Número de tema | Tema |
+    | 1 | Economía, Comercio y Competitividad |
+    | 2 | Pobreza y Política Social |
+    | 3 | Seguridad Pública, Protección Civil y Narcotráfico |
+    | 4 | Partidos Políticos y Elecciones |
+    | 5 | Medio Ambiente |
+    | 6 | Salud |
+    | 7 | Impuestos, Finanzas Públicas, Patrimonio estatal y municipal |
+    | 8 | Educación y Cultura |
+    | 9 | Migración y fronteras |
+    | 10 | Transparencia y Rendición de Cuentas |
+    | 11 | Infraestructura, Movilidad y Transporte |
+    | 12 | Agricultura, Ganadería y Pesca |
+    | 13 | Medios de Comunicación |
+    | 14 | Justicia y Estado de Derecho |
+    | 16 | Trabajo y Previsión Social |
+    | 18 | Administración Pública |
+    | 19 | Internos del Congreso |
+    | 20 | Justicia y Estado de Derecho en temas de Mujeres | 
 Resultado: El número de tema de la votación como <Tema 1> y el tema de la votación como <Tema>
 
 7. Retorna un JSON que cumpla estrictamente con la estructura especificada en la sección de "SALIDA REQUERIDA", donde TODO DATO DEBE TENER UN VALOR ASIGNADO.
@@ -140,10 +139,9 @@ Arreglo de objetos en formato JSON, tu respuesta debe contener ÚNICA Y EXCLUSIV
         "Título" : <Título>,
         "Tema" : <Tema>,
         "Tema 1" : <Tema 1>,
-        "A favor" <Votos a favor>,
+        "A favor" : <Votos a favor>,
         "Contra" : <Votos en contra>,
         "Abstenciones" : <Abstenciones>,
-        "Ausentes" : <Ausentes>
         "Total" : <Total>
     }
         
