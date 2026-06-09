@@ -1,3 +1,5 @@
+# GacetaProcessor.py
+
 from datetime import datetime
 import re
 import os
@@ -273,7 +275,7 @@ Arreglo de objetos en formato JSON, tu respuesta debe contener ÚNICA Y EXCLUSIV
             print("Advertencia: Se encontraron valores no numéricos en los votos.")
             return 0
 
-    def process_file(self, file_content: str) -> list[dict]:
+    def process_file(self, file_content: str, folio_manager=None) -> list[dict]:
         """Procesa el archivo combinando reglas estáticas y la extracción de la IA"""
 
         periods = { 1 : "Primer periodo", 2 : "Segundo periodo", 3 : "Tercer periodo" }
@@ -286,14 +288,17 @@ Arreglo de objetos en formato JSON, tu respuesta debe contener ÚNICA Y EXCLUSIV
             print("No se pudo extraer la fecha del documento")
             return []
         
-        period = periods.get(classifier.classify_per_period(date), "Desconocido")
-        legislative_year = years.get(classifier.classify_per_year(date), "Desconocido")
+        # Guardamos los valores enteros que nos da el clasificador, porque el FolioManager los necesita para calcular matemáticamente.
+        period_int = classifier.classify_per_period(date)
+        year_int = classifier.classify_per_year(date)
+
+        # Convertimos a string para el registro JSON
+        period_str = periods.get(period_int, "Desconocido")
+        legislative_year_str = years.get(year_int, "Desconocido")
 
         base_record = {
-            "Año Legislatura" : legislative_year,
-            "Periodo" : period,
-            "Folio periodo": None,
-            "Folio legislatura": None,
+            "Año Legislatura" : legislative_year_str,
+            "Periodo" : period_str,
             "Fecha": date,
         }
         
@@ -302,9 +307,37 @@ Arreglo de objetos en formato JSON, tu respuesta debe contener ÚNICA Y EXCLUSIV
         
         final_records = []
         for vote in votes:
+            # Función local para casteo seguro
+            def safe_int(key, default=0):
+                try:
+                    # Usamos .get() para evitar KeyError y luego intentamos convertir
+                    return int(vote.get(key, default))
+                except (ValueError, TypeError):
+                    # Si la IA mandó texto, vacío o None, regresamos el default
+                    return default
+
+            # Castear datos numéricos de forma segura
+            vote["Tema 1"] = safe_int("Tema 1", default=0)
+            vote["A favor"] = safe_int("A favor", default=0) 
+            vote["Contra"] = safe_int("Contra", default=0)
+            vote["Abstenciones"] = safe_int("Abstenciones", default=0)
+            
+            # Asumimos 41 por defecto para el total si algo sale mal
+            vote["Total"] = safe_int("Total", default=41) 
+
             absences = self.get_absences(vote)
+            
+            # Generamos los folios específicos para ESTE registro
+            if folio_manager and period_int and year_int:
+                folio_leg, folio_per = folio_manager.generate_folios(date, year_int, period_int)
+            else:
+                folio_leg, folio_per = None, None
+
             merged_record = {**base_record, **vote}
             merged_record["Ausentes"] = absences
+            merged_record["Folio legislatura"] = folio_leg
+            merged_record["Folio periodo"] = folio_per
+            
             final_records.append(merged_record)
             
         return final_records

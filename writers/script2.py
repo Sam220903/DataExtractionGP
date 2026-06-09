@@ -41,7 +41,10 @@ def parse_date(date_str):
 
 
 # ── Carga y procesamiento de datos ──────────────────────────────────────────
-with open("../data/votaciones.json", "r", encoding="utf-8") as f:
+# Ajuste de ruta dinámica para el archivo JSON
+input_path = os.path.join(os.path.dirname(__file__), '..', 'data', 'votaciones.json')
+
+with open(input_path, "r", encoding="utf-8") as f:
     data = json.load(f)
 
 registros = data["registros"]
@@ -63,7 +66,10 @@ ws = wb.active
 ws.title = "Hoja 1"
 
 output_filename = "Votaciones.xlsx"
-output_folder = "../outputs"
+
+# Ajuste de ruta dinámica para el guardado
+output_folder = os.path.join(os.path.dirname(__file__), '..', 'outputs')
+os.makedirs(output_folder, exist_ok=True)
 
 NUM_VOTES = len(registros)   # columnas de votaciones
 NUM_DEPS  = len(deputies_list)
@@ -230,4 +236,4 @@ ws.freeze_panes = "C10"
 # ── Guardar ──────────────────────────────────────────────────────────────────
 output_path = os.path.join(output_folder, output_filename)
 wb.save(output_path)
-print(f"Archivo generado: {output_path}")
+print(f"Archivo generado de forma segura: {output_path}")
