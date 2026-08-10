@@ -1,4 +1,3 @@
-import atexit
 import sys
 import os
 # Le decimos a Python que añada la carpeta principal al directorio de búsqueda
