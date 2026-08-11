@@ -10,11 +10,18 @@ Flujo:
   4. Se arma el JSON final con la estructura solicitada.
 """
 
+import sys
 import os
+# Añadimos la carpeta principal al path para poder importar desde lib/
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
 import json
 import time
+import unicodedata
 from curl_cffi import requests
 from bs4 import BeautifulSoup
+from lib.EventClassifier import EventClassifier
+from lib.FolioManager import FolioManager
 
 
 # ---------------------------------------------------------------------------
@@ -31,18 +38,97 @@ class AsistenciasDateFormatter:
         "septiembre": "09", "octubre": "10", "noviembre": "11", "diciembre": "12"
     }
 
+    def _parse(self, date: str):
+        # "24 de Julio de 2026" -> ['24', 'de', 'julio', 'de', '2026']
+        partes = date.lower().split()
+        if len(partes) >= 5:
+            dia = partes[0].zfill(2)
+            mes = self.MESES.get(partes[2], "00")
+            anio = partes[4]  # año completo (4 dígitos)
+            return dia, mes, anio
+        return None
+
     def format(self, date: str) -> str:
         try:
-            # "24 de Julio de 2026" -> ['24', 'de', 'julio', 'de', '2026']
-            partes = date.lower().split()
-            if len(partes) >= 5:
-                dia = partes[0].zfill(2)
-                mes = self.MESES.get(partes[2], "00")
-                anio = partes[4]  # año completo (4 dígitos), sin truncar
+            parsed = self._parse(date)
+            if parsed:
+                dia, mes, anio = parsed
                 return f"{dia}/{mes}/{anio}"
             return date
         except Exception:
             return date
+
+    def to_iso(self, date: str) -> str:
+        """
+        Devuelve la fecha en formato 'YYYY-MM-DD', que es uno de los dos
+        formatos que aceptan EventClassifier y FolioManager.
+        """
+        try:
+            parsed = self._parse(date)
+            if parsed:
+                dia, mes, anio = parsed
+                return f"{anio}-{mes}-{dia}"
+            return date
+        except Exception:
+            return date
+
+
+# ---------------------------------------------------------------------------
+# Clasificación del tipo de asistencia a su clave numérica
+# ---------------------------------------------------------------------------
+ASISTENCIA_CODIGOS = {
+    "asistencia": 1,
+    "retardo justificado": 2,
+    "retardo injustificado": 3,
+    "inasistencia justificada": 4,
+    "inasistencia injustificada": 5,
+    "con licencia": 6,
+    "sin informacion": 7,
+    "fallecimiento": 8,
+    "ya no es diputado": "-",
+}
+
+
+def clasificar_asistencia(texto: str):
+    # Normaliza: minúsculas y sin acentos, para no depender de la
+    # capitalización/acentuación exacta que traiga la página
+    limpio = texto.lower()
+    limpio = ''.join(
+        c for c in unicodedata.normalize('NFD', limpio)
+        if unicodedata.category(c) != 'Mn'
+    )
+    limpio = limpio.strip()
+
+    if limpio in ASISTENCIA_CODIGOS:
+        return ASISTENCIA_CODIGOS[limpio]
+
+    # Si aparece un texto no contemplado en el diccionario, se conserva
+    # el texto original para no perder el dato, y se avisa en consola
+    print(f"  [AVISO] Tipo de asistencia no reconocido: '{texto}'")
+    return texto
+
+
+# Mapeo inverso (código -> nombre) para poder sumar por categoría.
+# No incluye "-" (ya no es diputado) porque no está en la lista de totales pedida.
+CODIGO_A_NOMBRE = {
+    1: "Asistencia",
+    2: "Retardo Justificado",
+    3: "Retardo Injustificado",
+    4: "Inasistencia Justificada",
+    5: "Inasistencia Injustificada",
+    6: "Con Licencia",
+    7: "Sin información",
+    8: "Fallecimiento",
+}
+
+
+def sumar_totales_por_tipo(asistencias: list) -> dict:
+    totales = {nombre: 0 for nombre in CODIGO_A_NOMBRE.values()}
+    for registro_asistencia in asistencias:
+        nombre = CODIGO_A_NOMBRE.get(registro_asistencia["Asistencia"])
+        if nombre:
+            totales[nombre] += 1
+    return totales
 
 
 # ---------------------------------------------------------------------------
@@ -54,6 +140,8 @@ browser = "edge"
 parser = "html.parser"
 
 date_formatter = AsistenciasDateFormatter()
+event_classifier = EventClassifier()
+folio_manager = FolioManager()
 
 print("Accediendo a la página de asistencias")
 response = requests.get(url_listado, impersonate=browser)
@@ -71,6 +159,13 @@ if response.status_code == 200:
         print("No se encontró la tabla de listado de sesiones.")
     else:
         filas = tabla_listado.find("tbody").find_all("tr")
+
+        # El listado del sitio viene de la sesión más reciente a la más
+        # antigua. FolioManager necesita recibir las sesiones en orden
+        # cronológico ascendente para calcular bien los folios (compara
+        # cada registro contra el "estado" del registro anterior), así
+        # que invertimos el orden antes de procesar.
+        filas = list(reversed(filas))
         visited_links = set()
 
         for fila in filas:
@@ -116,6 +211,7 @@ if response.status_code == 200:
                         tipo_sesion = tipo_strong.next_sibling.strip()
 
             fecha_formateada = date_formatter.format(fecha_raw) if fecha_raw else None
+            fecha_iso = date_formatter.to_iso(fecha_raw) if fecha_raw else None
 
             # --- Tabla de asistencias de diputados ---
             tabla_asistencias = session_soup.find("table", class_="tablaAsistencia")
@@ -134,21 +230,39 @@ if response.status_code == 200:
 
                     # El nombre del diputado queda como texto tras el <br> del <img>
                     nombre_diputado = celdas[2].get_text(strip=True)
-                    tipo_asistencia = celdas[3].get_text(strip=True)
+                    tipo_asistencia_raw = celdas[3].get_text(strip=True)
+                    codigo_asistencia = clasificar_asistencia(tipo_asistencia_raw)
 
                     asistencias.append({
                         "Diputado": nombre_diputado,
-                        "Asistencia": tipo_asistencia
+                        "Asistencia": codigo_asistencia
                     })
 
             total_sesiones += 1
 
+            # Folios: se calculan por cada sesión (registro), usando el año
+            # legislativo y periodo que ya determina EventClassifier
+            if fecha_iso:
+                legislative_year = event_classifier.classify_per_year(fecha_iso)
+                period = event_classifier.classify_per_period(fecha_iso)
+                folio_legislatura, folio_periodo = folio_manager.generate_folios(
+                    fecha_iso, legislative_year, period
+                )
+            else:
+                legislative_year, period = None, None
+                folio_legislatura, folio_periodo = None, None
+
+            totales_por_tipo = sumar_totales_por_tipo(asistencias)
+
             registro = {
-                "No. de sesión": total_sesiones,
+                "Folio legislatura": folio_legislatura,
+                "Folio periodo": folio_periodo,
+                "Año Legislatura": legislative_year,
+                "Periodo": period,
                 "Fecha": fecha_formateada,
                 "Sesión": tipo_sesion,
                 "Asistencias": asistencias,
-                "Total de asistencias": len(asistencias)
+                "Totales": totales_por_tipo
             }
 
             data["registros"].append(registro)
