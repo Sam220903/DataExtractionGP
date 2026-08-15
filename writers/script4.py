@@ -44,6 +44,10 @@ from openpyxl import Workbook
 from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
 from openpyxl.utils import get_column_letter
 
+# Ruta base: carpeta donde vive este script, para que las rutas relativas
+# no dependan del directorio desde el que se ejecute (cwd)
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
 
 # ---------------------------------------------------------------------------
 # Config de estilo (replicando Copia_de_Asistencia_2024-2025.xlsx)
@@ -325,12 +329,14 @@ def generar_excel(registros: list[dict], ruta_salida: str) -> None:
 
 
 def main():
-    ruta_json = "../data/asistencias.json"
-    ruta_salida = "../outputs/Asistencias.xlsx"
+    ruta_json = os.path.join(BASE_DIR, "..", "data", "asistencias.json")
+    ruta_salida = os.path.join(BASE_DIR, "..", "outputs", "Asistencias.xlsx")
 
     if not os.path.exists(ruta_json):
         print(f"No se encontró el archivo: {ruta_json}")
         sys.exit(1)
+
+    os.makedirs(os.path.dirname(ruta_salida), exist_ok=True)
 
     registros = cargar_registros(ruta_json)
     generar_excel(registros, ruta_salida)
