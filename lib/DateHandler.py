@@ -70,6 +70,15 @@ class DateHandler:
  
         return f"{day} de {monthName} de {year}"
 
+    def formatDateShort(self, dateTuple):
+        """
+        Receives a tuple (day, month, year), e.g. (14, 5, 2024),
+        and returns it formatted as "14/05/24" (dd/mm/aa, two-digit year).
+        """
+        day, month, year = dateTuple
+
+        return f"{day:02d}/{month:02d}/{year % 100:02d}"
+
     def getOldestDateFromTexts(self, dateTextList):
         """
         Receives a list of dates as text (e.g. "14 de mayo de 2024")

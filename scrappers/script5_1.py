@@ -245,7 +245,7 @@ if response.status_code == 200:
 # ----------------------------------------------- Guardar resultados -----------------------------------------------
 folder = "data"
 os.makedirs(folder, exist_ok=True)
-ruta_archivo = os.path.join(folder, "comisiones.json")
+ruta_archivo = os.path.join(folder, "comisiones_integrantes.json")
 with open(ruta_archivo, 'w', encoding='utf-8') as output_file:
     json.dump(data, output_file, ensure_ascii=False, indent=4)
 

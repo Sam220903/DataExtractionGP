@@ -58,6 +58,7 @@ def classify_sessions(session_texts):
     for session_text in session_texts:
         day, month, year = dh.parseDate(session_text)
         iso_date = f"{year:04d}-{month:02d}-{day:02d}"
+        final_date = dh.formatDateShort((day,month,year))
 
         legislative_year = ec.classify_per_year(iso_date)
         kind, period_number = ec.classify_period_or_recess(iso_date)
@@ -68,7 +69,7 @@ def classify_sessions(session_texts):
 
         list_key = f"sesiones_{kind}_{period_number} "
         if list_key in years_data[year_key]:
-            years_data[year_key][list_key].append(session_text)
+            years_data[year_key][list_key].append(final_date)
 
     for year_data in years_data.values():
         total_year = 0
