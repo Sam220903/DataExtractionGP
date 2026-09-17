@@ -116,3 +116,52 @@ class EventClassifier:
         legislative_year = cycle_year - term_start_year + 1
 
         return legislative_year
+
+
+    def classify_period_or_recess(self, date: str):
+        """
+        Recibe una fecha y determina si cae dentro de un periodo ordinario
+        o de un receso legislativo (sin fusionar el receso con su periodo,
+        a diferencia de classify_per_period).
+        Regresa una tupla (tipo, numero), donde tipo es "periodo" o "receso"
+        y numero es 1, 2 o 3.
+        Soporta los formatos 'YYYY-MM-DD' y 'DD/MM/YY'.
+        """
+        try:
+            if '-' in date:
+                date_obj = datetime.strptime(date, "%Y-%m-%d")
+            else:
+                date_obj = datetime.strptime(date, "%d/%m/%y")
+        except ValueError:
+            return ("desconocido", 0)  # Por si alguna fecha viene vacía o corrupta
+
+        month_day = (date_obj.month, date_obj.day)
+
+        # PERIODO 1: Del 15 de Septiembre (9, 15) al 15 de Diciembre (12, 15)
+        if (9, 15) <= month_day <= (12, 15):
+            return ("periodo", 1)
+
+        # RECESO 1: Del 16 de Diciembre (12, 16) al 14 de Enero (1, 14)
+        # Cruza el cambio de año, usamos "or"
+        elif month_day >= (12, 16) or month_day <= (1, 14):
+            return ("receso", 1)
+
+        # PERIODO 2: Del 15 de Enero (1, 15) al 15 de Marzo (3, 15)
+        elif (1, 15) <= month_day <= (3, 15):
+            return ("periodo", 2)
+
+        # RECESO 2: Del 16 de Marzo (3, 16) al 14 de Mayo (5, 14)
+        elif (3, 16) <= month_day <= (5, 14):
+            return ("receso", 2)
+
+        # PERIODO 3: Del 15 de Mayo (5, 15) al 15 de Julio (7, 15)
+        elif (5, 15) <= month_day <= (7, 15):
+            return ("periodo", 3)
+
+        # RECESO 3: Del 16 de Julio (7, 16) al 14 de Septiembre (9, 14)
+        elif (7, 16) <= month_day <= (9, 14):
+            return ("receso", 3)
+
+        # Caso por defecto, no debería llegarse hasta este punto
+        else:
+            return ("desconocido", 0)

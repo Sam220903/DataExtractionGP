@@ -184,7 +184,7 @@ if response.status_code == 200:
             report_2 = f'{domain}{annual_reports[1].find('a')['href']}' if annual_reports[1].find('a') else None
             report_3 = f'{domain}{annual_reports[2].find('a')['href']}' if annual_reports[2].find('a') else None
 
-            sessions_info_container = commision_soup.find('div', class_="contenedorGeneralComision").find('section', id="contenedorBotoneraPorCategorias", recursive=False)
+            sessions_info_container = info_divs[2].find('section', class_="content").find('section', id="contenedorBotoneraPorCategorias", recursive=False)
             sessions_dates_divs = sessions_info_container.find_all('div', class_="tituloFechaSesion")
             sessions_dates = [session_date_div.text.strip() for session_date_div in sessions_dates_divs]
 

@@ -1,0 +1,2695 @@
+[
+    {
+        "Nombre": "Asuntos Metropolitanos",
+        "sesiones_año_1": {
+            "sesiones_periodo_1 ": [
+                "13 de diciembre 2024",
+                "30 de octubre 2024",
+                "26 de septiembre 2024"
+            ],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 3,
+            "sesiones_periodo_2 ": [
+                "14 de marzo 2025"
+            ],
+            "sesiones_receso_2 ": [
+                "11 de abril 2025"
+            ],
+            "total_periodo_2": 2,
+            "sesiones_periodo_3 ": [
+                "09 de julio 2025",
+                "26 de mayo 2025"
+            ],
+            "sesiones_receso_3 ": [
+                "1 de septiembre 2025"
+            ],
+            "total_periodo_3": 3,
+            "total_año": 8
+        },
+        "sesiones_año_2": {
+            "sesiones_periodo_1 ": [
+                "13 de noviembre 2025"
+            ],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 1,
+            "sesiones_periodo_2 ": [
+                "27 de enero 2026"
+            ],
+            "sesiones_receso_2 ": [
+                "14 de mayo 2026"
+            ],
+            "total_periodo_2": 2,
+            "sesiones_periodo_3 ": [],
+            "sesiones_receso_3 ": [],
+            "total_periodo_3": 0,
+            "total_año": 3
+        },
+        "sesiones_año_3": {
+            "sesiones_periodo_1 ": [],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 0,
+            "sesiones_periodo_2 ": [],
+            "sesiones_receso_2 ": [],
+            "total_periodo_2": 0,
+            "sesiones_periodo_3 ": [],
+            "sesiones_receso_3 ": [],
+            "total_periodo_3": 0,
+            "total_año": 0
+        }
+    },
+    {
+        "Nombre": "Asuntos Municipales",
+        "sesiones_año_1": {
+            "sesiones_periodo_1 ": [
+                "13 de diciembre 2024",
+                "12 de noviembre 2024",
+                "31 de octubre 2024",
+                "27 de septiembre 2024"
+            ],
+            "sesiones_receso_1 ": [
+                "14 de enero 2025"
+            ],
+            "total_periodo_1": 5,
+            "sesiones_periodo_2 ": [
+                "4 de marzo 2025",
+                "20 de febrero 2025"
+            ],
+            "sesiones_receso_2 ": [
+                "24 de abril 2025"
+            ],
+            "total_periodo_2": 3,
+            "sesiones_periodo_3 ": [
+                "18 de junio 2025",
+                "16 de mayo 2025"
+            ],
+            "sesiones_receso_3 ": [
+                "10 de septiembre 2025",
+                "29 de agosto 2025",
+                "24 de julio 2025"
+            ],
+            "total_periodo_3": 5,
+            "total_año": 13
+        },
+        "sesiones_año_2": {
+            "sesiones_periodo_1 ": [
+                "04 de diciembre 2025",
+                "13 de noviembre 2025",
+                "28 de octubre 2025"
+            ],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 3,
+            "sesiones_periodo_2 ": [
+                "05 de marzo 2026",
+                "29 de enero 2026"
+            ],
+            "sesiones_receso_2 ": [
+                "12 de mayo 2026",
+                "23 de abril 2026"
+            ],
+            "total_periodo_2": 4,
+            "sesiones_periodo_3 ": [
+                "25 de junio 2026"
+            ],
+            "sesiones_receso_3 ": [
+                "31 de agosto de 2026",
+                "21 de julio 2026"
+            ],
+            "total_periodo_3": 3,
+            "total_año": 10
+        },
+        "sesiones_año_3": {
+            "sesiones_periodo_1 ": [],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 0,
+            "sesiones_periodo_2 ": [],
+            "sesiones_receso_2 ": [],
+            "total_periodo_2": 0,
+            "sesiones_periodo_3 ": [],
+            "sesiones_receso_3 ": [],
+            "total_periodo_3": 0,
+            "total_año": 0
+        }
+    },
+    {
+        "Nombre": "Atención a Personas con Discapacidad",
+        "sesiones_año_1": {
+            "sesiones_periodo_1 ": [
+                "13 de diciembre 2024",
+                "30 de octubre 2024",
+                "26 de septiembre 2024"
+            ],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 3,
+            "sesiones_periodo_2 ": [
+                "12 de marzo 2025",
+                "26 de febrero 2025",
+                "29 de enero 2025"
+            ],
+            "sesiones_receso_2 ": [
+                "21 de abril 2025",
+                "18 de marzo 2025"
+            ],
+            "total_periodo_2": 5,
+            "sesiones_periodo_3 ": [
+                "25 de junio 2025",
+                "29 de mayo 2025"
+            ],
+            "sesiones_receso_3 ": [
+                "28 de agosto 2025",
+                "16 de julio 2025"
+            ],
+            "total_periodo_3": 4,
+            "total_año": 12
+        },
+        "sesiones_año_2": {
+            "sesiones_periodo_1 ": [
+                "26 de noviembre 2025",
+                "28 de octubre 2025",
+                "24 de septiembre 2025"
+            ],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 3,
+            "sesiones_periodo_2 ": [
+                "11 de marzo 2026",
+                "19 de febrero 2026",
+                "27 de enero 2026"
+            ],
+            "sesiones_receso_2 ": [
+                "29 de abril 2026"
+            ],
+            "total_periodo_2": 4,
+            "sesiones_periodo_3 ": [
+                "24 de junio 2026",
+                "27 de mayo 2026"
+            ],
+            "sesiones_receso_3 ": [
+                "21 de julio 2026"
+            ],
+            "total_periodo_3": 3,
+            "total_año": 10
+        },
+        "sesiones_año_3": {
+            "sesiones_periodo_1 ": [],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 0,
+            "sesiones_periodo_2 ": [],
+            "sesiones_receso_2 ": [],
+            "total_periodo_2": 0,
+            "sesiones_periodo_3 ": [],
+            "sesiones_receso_3 ": [],
+            "total_periodo_3": 0,
+            "total_año": 0
+        }
+    },
+    {
+        "Nombre": "Atención a Personas en Situación de Vulnerabilidad",
+        "sesiones_año_1": {
+            "sesiones_periodo_1 ": [
+                "12 de diciembre 2024",
+                "30 de octubre de 2024",
+                "26 de septiembre 2024"
+            ],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 3,
+            "sesiones_periodo_2 ": [
+                "11 de marzo 2025",
+                "06 de febrero 2025"
+            ],
+            "sesiones_receso_2 ": [
+                "01 de abril 2025"
+            ],
+            "total_periodo_2": 3,
+            "sesiones_periodo_3 ": [
+                "14 de julio 2025",
+                "26 de junio 2025",
+                "30 de mayo 2025"
+            ],
+            "sesiones_receso_3 ": [
+                "28 de agosto 2025"
+            ],
+            "total_periodo_3": 4,
+            "total_año": 10
+        },
+        "sesiones_año_2": {
+            "sesiones_periodo_1 ": [
+                "11 de diciembre 2025",
+                "13 de noviembre 2025",
+                "09 de octubre 2025",
+                "25 de septiembre 2025"
+            ],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 4,
+            "sesiones_periodo_2 ": [
+                "12 de marzo 2026",
+                "29 de enero 2026"
+            ],
+            "sesiones_receso_2 ": [
+                "12 de mayo 2026",
+                "23 de abril 2026"
+            ],
+            "total_periodo_2": 4,
+            "sesiones_periodo_3 ": [
+                "04 de junio 2026"
+            ],
+            "sesiones_receso_3 ": [
+                "27 de agosto de 2026",
+                "21 de julio 2026"
+            ],
+            "total_periodo_3": 3,
+            "total_año": 11
+        },
+        "sesiones_año_3": {
+            "sesiones_periodo_1 ": [],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 0,
+            "sesiones_periodo_2 ": [],
+            "sesiones_receso_2 ": [],
+            "total_periodo_2": 0,
+            "sesiones_periodo_3 ": [],
+            "sesiones_receso_3 ": [],
+            "total_periodo_3": 0,
+            "total_año": 0
+        }
+    },
+    {
+        "Nombre": "Bienestar",
+        "sesiones_año_1": {
+            "sesiones_periodo_1 ": [
+                "06 de diciembre 2024",
+                "31 de octubre 2024",
+                "26 de septiembre 2024"
+            ],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 3,
+            "sesiones_periodo_2 ": [
+                "06 de febrero 2025"
+            ],
+            "sesiones_receso_2 ": [
+                "25 de marzo 2025"
+            ],
+            "total_periodo_2": 2,
+            "sesiones_periodo_3 ": [
+                "03 de julio 2025",
+                "29 de mayo 2025"
+            ],
+            "sesiones_receso_3 ": [],
+            "total_periodo_3": 2,
+            "total_año": 7
+        },
+        "sesiones_año_2": {
+            "sesiones_periodo_1 ": [
+                "16 de octubre 2025"
+            ],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 1,
+            "sesiones_periodo_2 ": [
+                "16 de enero 2026"
+            ],
+            "sesiones_receso_2 ": [],
+            "total_periodo_2": 1,
+            "sesiones_periodo_3 ": [
+                "18 de junio 2026",
+                "15 de mayo 2026"
+            ],
+            "sesiones_receso_3 ": [],
+            "total_periodo_3": 2,
+            "total_año": 4
+        },
+        "sesiones_año_3": {
+            "sesiones_periodo_1 ": [],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 0,
+            "sesiones_periodo_2 ": [],
+            "sesiones_receso_2 ": [],
+            "total_periodo_2": 0,
+            "sesiones_periodo_3 ": [],
+            "sesiones_receso_3 ": [],
+            "total_periodo_3": 0,
+            "total_año": 0
+        }
+    },
+    {
+        "Nombre": "Ciencia, Humanidades, Tecnología e Innovación",
+        "sesiones_año_1": {
+            "sesiones_periodo_1 ": [
+                "12 de diciembre 2024",
+                "24 de octubre 2024",
+                "26 de septiembre 2024"
+            ],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 3,
+            "sesiones_periodo_2 ": [
+                "30 de enero 2025"
+            ],
+            "sesiones_receso_2 ": [
+                "25 de marzo 2025"
+            ],
+            "total_periodo_2": 2,
+            "sesiones_periodo_3 ": [
+                "27 de mayo 2025",
+                "22 de mayo 2025"
+            ],
+            "sesiones_receso_3 ": [
+                "27 de agosto 2025"
+            ],
+            "total_periodo_3": 3,
+            "total_año": 8
+        },
+        "sesiones_año_2": {
+            "sesiones_periodo_1 ": [
+                "11 de diciembre 2025",
+                "06 de noviembre 2025",
+                "30 de octubre 2025",
+                "18 de septiembre 2025"
+            ],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 4,
+            "sesiones_periodo_2 ": [
+                "25 de febrero 2026",
+                "16 de enero 2026"
+            ],
+            "sesiones_receso_2 ": [
+                "23 de abril 2026"
+            ],
+            "total_periodo_2": 3,
+            "sesiones_periodo_3 ": [
+                "04 de junio 2026"
+            ],
+            "sesiones_receso_3 ": [
+                "27 de agosto de 2026"
+            ],
+            "total_periodo_3": 2,
+            "total_año": 9
+        },
+        "sesiones_año_3": {
+            "sesiones_periodo_1 ": [],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 0,
+            "sesiones_periodo_2 ": [],
+            "sesiones_receso_2 ": [],
+            "total_periodo_2": 0,
+            "sesiones_periodo_3 ": [],
+            "sesiones_receso_3 ": [],
+            "total_periodo_3": 0,
+            "total_año": 0
+        }
+    },
+    {
+        "Nombre": "Comunicaciones e Infraestructura",
+        "sesiones_año_1": {
+            "sesiones_periodo_1 ": [
+                "03 de diciembre 2024",
+                "06 de noviembre 2024",
+                "30 de octubre 2024",
+                "3 de octubre 2024"
+            ],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 4,
+            "sesiones_periodo_2 ": [
+                "11 de marzo 2025",
+                "13 de febrero 2025",
+                "30 de enero 2025"
+            ],
+            "sesiones_receso_2 ": [
+                "07 de mayo 2025",
+                "09 de abril 2025"
+            ],
+            "total_periodo_2": 5,
+            "sesiones_periodo_3 ": [
+                "02 de julio 2025",
+                "4 de junio 2025"
+            ],
+            "sesiones_receso_3 ": [
+                "25 de agosto 2025"
+            ],
+            "total_periodo_3": 3,
+            "total_año": 12
+        },
+        "sesiones_año_2": {
+            "sesiones_periodo_1 ": [
+                "15 de diciembre 2025",
+                "26 de noviembre 2025",
+                "27 de octubre 2025",
+                "29 de septiembre 2025"
+            ],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 4,
+            "sesiones_periodo_2 ": [
+                "12 de marzo 2026",
+                "24 de febrero 2026",
+                "19 de enero 2026"
+            ],
+            "sesiones_receso_2 ": [
+                "30 de abril 2026"
+            ],
+            "total_periodo_2": 4,
+            "sesiones_periodo_3 ": [
+                "13 de julio 2026",
+                "18 de junio 2026"
+            ],
+            "sesiones_receso_3 ": [
+                "21 de agosto de 2026"
+            ],
+            "total_periodo_3": 3,
+            "total_año": 11
+        },
+        "sesiones_año_3": {
+            "sesiones_periodo_1 ": [],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 0,
+            "sesiones_periodo_2 ": [],
+            "sesiones_receso_2 ": [],
+            "total_periodo_2": 0,
+            "sesiones_periodo_3 ": [],
+            "sesiones_receso_3 ": [],
+            "total_periodo_3": 0,
+            "total_año": 0
+        }
+    },
+    {
+        "Nombre": "Control, Vigilancia y Evaluación de la Auditoría Superior del Estado",
+        "sesiones_año_1": {
+            "sesiones_periodo_1 ": [
+                "13 de diciembre 2024",
+                "04 de diciembre 2024",
+                "31 de octubre 2024",
+                "29 de octubre 2024",
+                "22 de octubre 2024",
+                "26 de septiembre 2024"
+            ],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 6,
+            "sesiones_periodo_2 ": [
+                "05 de febrero 2025"
+            ],
+            "sesiones_receso_2 ": [
+                "30 de abril 2025",
+                "31 de marzo 2025"
+            ],
+            "total_periodo_2": 3,
+            "sesiones_periodo_3 ": [
+                "12 de junio 2025"
+            ],
+            "sesiones_receso_3 ": [
+                "29 de agosto 2025",
+                "24 de julio 2025"
+            ],
+            "total_periodo_3": 3,
+            "total_año": 12
+        },
+        "sesiones_año_2": {
+            "sesiones_periodo_1 ": [
+                "15 de diciembre 2025",
+                "20 de noviembre 2025",
+                "23 de octubre 2025",
+                "29 de septiembre 2025"
+            ],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 4,
+            "sesiones_periodo_2 ": [
+                "27 de febrero 2026",
+                "20 de enero 2026"
+            ],
+            "sesiones_receso_2 ": [
+                "30 de abril 2026",
+                "28 de abril 2026",
+                "25 de marzo 2026"
+            ],
+            "total_periodo_2": 5,
+            "sesiones_periodo_3 ": [
+                "14 de julio 2026",
+                "12 de junio 2026",
+                "19 de mayo 2026"
+            ],
+            "sesiones_receso_3 ": [
+                "23 de julio 2026"
+            ],
+            "total_periodo_3": 4,
+            "total_año": 13
+        },
+        "sesiones_año_3": {
+            "sesiones_periodo_1 ": [],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 0,
+            "sesiones_periodo_2 ": [],
+            "sesiones_receso_2 ": [],
+            "total_periodo_2": 0,
+            "sesiones_periodo_3 ": [],
+            "sesiones_receso_3 ": [],
+            "total_periodo_3": 0,
+            "total_año": 0
+        }
+    },
+    {
+        "Nombre": "Cultura",
+        "sesiones_año_1": {
+            "sesiones_periodo_1 ": [
+                "03 de diciembre 2024",
+                "04 de noviembre 2024",
+                "28 de octubre 2024",
+                "26 de septiembre 2024"
+            ],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 4,
+            "sesiones_periodo_2 ": [
+                "04 de marzo 2025",
+                "13 de febrero 2025",
+                "28 de enero 2025"
+            ],
+            "sesiones_receso_2 ": [
+                "03 de abril 2025"
+            ],
+            "total_periodo_2": 4,
+            "sesiones_periodo_3 ": [
+                "04 de julio 2025",
+                "20 de junio 2025",
+                "15 de mayo 2025"
+            ],
+            "sesiones_receso_3 ": [
+                "26 de agosto 2025"
+            ],
+            "total_periodo_3": 4,
+            "total_año": 12
+        },
+        "sesiones_año_2": {
+            "sesiones_periodo_1 ": [
+                "09 de diciembre 2025",
+                "21 de noviembre 2025",
+                "22 de octubre 2025",
+                "19 de septiembre 2025"
+            ],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 4,
+            "sesiones_periodo_2 ": [
+                "13 de marzo 2026",
+                "05 de marzo 2026",
+                "13 de febrero 2026",
+                "26 de enero 2026",
+                "19 de enero 2026"
+            ],
+            "sesiones_receso_2 ": [
+                "14 de mayo 2026",
+                "08 de abril 2026"
+            ],
+            "total_periodo_2": 7,
+            "sesiones_periodo_3 ": [
+                "02 de julio 2026",
+                "17 de junio 2026",
+                "28 de mayo 2026"
+            ],
+            "sesiones_receso_3 ": [
+                "23 de julio 2026"
+            ],
+            "total_periodo_3": 4,
+            "total_año": 15
+        },
+        "sesiones_año_3": {
+            "sesiones_periodo_1 ": [],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 0,
+            "sesiones_periodo_2 ": [],
+            "sesiones_receso_2 ": [],
+            "total_periodo_2": 0,
+            "sesiones_periodo_3 ": [],
+            "sesiones_receso_3 ": [],
+            "total_periodo_3": 0,
+            "total_año": 0
+        }
+    },
+    {
+        "Nombre": "De la Agenda 2030 y convenios o acuerdos que se determinen en el ámbito internacional para mejorar las necesidades de toda la población",
+        "sesiones_año_1": {
+            "sesiones_periodo_1 ": [
+                "30 de octubre 2024",
+                "26 de septiembre 2024"
+            ],
+            "sesiones_receso_1 ": [
+                "14 de enero 2025"
+            ],
+            "total_periodo_1": 3,
+            "sesiones_periodo_2 ": [],
+            "sesiones_receso_2 ": [],
+            "total_periodo_2": 0,
+            "sesiones_periodo_3 ": [
+                "30 de junio 2025",
+                "29 de mayo 2025"
+            ],
+            "sesiones_receso_3 ": [
+                "1 de septiembre 2025"
+            ],
+            "total_periodo_3": 3,
+            "total_año": 6
+        },
+        "sesiones_año_2": {
+            "sesiones_periodo_1 ": [
+                "15 de diciembre 2025",
+                "12 de noviembre 2025",
+                "30 de septiembre 2025"
+            ],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 3,
+            "sesiones_periodo_2 ": [
+                "11 de marzo 2026",
+                "28 de enero 2026"
+            ],
+            "sesiones_receso_2 ": [],
+            "total_periodo_2": 2,
+            "sesiones_periodo_3 ": [
+                "21 de mayo 2026"
+            ],
+            "sesiones_receso_3 ": [],
+            "total_periodo_3": 1,
+            "total_año": 6
+        },
+        "sesiones_año_3": {
+            "sesiones_periodo_1 ": [],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 0,
+            "sesiones_periodo_2 ": [],
+            "sesiones_receso_2 ": [],
+            "total_periodo_2": 0,
+            "sesiones_periodo_3 ": [],
+            "sesiones_receso_3 ": [],
+            "total_periodo_3": 0,
+            "total_año": 0
+        }
+    },
+    {
+        "Nombre": "De la Familia y los Derechos de la Niñez",
+        "sesiones_año_1": {
+            "sesiones_periodo_1 ": [
+                "12 de diciembre 2024",
+                "23 de octubre 2024",
+                "26 de septiembre 2024"
+            ],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 3,
+            "sesiones_periodo_2 ": [
+                "26 de febrero 2025",
+                "28 de enero 2025"
+            ],
+            "sesiones_receso_2 ": [
+                "11 de abril 2025"
+            ],
+            "total_periodo_2": 3,
+            "sesiones_periodo_3 ": [
+                "11 de julio 2025",
+                "30 de junio 2025",
+                "30 de mayo 2025"
+            ],
+            "sesiones_receso_3 ": [
+                "27 de agosto 2025"
+            ],
+            "total_periodo_3": 4,
+            "total_año": 10
+        },
+        "sesiones_año_2": {
+            "sesiones_periodo_1 ": [
+                "28 de octubre 2025",
+                "24 de septiembre 2025"
+            ],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 2,
+            "sesiones_periodo_2 ": [
+                "03 de febrero 2026"
+            ],
+            "sesiones_receso_2 ": [],
+            "total_periodo_2": 1,
+            "sesiones_periodo_3 ": [
+                "20 de mayo 2026"
+            ],
+            "sesiones_receso_3 ": [
+                "20 de julio 2026"
+            ],
+            "total_periodo_3": 2,
+            "total_año": 5
+        },
+        "sesiones_año_3": {
+            "sesiones_periodo_1 ": [],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 0,
+            "sesiones_periodo_2 ": [],
+            "sesiones_receso_2 ": [],
+            "total_periodo_2": 0,
+            "sesiones_periodo_3 ": [],
+            "sesiones_receso_3 ": [],
+            "total_periodo_3": 0,
+            "total_año": 0
+        }
+    },
+    {
+        "Nombre": "Derechos Humanos",
+        "sesiones_año_1": {
+            "sesiones_periodo_1 ": [
+                "09 de diciembre 2024",
+                "26 de noviembre 2024",
+                "11 de noviembre 2024",
+                "04 de noviembre 2024",
+                "29 de octubre 2024",
+                "25 de octubre 2024",
+                "21 de octubre 2024",
+                "26 de septiembre 2024"
+            ],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 8,
+            "sesiones_periodo_2 ": [
+                "14 de marzo 2025",
+                "11 de febrero 2025",
+                "29 de enero 2025"
+            ],
+            "sesiones_receso_2 ": [
+                "23 de abril 2025"
+            ],
+            "total_periodo_2": 4,
+            "sesiones_periodo_3 ": [
+                "10 de julio 2025",
+                "19 de junio 2025",
+                "22 de mayo 2025"
+            ],
+            "sesiones_receso_3 ": [
+                "29 de agosto 2025"
+            ],
+            "total_periodo_3": 4,
+            "total_año": 16
+        },
+        "sesiones_año_2": {
+            "sesiones_periodo_1 ": [
+                "30 de octubre 2025",
+                "29 de septiembre 2025"
+            ],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 2,
+            "sesiones_periodo_2 ": [
+                "25 de febrero 2026",
+                "29 de enero 2026"
+            ],
+            "sesiones_receso_2 ": [
+                "11 de mayo 2026"
+            ],
+            "total_periodo_2": 3,
+            "sesiones_periodo_3 ": [],
+            "sesiones_receso_3 ": [
+                "20 de agosto de 2026"
+            ],
+            "total_periodo_3": 1,
+            "total_año": 6
+        },
+        "sesiones_año_3": {
+            "sesiones_periodo_1 ": [],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 0,
+            "sesiones_periodo_2 ": [],
+            "sesiones_receso_2 ": [],
+            "total_periodo_2": 0,
+            "sesiones_periodo_3 ": [],
+            "sesiones_receso_3 ": [],
+            "total_periodo_3": 0,
+            "total_año": 0
+        }
+    },
+    {
+        "Nombre": "Desarrollo Económico",
+        "sesiones_año_1": {
+            "sesiones_periodo_1 ": [
+                "04 de diciembre 2024",
+                "24 de octubre 2024",
+                "26 de septiembre 2024"
+            ],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 3,
+            "sesiones_periodo_2 ": [
+                "28 de febrero 2025",
+                "29 de enero 2025"
+            ],
+            "sesiones_receso_2 ": [],
+            "total_periodo_2": 2,
+            "sesiones_periodo_3 ": [
+                "25 de junio 2025",
+                "21 de mayo 2025"
+            ],
+            "sesiones_receso_3 ": [
+                "26 de agosto 2025",
+                "18 de julio 2025"
+            ],
+            "total_periodo_3": 4,
+            "total_año": 9
+        },
+        "sesiones_año_2": {
+            "sesiones_periodo_1 ": [
+                "10 de diciembre 2025",
+                "03 de diciembre 2025",
+                "26 de noviembre 2025",
+                "21 de octubre 2025",
+                "24 de septiembre 2025"
+            ],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 5,
+            "sesiones_periodo_2 ": [
+                "12 de marzo 2026",
+                "10 de marzo 2026",
+                "19 de febrero 2026",
+                "20 de enero 2026"
+            ],
+            "sesiones_receso_2 ": [
+                "06 de mayo 2026"
+            ],
+            "total_periodo_2": 5,
+            "sesiones_periodo_3 ": [
+                "14 de julio 2026",
+                "25 de junio 2026"
+            ],
+            "sesiones_receso_3 ": [
+                "09 de septiembre 2026",
+                "24 de julio 2026"
+            ],
+            "total_periodo_3": 4,
+            "total_año": 14
+        },
+        "sesiones_año_3": {
+            "sesiones_periodo_1 ": [],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 0,
+            "sesiones_periodo_2 ": [],
+            "sesiones_receso_2 ": [],
+            "total_periodo_2": 0,
+            "sesiones_periodo_3 ": [],
+            "sesiones_receso_3 ": [],
+            "total_periodo_3": 0,
+            "total_año": 0
+        }
+    },
+    {
+        "Nombre": "Desarrollo Rural",
+        "sesiones_año_1": {
+            "sesiones_periodo_1 ": [
+                "06 de diciembre 2024",
+                "31 de octubre 2024",
+                "27 de septiembre 2024"
+            ],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 3,
+            "sesiones_periodo_2 ": [
+                "20 de enero 2025",
+                "13 de marzo 2025",
+                "06 de febrero 2025"
+            ],
+            "sesiones_receso_2 ": [
+                "28 de abril 2025"
+            ],
+            "total_periodo_2": 4,
+            "sesiones_periodo_3 ": [
+                "25 de junio 2025",
+                "28 de mayo 2025"
+            ],
+            "sesiones_receso_3 ": [
+                "3 de septiembre 2025"
+            ],
+            "total_periodo_3": 3,
+            "total_año": 10
+        },
+        "sesiones_año_2": {
+            "sesiones_periodo_1 ": [
+                "27 de noviembre 2025"
+            ],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 1,
+            "sesiones_periodo_2 ": [
+                "25 de febrero 2026"
+            ],
+            "sesiones_receso_2 ": [
+                "23 de abril 2026",
+                "26 de marzo 2026"
+            ],
+            "total_periodo_2": 3,
+            "sesiones_periodo_3 ": [
+                "15 de julio 2026",
+                "24 de junio 2026",
+                "21 de mayo 2026"
+            ],
+            "sesiones_receso_3 ": [
+                "31 de agosto de 2026"
+            ],
+            "total_periodo_3": 4,
+            "total_año": 8
+        },
+        "sesiones_año_3": {
+            "sesiones_periodo_1 ": [
+                "15 de septiembre 2026"
+            ],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 1,
+            "sesiones_periodo_2 ": [],
+            "sesiones_receso_2 ": [],
+            "total_periodo_2": 0,
+            "sesiones_periodo_3 ": [],
+            "sesiones_receso_3 ": [],
+            "total_periodo_3": 0,
+            "total_año": 1
+        }
+    },
+    {
+        "Nombre": "Desarrollo Urbano",
+        "sesiones_año_1": {
+            "sesiones_periodo_1 ": [
+                "13 de diciembre 2024",
+                "30 de octubre 2024",
+                "26 de septiembre 2024"
+            ],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 3,
+            "sesiones_periodo_2 ": [
+                "30 de enero 2025"
+            ],
+            "sesiones_receso_2 ": [
+                "25 de marzo 2025"
+            ],
+            "total_periodo_2": 2,
+            "sesiones_periodo_3 ": [],
+            "sesiones_receso_3 ": [
+                "11 de septiembre 2025"
+            ],
+            "total_periodo_3": 1,
+            "total_año": 6
+        },
+        "sesiones_año_2": {
+            "sesiones_periodo_1 ": [
+                "22 de octubre 2025"
+            ],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 1,
+            "sesiones_periodo_2 ": [
+                "28 de enero 2026"
+            ],
+            "sesiones_receso_2 ": [],
+            "total_periodo_2": 1,
+            "sesiones_periodo_3 ": [],
+            "sesiones_receso_3 ": [
+                "11 de septiembre 2026"
+            ],
+            "total_periodo_3": 1,
+            "total_año": 3
+        },
+        "sesiones_año_3": {
+            "sesiones_periodo_1 ": [],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 0,
+            "sesiones_periodo_2 ": [],
+            "sesiones_receso_2 ": [],
+            "total_periodo_2": 0,
+            "sesiones_periodo_3 ": [],
+            "sesiones_receso_3 ": [],
+            "total_periodo_3": 0,
+            "total_año": 0
+        }
+    },
+    {
+        "Nombre": "Educación",
+        "sesiones_año_1": {
+            "sesiones_periodo_1 ": [
+                "06 de diciembre 2024",
+                "25 de noviembre 2024",
+                "12 de noviembre 2024",
+                "31 de octubre 2024",
+                "26 de septiembre 2024"
+            ],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 5,
+            "sesiones_periodo_2 ": [
+                "04 de marzo 2025",
+                "28 de enero 2025"
+            ],
+            "sesiones_receso_2 ": [
+                "30 de abril 2025"
+            ],
+            "total_periodo_2": 3,
+            "sesiones_periodo_3 ": [
+                "30 de junio 2025",
+                "16 de mayo 2025"
+            ],
+            "sesiones_receso_3 ": [
+                "25 de agosto 2025",
+                "17 de julio 2025"
+            ],
+            "total_periodo_3": 4,
+            "total_año": 12
+        },
+        "sesiones_año_2": {
+            "sesiones_periodo_1 ": [
+                "25 de noviembre 2025",
+                "04 de noviembre 2025",
+                "14 de octubre 2025",
+                "22 de septiembre 2025"
+            ],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 4,
+            "sesiones_periodo_2 ": [
+                "12 de marzo 2026",
+                "19 de febrero 2026"
+            ],
+            "sesiones_receso_2 ": [
+                "14 de mayo 2026"
+            ],
+            "total_periodo_2": 3,
+            "sesiones_periodo_3 ": [
+                "09 de julio 2026",
+                "28 de mayo 2026"
+            ],
+            "sesiones_receso_3 ": [
+                "31 de agosto de 2026"
+            ],
+            "total_periodo_3": 3,
+            "total_año": 10
+        },
+        "sesiones_año_3": {
+            "sesiones_periodo_1 ": [],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 0,
+            "sesiones_periodo_2 ": [],
+            "sesiones_receso_2 ": [],
+            "total_periodo_2": 0,
+            "sesiones_periodo_3 ": [],
+            "sesiones_receso_3 ": [],
+            "total_periodo_3": 0,
+            "total_año": 0
+        }
+    },
+    {
+        "Nombre": "Gobernación y Puntos Constitucionales",
+        "sesiones_año_1": {
+            "sesiones_periodo_1 ": [
+                "13 de diciembre 2024",
+                "05 de diciembre 2024",
+                "02 de diciembre 2024",
+                "28 de noviembre 2024",
+                "12 de noviembre 2024",
+                "31 de octubre 2024",
+                "30 de octubre 2024",
+                "22 de octubre 2024"
+            ],
+            "sesiones_receso_1 ": [
+                "19 de diciembre 2024"
+            ],
+            "total_periodo_1": 9,
+            "sesiones_periodo_2 ": [
+                "15 de marzo 2025",
+                "10 de marzo 2025",
+                "04 de marzo 2025",
+                "25 de febrero 2025",
+                "19 de febrero 2025",
+                "28 de enero 2025"
+            ],
+            "sesiones_receso_2 ": [
+                "07 de abril de 2025",
+                "21 de marzo 2025"
+            ],
+            "total_periodo_2": 8,
+            "sesiones_periodo_3 ": [
+                "09 de julio 2025",
+                "23 de junio 2025",
+                "17 de junio 2025",
+                "5 de junio de 2025",
+                "3 de junio 2025",
+                "29 de mayo 2025",
+                "26 de mayo 2025",
+                "26 de mayo 2025",
+                "20 de mayo 2025",
+                "19 de mayo 2025"
+            ],
+            "sesiones_receso_3 ": [
+                "27 de agosto 2025"
+            ],
+            "total_periodo_3": 11,
+            "total_año": 28
+        },
+        "sesiones_año_2": {
+            "sesiones_periodo_1 ": [
+                "12 de diciembre 2025",
+                "10 de diciembre 2025",
+                "02 de diciembre 2025",
+                "30 de octubre 2025",
+                "30 de septiembre 2025",
+                "23 de septiembre 2025"
+            ],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 6,
+            "sesiones_periodo_2 ": [
+                "15 de marzo 2026",
+                "13 de marzo 2026",
+                "03 de marzo 2026",
+                "25 de febrero 2026"
+            ],
+            "sesiones_receso_2 ": [
+                "23 de abril 2026",
+                "09 de abril 2026",
+                "27 de marzo 2026"
+            ],
+            "total_periodo_2": 7,
+            "sesiones_periodo_3 ": [
+                "13 de julio 2026",
+                "07 de julio 2026",
+                "23 de junio 2026",
+                "29 de mayo 2026"
+            ],
+            "sesiones_receso_3 ": [
+                "12 de septiembre 2026",
+                "09 de septiembre 2026",
+                "03 de septiembre de 2026",
+                "23 de julio 2026",
+                "23 de julio 2026"
+            ],
+            "total_periodo_3": 9,
+            "total_año": 22
+        },
+        "sesiones_año_3": {
+            "sesiones_periodo_1 ": [],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 0,
+            "sesiones_periodo_2 ": [],
+            "sesiones_receso_2 ": [],
+            "total_periodo_2": 0,
+            "sesiones_periodo_3 ": [],
+            "sesiones_receso_3 ": [],
+            "total_periodo_3": 0,
+            "total_año": 0
+        }
+    },
+    {
+        "Nombre": "Hacienda y Patrimonio Municipal",
+        "sesiones_año_1": {
+            "sesiones_periodo_1 ": [
+                "10 de diciembre 2024",
+                "04 de diciembre 2024",
+                "04 de diciembre 2024",
+                "03 de diciembre 2024",
+                "26 de noviembre 2024",
+                "13 de noviembre 2024",
+                "08 de noviembre 2024",
+                "30 de octubre 2024",
+                "26 de septiembre 2024"
+            ],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 9,
+            "sesiones_periodo_2 ": [
+                "26 de febrero 2025",
+                "28 de enero 2025"
+            ],
+            "sesiones_receso_2 ": [
+                "29 de abril 2025",
+                "20 de marzo 2025"
+            ],
+            "total_periodo_2": 4,
+            "sesiones_periodo_3 ": [
+                "14 de julio 2025",
+                "3 de junio 2025",
+                "27 de mayo 2025"
+            ],
+            "sesiones_receso_3 ": [
+                "27 de agosto 2025"
+            ],
+            "total_periodo_3": 4,
+            "total_año": 17
+        },
+        "sesiones_año_2": {
+            "sesiones_periodo_1 ": [
+                "12 de diciembre 2025",
+                "11 de diciembre 2025",
+                "09 de diciembre 2025",
+                "02 de diciembre 2025",
+                "25 de noviembre 2025",
+                "05 de noviembre de 2025",
+                "20 de octubre 2025",
+                "08 de octubre 2025",
+                "25 de septiembre 2025"
+            ],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 9,
+            "sesiones_periodo_2 ": [
+                "12 de marzo 2026",
+                "03 de marzo 2026",
+                "10 de febrero 2026",
+                "27 de enero 2026"
+            ],
+            "sesiones_receso_2 ": [
+                "20 de marzo 2026"
+            ],
+            "total_periodo_2": 5,
+            "sesiones_periodo_3 ": [
+                "07 de julio 2026",
+                "16 de junio 2026",
+                "26 de mayo 2026"
+            ],
+            "sesiones_receso_3 ": [],
+            "total_periodo_3": 3,
+            "total_año": 17
+        },
+        "sesiones_año_3": {
+            "sesiones_periodo_1 ": [],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 0,
+            "sesiones_periodo_2 ": [],
+            "sesiones_receso_2 ": [],
+            "total_periodo_2": 0,
+            "sesiones_periodo_3 ": [],
+            "sesiones_receso_3 ": [],
+            "total_periodo_3": 0,
+            "total_año": 0
+        }
+    },
+    {
+        "Nombre": "Igualdad de Género",
+        "sesiones_año_1": {
+            "sesiones_periodo_1 ": [
+                "02 de diciembre 2024",
+                "21 de noviembre 2024",
+                "12 de noviembre 2024",
+                "06 de noviembre 2024",
+                "22 de octubre 2024",
+                "27 de septiembre 2024"
+            ],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 6,
+            "sesiones_periodo_2 ": [
+                "04 de marzo 2025",
+                "27 de febrero 2025",
+                "29 de enero 2025"
+            ],
+            "sesiones_receso_2 ": [
+                "24 de abril 2025"
+            ],
+            "total_periodo_2": 4,
+            "sesiones_periodo_3 ": [
+                "15 de julio 2025",
+                "12 de junio 2025",
+                "26 de mayo 2025"
+            ],
+            "sesiones_receso_3 ": [
+                "28 de agosto 2025"
+            ],
+            "total_periodo_3": 4,
+            "total_año": 14
+        },
+        "sesiones_año_2": {
+            "sesiones_periodo_1 ": [
+                "15 de diciembre 2025",
+                "26 de noviembre 2025",
+                "04 de noviembre de 2025",
+                "18 de septiembre 2025"
+            ],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 4,
+            "sesiones_periodo_2 ": [
+                "11 de marzo 2026",
+                "19 de febrero 2026",
+                "16 de enero 2026"
+            ],
+            "sesiones_receso_2 ": [
+                "16 de abril 2026"
+            ],
+            "total_periodo_2": 4,
+            "sesiones_periodo_3 ": [
+                "09 de julio 2026",
+                "04 de junio 2026",
+                "15 de mayo 2026"
+            ],
+            "sesiones_receso_3 ": [
+                "27 de agosto de 2026"
+            ],
+            "total_periodo_3": 4,
+            "total_año": 12
+        },
+        "sesiones_año_3": {
+            "sesiones_periodo_1 ": [],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 0,
+            "sesiones_periodo_2 ": [],
+            "sesiones_receso_2 ": [],
+            "total_periodo_2": 0,
+            "sesiones_periodo_3 ": [],
+            "sesiones_receso_3 ": [],
+            "total_periodo_3": 0,
+            "total_año": 0
+        }
+    },
+    {
+        "Nombre": "Instructora",
+        "sesiones_año_1": {
+            "sesiones_periodo_1 ": [
+                "13 de diciembre 2024",
+                "31 de octubre 2024",
+                "26 de septiembre 2024"
+            ],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 3,
+            "sesiones_periodo_2 ": [
+                "14 de marzo 2025",
+                "27 de febrero 2025",
+                "30 de enero 2025"
+            ],
+            "sesiones_receso_2 ": [
+                "30 de abril 2025"
+            ],
+            "total_periodo_2": 4,
+            "sesiones_periodo_3 ": [
+                "25 de junio 2025",
+                "28 de mayo 2025"
+            ],
+            "sesiones_receso_3 ": [],
+            "total_periodo_3": 2,
+            "total_año": 9
+        },
+        "sesiones_año_2": {
+            "sesiones_periodo_1 ": [
+                "09 de diciembre 2025",
+                "08 de octubre 2025"
+            ],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 2,
+            "sesiones_periodo_2 ": [
+                "18 de febrero 2026"
+            ],
+            "sesiones_receso_2 ": [],
+            "total_periodo_2": 1,
+            "sesiones_periodo_3 ": [],
+            "sesiones_receso_3 ": [],
+            "total_periodo_3": 0,
+            "total_año": 3
+        },
+        "sesiones_año_3": {
+            "sesiones_periodo_1 ": [],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 0,
+            "sesiones_periodo_2 ": [],
+            "sesiones_receso_2 ": [],
+            "total_periodo_2": 0,
+            "sesiones_periodo_3 ": [],
+            "sesiones_receso_3 ": [],
+            "total_periodo_3": 0,
+            "total_año": 0
+        }
+    },
+    {
+        "Nombre": "Juventud y Deporte",
+        "sesiones_año_1": {
+            "sesiones_periodo_1 ": [
+                "11 de diciembre 2024",
+                "30 de octubre 2024",
+                "26 de septiembre 2024"
+            ],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 3,
+            "sesiones_periodo_2 ": [
+                "27 de febrero 2025",
+                "30 de enero 2025"
+            ],
+            "sesiones_receso_2 ": [
+                "30 de abril 2025",
+                "01 de abril 2025"
+            ],
+            "total_periodo_2": 4,
+            "sesiones_periodo_3 ": [
+                "03 de julio 2025",
+                "28 de mayo 2025"
+            ],
+            "sesiones_receso_3 ": [
+                "28 de agosto 2025",
+                "16 de julio 2025"
+            ],
+            "total_periodo_3": 4,
+            "total_año": 11
+        },
+        "sesiones_año_2": {
+            "sesiones_periodo_1 ": [
+                "04 de diciembre 2025",
+                "06 de noviembre 2025",
+                "25 de septiembre 2025"
+            ],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 3,
+            "sesiones_periodo_2 ": [
+                "25 de febrero 2026",
+                "19 de enero 2026"
+            ],
+            "sesiones_receso_2 ": [
+                "19 de marzo 2026"
+            ],
+            "total_periodo_2": 3,
+            "sesiones_periodo_3 ": [
+                "02 de julio 2026",
+                "18 de junio 2026",
+                "15 de mayo 2026"
+            ],
+            "sesiones_receso_3 ": [],
+            "total_periodo_3": 3,
+            "total_año": 9
+        },
+        "sesiones_año_3": {
+            "sesiones_periodo_1 ": [],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 0,
+            "sesiones_periodo_2 ": [],
+            "sesiones_receso_2 ": [],
+            "total_periodo_2": 0,
+            "sesiones_periodo_3 ": [],
+            "sesiones_receso_3 ": [],
+            "total_periodo_3": 0,
+            "total_año": 0
+        }
+    },
+    {
+        "Nombre": "Medio Ambiente, Recursos Naturales y Cambio Climático",
+        "sesiones_año_1": {
+            "sesiones_periodo_1 ": [
+                "06 de diciembre 2024",
+                "29 de octubre 2024",
+                "27 de septiembre 2024"
+            ],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 3,
+            "sesiones_periodo_2 ": [
+                "26 de febrero 2025",
+                "30 de enero 2025"
+            ],
+            "sesiones_receso_2 ": [
+                "24 de abril 2025"
+            ],
+            "total_periodo_2": 3,
+            "sesiones_periodo_3 ": [
+                "14 de julio 2025",
+                "18 de junio 2025",
+                "03 de junio 2025",
+                "15 de mayo 2025"
+            ],
+            "sesiones_receso_3 ": [],
+            "total_periodo_3": 4,
+            "total_año": 10
+        },
+        "sesiones_año_2": {
+            "sesiones_periodo_1 ": [
+                "15 de diciembre 2025",
+                "12 de noviembre 2025",
+                "28 de octubre 2025",
+                "17 de septiembre 2025"
+            ],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 4,
+            "sesiones_periodo_2 ": [
+                "12 de marzo 2026",
+                "12 de febrero 2026",
+                "15 de enero 2026"
+            ],
+            "sesiones_receso_2 ": [],
+            "total_periodo_2": 3,
+            "sesiones_periodo_3 ": [
+                "25 de junio 2026",
+                "21 de mayo 2026"
+            ],
+            "sesiones_receso_3 ": [],
+            "total_periodo_3": 2,
+            "total_año": 9
+        },
+        "sesiones_año_3": {
+            "sesiones_periodo_1 ": [],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 0,
+            "sesiones_periodo_2 ": [],
+            "sesiones_receso_2 ": [],
+            "total_periodo_2": 0,
+            "sesiones_periodo_3 ": [],
+            "sesiones_receso_3 ": [],
+            "total_periodo_3": 0,
+            "total_año": 0
+        }
+    },
+    {
+        "Nombre": "Migración y Asuntos Internacionales",
+        "sesiones_año_1": {
+            "sesiones_periodo_1 ": [
+                "30 de octubre 2024",
+                "26 de septiembre 2024"
+            ],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 2,
+            "sesiones_periodo_2 ": [
+                "27 de febrero 2025",
+                "29 de enero 2025"
+            ],
+            "sesiones_receso_2 ": [
+                "24 de abril 2025",
+                "25 de marzo 2025"
+            ],
+            "total_periodo_2": 4,
+            "sesiones_periodo_3 ": [
+                "26 de junio 2025",
+                "29 de mayo 2025"
+            ],
+            "sesiones_receso_3 ": [
+                "27 de agosto 2025"
+            ],
+            "total_periodo_3": 3,
+            "total_año": 9
+        },
+        "sesiones_año_2": {
+            "sesiones_periodo_1 ": [
+                "25 de noviembre 2025",
+                "28 de octubre 2025",
+                "25 de septiembre 2025"
+            ],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 3,
+            "sesiones_periodo_2 ": [
+                "13 de marzo 2026",
+                "24 de febrero 2026",
+                "29 de enero 2026"
+            ],
+            "sesiones_receso_2 ": [],
+            "total_periodo_2": 3,
+            "sesiones_periodo_3 ": [
+                "15 de julio 2026",
+                "24 de junio 2026",
+                "21 de mayo 2026"
+            ],
+            "sesiones_receso_3 ": [
+                "31 de agosto de 2026"
+            ],
+            "total_periodo_3": 4,
+            "total_año": 10
+        },
+        "sesiones_año_3": {
+            "sesiones_periodo_1 ": [
+                "15 de septiembre 2026"
+            ],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 1,
+            "sesiones_periodo_2 ": [],
+            "sesiones_receso_2 ": [],
+            "total_periodo_2": 0,
+            "sesiones_periodo_3 ": [],
+            "sesiones_receso_3 ": [],
+            "total_periodo_3": 0,
+            "total_año": 1
+        }
+    },
+    {
+        "Nombre": "Organizaciones No Gubernamentales",
+        "sesiones_año_1": {
+            "sesiones_periodo_1 ": [
+                "13 de diciembre 2024",
+                "31 de octubre 2024",
+                "26 de septiembre 2024"
+            ],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 3,
+            "sesiones_periodo_2 ": [
+                "13 de marzo 2025",
+                "20 de febrero 2025",
+                "29 de enero 2025"
+            ],
+            "sesiones_receso_2 ": [
+                "23 de abril 2025"
+            ],
+            "total_periodo_2": 4,
+            "sesiones_periodo_3 ": [
+                "30 de junio 2025",
+                "19 de mayo 2025"
+            ],
+            "sesiones_receso_3 ": [
+                "28 de Agosto 2025",
+                "24 de julio 2025"
+            ],
+            "total_periodo_3": 4,
+            "total_año": 11
+        },
+        "sesiones_año_2": {
+            "sesiones_periodo_1 ": [
+                "10 de diciembre 2025",
+                "19 de noviembre 2025",
+                "08 de octubre 2025",
+                "29 de septiembre 2025"
+            ],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 4,
+            "sesiones_periodo_2 ": [
+                "27 de febrero 2026",
+                "28 de enero 2026"
+            ],
+            "sesiones_receso_2 ": [
+                "13 de mayo 2026",
+                "15 de abril 2026",
+                "18 de marzo 2026"
+            ],
+            "total_periodo_2": 5,
+            "sesiones_periodo_3 ": [
+                "13 de julio 2026",
+                "22 de junio 2026"
+            ],
+            "sesiones_receso_3 ": [
+                "26 de agosto de 2026"
+            ],
+            "total_periodo_3": 3,
+            "total_año": 12
+        },
+        "sesiones_año_3": {
+            "sesiones_periodo_1 ": [],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 0,
+            "sesiones_periodo_2 ": [],
+            "sesiones_receso_2 ": [],
+            "total_periodo_2": 0,
+            "sesiones_periodo_3 ": [],
+            "sesiones_receso_3 ": [],
+            "total_periodo_3": 0,
+            "total_año": 0
+        }
+    },
+    {
+        "Nombre": "Participación Ciudadana y Combate a la Corrupción",
+        "sesiones_año_1": {
+            "sesiones_periodo_1 ": [
+                "13 de diciembre 2024",
+                "29 de octubre 2024",
+                "26 de septiembre 2024"
+            ],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 3,
+            "sesiones_periodo_2 ": [
+                "27 de febrero 2025"
+            ],
+            "sesiones_receso_2 ": [],
+            "total_periodo_2": 1,
+            "sesiones_periodo_3 ": [
+                "15 de julio 2025",
+                "30 de mayo 2025"
+            ],
+            "sesiones_receso_3 ": [],
+            "total_periodo_3": 2,
+            "total_año": 6
+        },
+        "sesiones_año_2": {
+            "sesiones_periodo_1 ": [
+                "16 de octubre 2025"
+            ],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 1,
+            "sesiones_periodo_2 ": [],
+            "sesiones_receso_2 ": [],
+            "total_periodo_2": 0,
+            "sesiones_periodo_3 ": [
+                "21 de mayo 2026"
+            ],
+            "sesiones_receso_3 ": [],
+            "total_periodo_3": 1,
+            "total_año": 2
+        },
+        "sesiones_año_3": {
+            "sesiones_periodo_1 ": [],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 0,
+            "sesiones_periodo_2 ": [],
+            "sesiones_receso_2 ": [],
+            "total_periodo_2": 0,
+            "sesiones_periodo_3 ": [],
+            "sesiones_receso_3 ": [],
+            "total_periodo_3": 0,
+            "total_año": 0
+        }
+    },
+    {
+        "Nombre": "Presupuesto y Crédito Público",
+        "sesiones_año_1": {
+            "sesiones_periodo_1 ": [
+                "10 de diciembre 2024",
+                "31 de octubre 2024",
+                "26 de septiembre 2024"
+            ],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 3,
+            "sesiones_periodo_2 ": [
+                "13 de marzo 2025",
+                "27 de febrero 2025"
+            ],
+            "sesiones_receso_2 ": [],
+            "total_periodo_2": 2,
+            "sesiones_periodo_3 ": [
+                "25 de junio 2025"
+            ],
+            "sesiones_receso_3 ": [
+                "27 de agosto 2025"
+            ],
+            "total_periodo_3": 2,
+            "total_año": 7
+        },
+        "sesiones_año_2": {
+            "sesiones_periodo_1 ": [
+                "02 de diciembre 2025",
+                "18 de noviembre 2025",
+                "09 de octubre 2025",
+                "18 de septiembre 2025"
+            ],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 4,
+            "sesiones_periodo_2 ": [
+                "02 de marzo 2026"
+            ],
+            "sesiones_receso_2 ": [],
+            "total_periodo_2": 1,
+            "sesiones_periodo_3 ": [],
+            "sesiones_receso_3 ": [
+                "09 de septiembre 2026"
+            ],
+            "total_periodo_3": 1,
+            "total_año": 6
+        },
+        "sesiones_año_3": {
+            "sesiones_periodo_1 ": [],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 0,
+            "sesiones_periodo_2 ": [],
+            "sesiones_receso_2 ": [],
+            "total_periodo_2": 0,
+            "sesiones_periodo_3 ": [],
+            "sesiones_receso_3 ": [],
+            "total_periodo_3": 0,
+            "total_año": 0
+        }
+    },
+    {
+        "Nombre": "Procuración y Administración de Justicia",
+        "sesiones_año_1": {
+            "sesiones_periodo_1 ": [
+                "06 de noviembre 2024",
+                "27 de septiembre 2024"
+            ],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 2,
+            "sesiones_periodo_2 ": [
+                "13 de marzo 2025",
+                "04 de marzo 2025",
+                "28 de febrero 2025",
+                "31 de enero 2025"
+            ],
+            "sesiones_receso_2 ": [
+                "29 de abril 2025",
+                "25 de marzo 2025"
+            ],
+            "total_periodo_2": 6,
+            "sesiones_periodo_3 ": [
+                "10 de julio 2025",
+                "11 de junio 2025",
+                "26 de mayo 2025"
+            ],
+            "sesiones_receso_3 ": [
+                "2 de septiembre 2025"
+            ],
+            "total_periodo_3": 4,
+            "total_año": 12
+        },
+        "sesiones_año_2": {
+            "sesiones_periodo_1 ": [
+                "12 de diciembre 2025",
+                "06 de noviembre 2025",
+                "23 de octubre 2025",
+                "25 de septiembre 2025"
+            ],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 4,
+            "sesiones_periodo_2 ": [
+                "13 de marzo 2026",
+                "18 de febrero 2026",
+                "29 de enero 2026"
+            ],
+            "sesiones_receso_2 ": [
+                "23 de abril 2026"
+            ],
+            "total_periodo_2": 4,
+            "sesiones_periodo_3 ": [
+                "13 de julio 2026",
+                "25 de junio 2026",
+                "19 de mayo 2026"
+            ],
+            "sesiones_receso_3 ": [
+                "25 de agosto de 2026"
+            ],
+            "total_periodo_3": 4,
+            "total_año": 12
+        },
+        "sesiones_año_3": {
+            "sesiones_periodo_1 ": [],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 0,
+            "sesiones_periodo_2 ": [],
+            "sesiones_receso_2 ": [],
+            "total_periodo_2": 0,
+            "sesiones_periodo_3 ": [],
+            "sesiones_receso_3 ": [],
+            "total_periodo_3": 0,
+            "total_año": 0
+        }
+    },
+    {
+        "Nombre": "Protección Civil",
+        "sesiones_año_1": {
+            "sesiones_periodo_1 ": [
+                "12 de diciembre 2024",
+                "06 de noviembre 2024",
+                "3 de octubre 2024"
+            ],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 3,
+            "sesiones_periodo_2 ": [
+                "27 de febrero 2025"
+            ],
+            "sesiones_receso_2 ": [
+                "24 de abril 2025",
+                "25 de marzo 2025"
+            ],
+            "total_periodo_2": 3,
+            "sesiones_periodo_3 ": [
+                "03 de julio 2025",
+                "22 de mayo 2025"
+            ],
+            "sesiones_receso_3 ": [
+                "28 de agosto 2025"
+            ],
+            "total_periodo_3": 3,
+            "total_año": 9
+        },
+        "sesiones_año_2": {
+            "sesiones_periodo_1 ": [
+                "09 de diciembre 2025",
+                "04 de diciembre 2025",
+                "29 de octubre 2025",
+                "19 de septiembre de 2025"
+            ],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 4,
+            "sesiones_periodo_2 ": [
+                "12 de febrero 2026",
+                "27 de enero 2026"
+            ],
+            "sesiones_receso_2 ": [],
+            "total_periodo_2": 2,
+            "sesiones_periodo_3 ": [
+                "24 de junio 2026"
+            ],
+            "sesiones_receso_3 ": [
+                "27 de agosto de 2026",
+                "21 de julio 2026"
+            ],
+            "total_periodo_3": 3,
+            "total_año": 9
+        },
+        "sesiones_año_3": {
+            "sesiones_periodo_1 ": [],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 0,
+            "sesiones_periodo_2 ": [],
+            "sesiones_receso_2 ": [],
+            "total_periodo_2": 0,
+            "sesiones_periodo_3 ": [],
+            "sesiones_receso_3 ": [],
+            "total_periodo_3": 0,
+            "total_año": 0
+        }
+    },
+    {
+        "Nombre": "Pueblos, Comunidades Indígenas y Afromexicanas",
+        "sesiones_año_1": {
+            "sesiones_periodo_1 ": [
+                "13 de diciembre 2024",
+                "25 de octubre 2024",
+                "26 de septiembre 2024"
+            ],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 3,
+            "sesiones_periodo_2 ": [
+                "26 de febrero 2025",
+                "29 de enero 2025"
+            ],
+            "sesiones_receso_2 ": [
+                "29 de abril 2025",
+                "25 de marzo 2025"
+            ],
+            "total_periodo_2": 4,
+            "sesiones_periodo_3 ": [
+                "26 de junio 2025",
+                "29 de mayo 2025"
+            ],
+            "sesiones_receso_3 ": [
+                "26 de agosto 2025",
+                "24 de julio 2025"
+            ],
+            "total_periodo_3": 4,
+            "total_año": 11
+        },
+        "sesiones_año_2": {
+            "sesiones_periodo_1 ": [
+                "11 de diciembre 2025",
+                "20 de noviembre 2025",
+                "28 de octubre 2025",
+                "30 de septiembre 2025"
+            ],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 4,
+            "sesiones_periodo_2 ": [
+                "12 de marzo 2026",
+                "19 de febrero 2026",
+                "29 de enero 2026"
+            ],
+            "sesiones_receso_2 ": [
+                "23 de abril 2026"
+            ],
+            "total_periodo_2": 4,
+            "sesiones_periodo_3 ": [
+                "15 de julio 2026",
+                "25 de junio 2026",
+                "21 de mayo 2026"
+            ],
+            "sesiones_receso_3 ": [
+                "31 de agosto de 2026"
+            ],
+            "total_periodo_3": 4,
+            "total_año": 12
+        },
+        "sesiones_año_3": {
+            "sesiones_periodo_1 ": [],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 0,
+            "sesiones_periodo_2 ": [],
+            "sesiones_receso_2 ": [],
+            "total_periodo_2": 0,
+            "sesiones_periodo_3 ": [],
+            "sesiones_receso_3 ": [],
+            "total_periodo_3": 0,
+            "total_año": 0
+        }
+    },
+    {
+        "Nombre": "Salud",
+        "sesiones_año_1": {
+            "sesiones_periodo_1 ": [
+                "06 de diciembre 2024",
+                "31 de octubre de 2024",
+                "26 de septiembre 2024"
+            ],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 3,
+            "sesiones_periodo_2 ": [
+                "28 de febrero 2025"
+            ],
+            "sesiones_receso_2 ": [
+                "30 de abril 2025"
+            ],
+            "total_periodo_2": 2,
+            "sesiones_periodo_3 ": [
+                "24 de junio 2025",
+                "3 de junio 2025",
+                "30 de mayo 2025"
+            ],
+            "sesiones_receso_3 ": [
+                "11 de septiembre 2025",
+                "27 de agosto 2025",
+                "24 de julio 2025"
+            ],
+            "total_periodo_3": 6,
+            "total_año": 11
+        },
+        "sesiones_año_2": {
+            "sesiones_periodo_1 ": [
+                "12 de diciembre 2025",
+                "30 de octubre 2025"
+            ],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 2,
+            "sesiones_periodo_2 ": [
+                "16 de enero 2026"
+            ],
+            "sesiones_receso_2 ": [
+                "12 de mayo 2026"
+            ],
+            "total_periodo_2": 2,
+            "sesiones_periodo_3 ": [
+                "30 de junio 2026"
+            ],
+            "sesiones_receso_3 ": [
+                "27 de agosto de 2026",
+                "22 de julio 2026"
+            ],
+            "total_periodo_3": 3,
+            "total_año": 7
+        },
+        "sesiones_año_3": {
+            "sesiones_periodo_1 ": [],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 0,
+            "sesiones_periodo_2 ": [],
+            "sesiones_receso_2 ": [],
+            "total_periodo_2": 0,
+            "sesiones_periodo_3 ": [],
+            "sesiones_receso_3 ": [],
+            "total_periodo_3": 0,
+            "total_año": 0
+        }
+    },
+    {
+        "Nombre": "Seguridad Pública",
+        "sesiones_año_1": {
+            "sesiones_periodo_1 ": [
+                "10 de diciembre 2024",
+                "02 de diciembre 2024",
+                "31 de octubre 2024",
+                "26 de septiembre 2024"
+            ],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 4,
+            "sesiones_periodo_2 ": [],
+            "sesiones_receso_2 ": [],
+            "total_periodo_2": 0,
+            "sesiones_periodo_3 ": [
+                "3 de junio 2025"
+            ],
+            "sesiones_receso_3 ": [
+                "29 de agosto 2025"
+            ],
+            "total_periodo_3": 2,
+            "total_año": 6
+        },
+        "sesiones_año_2": {
+            "sesiones_periodo_1 ": [
+                "04 de noviembre 2025",
+                "14 de octubre 2025"
+            ],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 2,
+            "sesiones_periodo_2 ": [],
+            "sesiones_receso_2 ": [],
+            "total_periodo_2": 0,
+            "sesiones_periodo_3 ": [],
+            "sesiones_receso_3 ": [
+                "14 de septiembre 2026"
+            ],
+            "total_periodo_3": 1,
+            "total_año": 3
+        },
+        "sesiones_año_3": {
+            "sesiones_periodo_1 ": [],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 0,
+            "sesiones_periodo_2 ": [],
+            "sesiones_receso_2 ": [],
+            "total_periodo_2": 0,
+            "sesiones_periodo_3 ": [],
+            "sesiones_receso_3 ": [],
+            "total_periodo_3": 0,
+            "total_año": 0
+        }
+    },
+    {
+        "Nombre": "Trabajo, Competitividad y Previsión Social",
+        "sesiones_año_1": {
+            "sesiones_periodo_1 ": [
+                "03 de diciembre 2024",
+                "13 de noviembre 2024",
+                "30 de octubre 2024",
+                "26 de septiembre 2024"
+            ],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 4,
+            "sesiones_periodo_2 ": [
+                "25 de febrero 2025",
+                "28 de enero 2025"
+            ],
+            "sesiones_receso_2 ": [
+                "30 de abril 2025",
+                "24 de marzo 2025"
+            ],
+            "total_periodo_2": 4,
+            "sesiones_periodo_3 ": [
+                "14 de julio 2025",
+                "19 de junio 2025",
+                "28 de mayo 2025"
+            ],
+            "sesiones_receso_3 ": [
+                "26 de agosto 2025"
+            ],
+            "total_periodo_3": 4,
+            "total_año": 12
+        },
+        "sesiones_año_2": {
+            "sesiones_periodo_1 ": [
+                "02 de diciembre 2025",
+                "12 de noviembre 2025",
+                "08 de octubre 2025",
+                "17 de septiembre 2025"
+            ],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 4,
+            "sesiones_periodo_2 ": [
+                "11 de marzo 2026",
+                "11 de febrero 2026",
+                "20 de enero 2026"
+            ],
+            "sesiones_receso_2 ": [
+                "13 de mayo 2026",
+                "16 de abril 2026"
+            ],
+            "total_periodo_2": 5,
+            "sesiones_periodo_3 ": [
+                "08 de julio 2026",
+                "24 de junio 2026"
+            ],
+            "sesiones_receso_3 ": [
+                "19 de agosto de 2026",
+                "24 de julio 2026"
+            ],
+            "total_periodo_3": 4,
+            "total_año": 13
+        },
+        "sesiones_año_3": {
+            "sesiones_periodo_1 ": [],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 0,
+            "sesiones_periodo_2 ": [],
+            "sesiones_receso_2 ": [],
+            "total_periodo_2": 0,
+            "sesiones_periodo_3 ": [],
+            "sesiones_receso_3 ": [],
+            "total_periodo_3": 0,
+            "total_año": 0
+        }
+    },
+    {
+        "Nombre": "Transparencia y Acceso a la Información",
+        "sesiones_año_1": {
+            "sesiones_periodo_1 ": [
+                "11 de diciembre 2024",
+                "25 de octubre 2024",
+                "26 de septiembre 2024"
+            ],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 3,
+            "sesiones_periodo_2 ": [
+                "27 de febrero 2025",
+                "30 de enero 2025"
+            ],
+            "sesiones_receso_2 ": [
+                "29 de abril 2025"
+            ],
+            "total_periodo_2": 3,
+            "sesiones_periodo_3 ": [
+                "09 de julio 2025",
+                "5 de junio 2025"
+            ],
+            "sesiones_receso_3 ": [],
+            "total_periodo_3": 2,
+            "total_año": 8
+        },
+        "sesiones_año_2": {
+            "sesiones_periodo_1 ": [
+                "16 de octubre 2025",
+                "30 de septiembre 2025"
+            ],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 2,
+            "sesiones_periodo_2 ": [
+                "20 de enero 2026"
+            ],
+            "sesiones_receso_2 ": [],
+            "total_periodo_2": 1,
+            "sesiones_periodo_3 ": [
+                "09 de julio 2026",
+                "23 de junio 2026"
+            ],
+            "sesiones_receso_3 ": [
+                "23 de julio 2026",
+                "23 de julio 2026"
+            ],
+            "total_periodo_3": 4,
+            "total_año": 7
+        },
+        "sesiones_año_3": {
+            "sesiones_periodo_1 ": [],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 0,
+            "sesiones_periodo_2 ": [],
+            "sesiones_receso_2 ": [],
+            "total_periodo_2": 0,
+            "sesiones_periodo_3 ": [],
+            "sesiones_receso_3 ": [],
+            "total_periodo_3": 0,
+            "total_año": 0
+        }
+    },
+    {
+        "Nombre": "Transportes y Movilidad",
+        "sesiones_año_1": {
+            "sesiones_periodo_1 ": [
+                "02 de diciembre 2024",
+                "30 de octubre 2024",
+                "26 de septiembre 2024"
+            ],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 3,
+            "sesiones_periodo_2 ": [
+                "14 de marzo 2025",
+                "27 de febrero 2025"
+            ],
+            "sesiones_receso_2 ": [
+                "24 de abril 2025"
+            ],
+            "total_periodo_2": 3,
+            "sesiones_periodo_3 ": [
+                "10 de julio 2025",
+                "17 de junio 2025"
+            ],
+            "sesiones_receso_3 ": [
+                "10 de septiembre 2025",
+                "28 de agosto 2025"
+            ],
+            "total_periodo_3": 4,
+            "total_año": 10
+        },
+        "sesiones_año_2": {
+            "sesiones_periodo_1 ": [
+                "02 de diciembre 2025",
+                "27 de noviembre 2025",
+                "23 de octubre 2025"
+            ],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 3,
+            "sesiones_periodo_2 ": [
+                "12 de marzo 2026",
+                "19 de febrero 2026",
+                "29 de enero 2026",
+                "16 de enero 2026"
+            ],
+            "sesiones_receso_2 ": [
+                "23 de abril 2026"
+            ],
+            "total_periodo_2": 5,
+            "sesiones_periodo_3 ": [
+                "18 de junio 2026",
+                "21 de mayo 2026"
+            ],
+            "sesiones_receso_3 ": [
+                "20 de agosto de 2026"
+            ],
+            "total_periodo_3": 3,
+            "total_año": 11
+        },
+        "sesiones_año_3": {
+            "sesiones_periodo_1 ": [],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 0,
+            "sesiones_periodo_2 ": [],
+            "sesiones_receso_2 ": [],
+            "total_periodo_2": 0,
+            "sesiones_periodo_3 ": [],
+            "sesiones_receso_3 ": [],
+            "total_periodo_3": 0,
+            "total_año": 0
+        }
+    },
+    {
+        "Nombre": "Turismo",
+        "sesiones_año_1": {
+            "sesiones_periodo_1 ": [
+                "13 de diciembre 2024",
+                "03 de diciembre 2024",
+                "30 de octubre 2024",
+                "26 de septiembre 2024"
+            ],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 4,
+            "sesiones_periodo_2 ": [
+                "11 de marzo 2025",
+                "28 de febrero 2025",
+                "30 de enero 2025"
+            ],
+            "sesiones_receso_2 ": [
+                "23 de abril 2025"
+            ],
+            "total_periodo_2": 4,
+            "sesiones_periodo_3 ": [
+                "22 de mayo 2025"
+            ],
+            "sesiones_receso_3 ": [
+                "28 de agosto 2025"
+            ],
+            "total_periodo_3": 2,
+            "total_año": 10
+        },
+        "sesiones_año_2": {
+            "sesiones_periodo_1 ": [
+                "02 de diciembre 2025",
+                "30 de octubre 2025",
+                "18 de septiembre 2025"
+            ],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 3,
+            "sesiones_periodo_2 ": [
+                "10 de marzo 2026",
+                "25 de febrero 2026",
+                "15 de enero 2026"
+            ],
+            "sesiones_receso_2 ": [
+                "14 de mayo 2026"
+            ],
+            "total_periodo_2": 4,
+            "sesiones_periodo_3 ": [
+                "15 de julio 2026",
+                "25 de junio 2026"
+            ],
+            "sesiones_receso_3 ": [
+                "26 de agosto de 2026"
+            ],
+            "total_periodo_3": 3,
+            "total_año": 10
+        },
+        "sesiones_año_3": {
+            "sesiones_periodo_1 ": [],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 0,
+            "sesiones_periodo_2 ": [],
+            "sesiones_receso_2 ": [],
+            "total_periodo_2": 0,
+            "sesiones_periodo_3 ": [],
+            "sesiones_receso_3 ": [],
+            "total_periodo_3": 0,
+            "total_año": 0
+        }
+    },
+    {
+        "Nombre": "Vivienda",
+        "sesiones_año_1": {
+            "sesiones_periodo_1 ": [
+                "12 de diciembre 2024",
+                "31 de octubre 2024",
+                "26 de septiembre 2024"
+            ],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 3,
+            "sesiones_periodo_2 ": [
+                "11 de marzo 2025",
+                "13 de febrero 2025"
+            ],
+            "sesiones_receso_2 ": [
+                "09 de abril 2025"
+            ],
+            "total_periodo_2": 3,
+            "sesiones_periodo_3 ": [
+                "25 de junio 2025",
+                "29 de mayo 2025"
+            ],
+            "sesiones_receso_3 ": [],
+            "total_periodo_3": 2,
+            "total_año": 8
+        },
+        "sesiones_año_2": {
+            "sesiones_periodo_1 ": [
+                "28 de octubre 2025",
+                "29 de septiembre 2025"
+            ],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 2,
+            "sesiones_periodo_2 ": [],
+            "sesiones_receso_2 ": [],
+            "total_periodo_2": 0,
+            "sesiones_periodo_3 ": [
+                "28 de mayo 2026"
+            ],
+            "sesiones_receso_3 ": [],
+            "total_periodo_3": 1,
+            "total_año": 3
+        },
+        "sesiones_año_3": {
+            "sesiones_periodo_1 ": [],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 0,
+            "sesiones_periodo_2 ": [],
+            "sesiones_receso_2 ": [],
+            "total_periodo_2": 0,
+            "sesiones_periodo_3 ": [],
+            "sesiones_receso_3 ": [],
+            "total_periodo_3": 0,
+            "total_año": 0
+        }
+    },
+    {
+        "Nombre": "Adquisiciones, Arrendamientos y Servicios",
+        "sesiones_año_1": {
+            "sesiones_periodo_1 ": [
+                "23 de septiembre 2024"
+            ],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 1,
+            "sesiones_periodo_2 ": [],
+            "sesiones_receso_2 ": [],
+            "total_periodo_2": 0,
+            "sesiones_periodo_3 ": [],
+            "sesiones_receso_3 ": [],
+            "total_periodo_3": 0,
+            "total_año": 1
+        },
+        "sesiones_año_2": {
+            "sesiones_periodo_1 ": [],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 0,
+            "sesiones_periodo_2 ": [],
+            "sesiones_receso_2 ": [],
+            "total_periodo_2": 0,
+            "sesiones_periodo_3 ": [],
+            "sesiones_receso_3 ": [],
+            "total_periodo_3": 0,
+            "total_año": 0
+        },
+        "sesiones_año_3": {
+            "sesiones_periodo_1 ": [],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 0,
+            "sesiones_periodo_2 ": [],
+            "sesiones_receso_2 ": [],
+            "total_periodo_2": 0,
+            "sesiones_periodo_3 ": [],
+            "sesiones_receso_3 ": [],
+            "total_periodo_3": 0,
+            "total_año": 0
+        }
+    },
+    {
+        "Nombre": "Atención Ciudadana",
+        "sesiones_año_1": {
+            "sesiones_periodo_1 ": [
+                "10 de diciembre 2024",
+                "30 de octubre 2024",
+                "26 de septiembre 2024"
+            ],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 3,
+            "sesiones_periodo_2 ": [
+                "10 de febrero 2025"
+            ],
+            "sesiones_receso_2 ": [
+                "30 de abril 2025",
+                "25 de marzo 2025"
+            ],
+            "total_periodo_2": 3,
+            "sesiones_periodo_3 ": [
+                "30 de junio 2025",
+                "29 de mayo 2025"
+            ],
+            "sesiones_receso_3 ": [
+                "4 de Septiembre 2025"
+            ],
+            "total_periodo_3": 3,
+            "total_año": 9
+        },
+        "sesiones_año_2": {
+            "sesiones_periodo_1 ": [
+                "19 de noviembre 2025",
+                "23 de octubre 2025",
+                "02 de octubre 2025"
+            ],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 3,
+            "sesiones_periodo_2 ": [
+                "18 de febrero 2026"
+            ],
+            "sesiones_receso_2 ": [],
+            "total_periodo_2": 1,
+            "sesiones_periodo_3 ": [
+                "09 de julio 2026"
+            ],
+            "sesiones_receso_3 ": [],
+            "total_periodo_3": 1,
+            "total_año": 5
+        },
+        "sesiones_año_3": {
+            "sesiones_periodo_1 ": [],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 0,
+            "sesiones_periodo_2 ": [],
+            "sesiones_receso_2 ": [],
+            "total_periodo_2": 0,
+            "sesiones_periodo_3 ": [],
+            "sesiones_receso_3 ": [],
+            "total_periodo_3": 0,
+            "total_año": 0
+        }
+    },
+    {
+        "Nombre": "Comunicación Social",
+        "sesiones_año_1": {
+            "sesiones_periodo_1 ": [
+                "31 de octubre 2024",
+                "26 de septiembre 2024"
+            ],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 2,
+            "sesiones_periodo_2 ": [],
+            "sesiones_receso_2 ": [],
+            "total_periodo_2": 0,
+            "sesiones_periodo_3 ": [],
+            "sesiones_receso_3 ": [],
+            "total_periodo_3": 0,
+            "total_año": 2
+        },
+        "sesiones_año_2": {
+            "sesiones_periodo_1 ": [
+                "02 de octubre 2025"
+            ],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 1,
+            "sesiones_periodo_2 ": [],
+            "sesiones_receso_2 ": [],
+            "total_periodo_2": 0,
+            "sesiones_periodo_3 ": [],
+            "sesiones_receso_3 ": [
+                "27 de agosto de 2026"
+            ],
+            "total_periodo_3": 1,
+            "total_año": 2
+        },
+        "sesiones_año_3": {
+            "sesiones_periodo_1 ": [],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 0,
+            "sesiones_periodo_2 ": [],
+            "sesiones_receso_2 ": [],
+            "total_periodo_2": 0,
+            "sesiones_periodo_3 ": [],
+            "sesiones_receso_3 ": [],
+            "total_periodo_3": 0,
+            "total_año": 0
+        }
+    },
+    {
+        "Nombre": "Diario de Debates, Crónica Legislativa y Asuntos Editoriales",
+        "sesiones_año_1": {
+            "sesiones_periodo_1 ": [
+                "04 de noviembre 2024",
+                "26 de septiembre 2024"
+            ],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 2,
+            "sesiones_periodo_2 ": [
+                "28 de enero 2025"
+            ],
+            "sesiones_receso_2 ": [],
+            "total_periodo_2": 1,
+            "sesiones_periodo_3 ": [
+                "12 de junio 2025"
+            ],
+            "sesiones_receso_3 ": [],
+            "total_periodo_3": 1,
+            "total_año": 4
+        },
+        "sesiones_año_2": {
+            "sesiones_periodo_1 ": [
+                "06 de noviembre 2025"
+            ],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 1,
+            "sesiones_periodo_2 ": [
+                "05 de marzo 2026"
+            ],
+            "sesiones_receso_2 ": [],
+            "total_periodo_2": 1,
+            "sesiones_periodo_3 ": [],
+            "sesiones_receso_3 ": [],
+            "total_periodo_3": 0,
+            "total_año": 2
+        },
+        "sesiones_año_3": {
+            "sesiones_periodo_1 ": [],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 0,
+            "sesiones_periodo_2 ": [],
+            "sesiones_receso_2 ": [],
+            "total_periodo_2": 0,
+            "sesiones_periodo_3 ": [],
+            "sesiones_receso_3 ": [],
+            "total_periodo_3": 0,
+            "total_año": 0
+        }
+    },
+    {
+        "Nombre": "Tecnología, Innovación y Sostenibilidad",
+        "sesiones_año_1": {
+            "sesiones_periodo_1 ": [
+                "31 de octubre 2024",
+                "26 de septiembre 2024"
+            ],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 2,
+            "sesiones_periodo_2 ": [
+                "30 de enero 2025"
+            ],
+            "sesiones_receso_2 ": [
+                "25 de marzo 2025"
+            ],
+            "total_periodo_2": 2,
+            "sesiones_periodo_3 ": [
+                "29 de mayo 2025"
+            ],
+            "sesiones_receso_3 ": [
+                "29 de agosto 2025"
+            ],
+            "total_periodo_3": 2,
+            "total_año": 6
+        },
+        "sesiones_año_2": {
+            "sesiones_periodo_1 ": [
+                "15 de diciembre 2025",
+                "06 de noviembre 2025",
+                "29 de septiembre 2025"
+            ],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 3,
+            "sesiones_periodo_2 ": [
+                "12 de marzo 2026",
+                "29 de enero 2026"
+            ],
+            "sesiones_receso_2 ": [],
+            "total_periodo_2": 2,
+            "sesiones_periodo_3 ": [
+                "09 de julio 2026",
+                "25 de junio 2026"
+            ],
+            "sesiones_receso_3 ": [],
+            "total_periodo_3": 2,
+            "total_año": 7
+        },
+        "sesiones_año_3": {
+            "sesiones_periodo_1 ": [],
+            "sesiones_receso_1 ": [],
+            "total_periodo_1": 0,
+            "sesiones_periodo_2 ": [],
+            "sesiones_receso_2 ": [],
+            "total_periodo_2": 0,
+            "sesiones_periodo_3 ": [],
+            "sesiones_receso_3 ": [],
+            "total_periodo_3": 0,
+            "total_año": 0
+        }
+    }
+]
