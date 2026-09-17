@@ -1,0 +1,3205 @@
+[
+    {
+        "Nombre": "Asuntos Metropolitanos",
+        "Tipo": "Comisión",
+        "Enlace": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=itemlist&task=category&id=370:asuntos-metropolitanos",
+        "Sesiones": [
+            {
+                "Fecha": "14 de mayo 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=63356"
+            },
+            {
+                "Fecha": "27 de enero 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=61893"
+            },
+            {
+                "Fecha": "13 de noviembre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=60988"
+            },
+            {
+                "Fecha": "1 de septiembre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=60025"
+            },
+            {
+                "Fecha": "09 de julio 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=58989"
+            },
+            {
+                "Fecha": "26 de mayo 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=58463"
+            },
+            {
+                "Fecha": "11 de abril 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=59049"
+            },
+            {
+                "Fecha": "14 de marzo 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=57469"
+            },
+            {
+                "Fecha": "13 de diciembre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56722"
+            },
+            {
+                "Fecha": "30 de octubre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56173"
+            },
+            {
+                "Fecha": "26 de septiembre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=54904"
+            }
+        ]
+    },
+    {
+        "Nombre": "Asuntos Municipales",
+        "Tipo": "Comisión",
+        "Enlace": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=itemlist&task=category&id=371:asuntos-municipales",
+        "Sesiones": [
+            {
+                "Fecha": "21 de julio 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=64379"
+            },
+            {
+                "Fecha": "25 de junio 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=64280"
+            },
+            {
+                "Fecha": "12 de mayo 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=63325"
+            },
+            {
+                "Fecha": "23 de abril 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=62919"
+            },
+            {
+                "Fecha": "05 de marzo 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=62499"
+            },
+            {
+                "Fecha": "29 de enero 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=62361"
+            },
+            {
+                "Fecha": "04 de diciembre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=61480"
+            },
+            {
+                "Fecha": "13 de noviembre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=61215"
+            },
+            {
+                "Fecha": "28 de octubre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=60864"
+            },
+            {
+                "Fecha": "10 de septiembre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=60005"
+            },
+            {
+                "Fecha": "29 de agosto 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=59510"
+            },
+            {
+                "Fecha": "24 de julio 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=59098"
+            },
+            {
+                "Fecha": "18 de junio 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=58937"
+            },
+            {
+                "Fecha": "16 de mayo 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=58369"
+            },
+            {
+                "Fecha": "24 de abril 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=62858"
+            },
+            {
+                "Fecha": "4 de marzo 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=57405"
+            },
+            {
+                "Fecha": "20 de febrero 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=57412"
+            },
+            {
+                "Fecha": "14 de enero 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56732"
+            },
+            {
+                "Fecha": "13 de diciembre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56728"
+            },
+            {
+                "Fecha": "12 de noviembre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=62761"
+            },
+            {
+                "Fecha": "31 de octubre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56181"
+            },
+            {
+                "Fecha": "27 de septiembre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=54932"
+            }
+        ]
+    },
+    {
+        "Nombre": "Atención a Personas con Discapacidad",
+        "Tipo": "Comisión",
+        "Enlace": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=itemlist&task=category&id=372:atención-a-personas-con-discapacidad",
+        "Sesiones": [
+            {
+                "Fecha": "21 de julio 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=64380"
+            },
+            {
+                "Fecha": "24 de junio 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=64272"
+            },
+            {
+                "Fecha": "27 de mayo 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=63426"
+            },
+            {
+                "Fecha": "29 de abril 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=62955"
+            },
+            {
+                "Fecha": "11 de marzo 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=62887"
+            },
+            {
+                "Fecha": "19 de febrero 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=62388"
+            },
+            {
+                "Fecha": "27 de enero 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=62355"
+            },
+            {
+                "Fecha": "26 de noviembre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=61216"
+            },
+            {
+                "Fecha": "28 de octubre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=60729"
+            },
+            {
+                "Fecha": "24 de septiembre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=60457"
+            },
+            {
+                "Fecha": "28 de agosto 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=59645"
+            },
+            {
+                "Fecha": "16 de julio 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=59024"
+            },
+            {
+                "Fecha": "25 de junio 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=58946"
+            },
+            {
+                "Fecha": "29 de mayo 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=58467"
+            },
+            {
+                "Fecha": "21 de abril 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=57764"
+            },
+            {
+                "Fecha": "18 de marzo 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=57579"
+            },
+            {
+                "Fecha": "12 de marzo 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=57464"
+            },
+            {
+                "Fecha": "26 de febrero 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=57393"
+            },
+            {
+                "Fecha": "29 de enero 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=57259"
+            },
+            {
+                "Fecha": "13 de diciembre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56720"
+            },
+            {
+                "Fecha": "30 de octubre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56165"
+            },
+            {
+                "Fecha": "26 de septiembre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=54913"
+            }
+        ]
+    },
+    {
+        "Nombre": "Atención a Personas en Situación de Vulnerabilidad",
+        "Tipo": "Comisión",
+        "Enlace": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=itemlist&task=category&id=387:atención-a-personas-en-situación-de-vulnerabilidad",
+        "Sesiones": [
+            {
+                "Fecha": "21 de julio 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=64369"
+            },
+            {
+                "Fecha": "04 de junio 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=63429"
+            },
+            {
+                "Fecha": "12 de mayo 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=63324"
+            },
+            {
+                "Fecha": "23 de abril 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=62920"
+            },
+            {
+                "Fecha": "12 de marzo 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=62890"
+            },
+            {
+                "Fecha": "29 de enero 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=61896"
+            },
+            {
+                "Fecha": "11 de diciembre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=61486"
+            },
+            {
+                "Fecha": "13 de noviembre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=60877"
+            },
+            {
+                "Fecha": "09 de octubre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=60848"
+            },
+            {
+                "Fecha": "25 de septiembre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=60462"
+            },
+            {
+                "Fecha": "28 de agosto 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=59647"
+            },
+            {
+                "Fecha": "14 de julio 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=59023"
+            },
+            {
+                "Fecha": "26 de junio 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=59017"
+            },
+            {
+                "Fecha": "30 de mayo 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=58631"
+            },
+            {
+                "Fecha": "01 de abril 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=57761"
+            },
+            {
+                "Fecha": "11 de marzo 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=57463"
+            },
+            {
+                "Fecha": "06 de febrero 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=57442"
+            },
+            {
+                "Fecha": "12 de diciembre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56715"
+            },
+            {
+                "Fecha": "30 de octubre de 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56172"
+            },
+            {
+                "Fecha": "26 de septiembre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=54914"
+            }
+        ]
+    },
+    {
+        "Nombre": "Bienestar",
+        "Tipo": "Comisión",
+        "Enlace": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=itemlist&task=category&id=373:bienestar",
+        "Sesiones": [
+            {
+                "Fecha": "18 de junio 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=64080"
+            },
+            {
+                "Fecha": "15 de mayo 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=63330"
+            },
+            {
+                "Fecha": "16 de enero 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=61885"
+            },
+            {
+                "Fecha": "16 de octubre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=60850"
+            },
+            {
+                "Fecha": "03 de julio 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=58986"
+            },
+            {
+                "Fecha": "29 de mayo 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=58469"
+            },
+            {
+                "Fecha": "25 de marzo 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=57470"
+            },
+            {
+                "Fecha": "06 de febrero 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=63067"
+            },
+            {
+                "Fecha": "06 de diciembre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56703"
+            },
+            {
+                "Fecha": "31 de octubre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56176"
+            },
+            {
+                "Fecha": "26 de septiembre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=54899"
+            }
+        ]
+    },
+    {
+        "Nombre": "Ciencia, Humanidades, Tecnología e Innovación",
+        "Tipo": "Comisión",
+        "Enlace": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=itemlist&task=category&id=374:ciencia-humanidades-tecnología-e-innovación",
+        "Sesiones": [
+            {
+                "Fecha": "04 de junio 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=63430"
+            },
+            {
+                "Fecha": "23 de abril 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=62922"
+            },
+            {
+                "Fecha": "25 de febrero 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=63337"
+            },
+            {
+                "Fecha": "16 de enero 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=63335"
+            },
+            {
+                "Fecha": "11 de diciembre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=61449"
+            },
+            {
+                "Fecha": "06 de noviembre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=61473"
+            },
+            {
+                "Fecha": "30 de octubre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=63333"
+            },
+            {
+                "Fecha": "18 de septiembre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=63332"
+            },
+            {
+                "Fecha": "27 de agosto 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=63331"
+            },
+            {
+                "Fecha": "27 de mayo 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=58496"
+            },
+            {
+                "Fecha": "22 de mayo 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=58500"
+            },
+            {
+                "Fecha": "25 de marzo 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=57669"
+            },
+            {
+                "Fecha": "30 de enero 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=57265"
+            },
+            {
+                "Fecha": "12 de diciembre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56716"
+            },
+            {
+                "Fecha": "24 de octubre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56136"
+            },
+            {
+                "Fecha": "26 de septiembre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=54919"
+            }
+        ]
+    },
+    {
+        "Nombre": "Comunicaciones e Infraestructura",
+        "Tipo": "Comisión",
+        "Enlace": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=itemlist&task=category&id=377:comunicaciones-e-infraestructura",
+        "Sesiones": [
+            {
+                "Fecha": "21 de agosto de 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=64594"
+            },
+            {
+                "Fecha": "13 de julio 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=64364"
+            },
+            {
+                "Fecha": "18 de junio 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=64269"
+            },
+            {
+                "Fecha": "30 de abril 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=63077"
+            },
+            {
+                "Fecha": "12 de marzo 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=62891"
+            },
+            {
+                "Fecha": "24 de febrero 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=62389"
+            },
+            {
+                "Fecha": "19 de enero 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=62572"
+            },
+            {
+                "Fecha": "15 de diciembre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=61484"
+            },
+            {
+                "Fecha": "26 de noviembre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=61477"
+            },
+            {
+                "Fecha": "27 de octubre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=60860"
+            },
+            {
+                "Fecha": "29 de septiembre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=60018"
+            },
+            {
+                "Fecha": "25 de agosto 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=59627"
+            },
+            {
+                "Fecha": "02 de julio 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=59000"
+            },
+            {
+                "Fecha": "4 de junio 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=58600"
+            },
+            {
+                "Fecha": "07 de mayo 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=58491"
+            },
+            {
+                "Fecha": "09 de abril 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=57762"
+            },
+            {
+                "Fecha": "11 de marzo 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=57577"
+            },
+            {
+                "Fecha": "13 de febrero 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=57432"
+            },
+            {
+                "Fecha": "30 de enero 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=57267"
+            },
+            {
+                "Fecha": "03 de diciembre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56695"
+            },
+            {
+                "Fecha": "06 de noviembre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56190"
+            },
+            {
+                "Fecha": "30 de octubre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56143"
+            },
+            {
+                "Fecha": "3 de octubre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=54925"
+            }
+        ]
+    },
+    {
+        "Nombre": "Control, Vigilancia y Evaluación de la Auditoría Superior del Estado",
+        "Tipo": "Comisión",
+        "Enlace": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=itemlist&task=category&id=378:control-vigilancia-y-evaluacion-de-la-auditoria-superior-del-estado",
+        "Sesiones": [
+            {
+                "Fecha": "23 de julio 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=64375"
+            },
+            {
+                "Fecha": "14 de julio 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=64310"
+            },
+            {
+                "Fecha": "12 de junio 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=63521"
+            },
+            {
+                "Fecha": "19 de mayo 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=63468"
+            },
+            {
+                "Fecha": "30 de abril 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=62954"
+            },
+            {
+                "Fecha": "28 de abril 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=62942"
+            },
+            {
+                "Fecha": "25 de marzo 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=62879"
+            },
+            {
+                "Fecha": "27 de febrero 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=63467"
+            },
+            {
+                "Fecha": "20 de enero 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=62354"
+            },
+            {
+                "Fecha": "15 de diciembre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=61447"
+            },
+            {
+                "Fecha": "20 de noviembre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=61219"
+            },
+            {
+                "Fecha": "23 de octubre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=64314"
+            },
+            {
+                "Fecha": "29 de septiembre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=63466"
+            },
+            {
+                "Fecha": "29 de agosto 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=59509"
+            },
+            {
+                "Fecha": "24 de julio 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=63464"
+            },
+            {
+                "Fecha": "12 de junio 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=63463"
+            },
+            {
+                "Fecha": "30 de abril 2025",
+                "Estenografica": [
+                    "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=59060",
+                    "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=63460"
+                ]
+            },
+            {
+                "Fecha": "31 de marzo 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=59059"
+            },
+            {
+                "Fecha": "05 de febrero 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=59058"
+            },
+            {
+                "Fecha": "13 de diciembre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=59057"
+            },
+            {
+                "Fecha": "04 de diciembre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=59056"
+            },
+            {
+                "Fecha": "31 de octubre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=59055"
+            },
+            {
+                "Fecha": "29 de octubre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=59054"
+            },
+            {
+                "Fecha": "22 de octubre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56141"
+            },
+            {
+                "Fecha": "26 de septiembre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=54897"
+            }
+        ]
+    },
+    {
+        "Nombre": "Cultura",
+        "Tipo": "Comisión",
+        "Enlace": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=itemlist&task=category&id=379:cultura",
+        "Sesiones": [
+            {
+                "Fecha": "23 de julio 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=64377"
+            },
+            {
+                "Fecha": "02 de julio 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=64366"
+            },
+            {
+                "Fecha": "17 de junio 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=64079"
+            },
+            {
+                "Fecha": "28 de mayo 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=63519"
+            },
+            {
+                "Fecha": "14 de mayo 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=63357"
+            },
+            {
+                "Fecha": "08 de abril 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=62902"
+            },
+            {
+                "Fecha": "13 de marzo 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=62894"
+            },
+            {
+                "Fecha": "05 de marzo 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=62500"
+            },
+            {
+                "Fecha": "13 de febrero 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=62371"
+            },
+            {
+                "Fecha": "26 de enero 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=61892"
+            },
+            {
+                "Fecha": "19 de enero 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=61782"
+            },
+            {
+                "Fecha": "09 de diciembre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=63518"
+            },
+            {
+                "Fecha": "21 de noviembre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=61220"
+            },
+            {
+                "Fecha": "22 de octubre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=60857"
+            },
+            {
+                "Fecha": "19 de septiembre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=60011"
+            },
+            {
+                "Fecha": "26 de agosto 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=59504"
+            },
+            {
+                "Fecha": "04 de julio 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=58988"
+            },
+            {
+                "Fecha": "20 de junio 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=58940"
+            },
+            {
+                "Fecha": "15 de mayo 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=58455"
+            },
+            {
+                "Fecha": "03 de abril 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=57594"
+            },
+            {
+                "Fecha": "04 de marzo 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=57406"
+            },
+            {
+                "Fecha": "13 de febrero 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=59052"
+            },
+            {
+                "Fecha": "28 de enero 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56862"
+            },
+            {
+                "Fecha": "03 de diciembre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56692"
+            },
+            {
+                "Fecha": "04 de noviembre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=59051"
+            },
+            {
+                "Fecha": "28 de octubre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56159"
+            },
+            {
+                "Fecha": "26 de septiembre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=54903"
+            }
+        ]
+    },
+    {
+        "Nombre": "De la Agenda 2030 y convenios o acuerdos que se determinen en el ámbito internacional para mejorar las necesidades de toda la población",
+        "Tipo": "Comisión",
+        "Enlace": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=itemlist&task=category&id=381:de-la-agenda-2030-y-convenios-o-acuerdos-que-se-determinen-en-el-ambito-internacional-para-mejorar-las-necesidades-de-toda-la-poblacion",
+        "Sesiones": [
+            {
+                "Fecha": "21 de mayo 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=63423"
+            },
+            {
+                "Fecha": "11 de marzo 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=62884"
+            },
+            {
+                "Fecha": "28 de enero 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=61894"
+            },
+            {
+                "Fecha": "15 de diciembre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=61445"
+            },
+            {
+                "Fecha": "12 de noviembre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=61217"
+            },
+            {
+                "Fecha": "30 de septiembre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=60466"
+            },
+            {
+                "Fecha": "1 de septiembre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=60452"
+            },
+            {
+                "Fecha": "30 de junio 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=59018"
+            },
+            {
+                "Fecha": "29 de mayo 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=58476"
+            },
+            {
+                "Fecha": "14 de enero 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56731"
+            },
+            {
+                "Fecha": "30 de octubre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56163"
+            },
+            {
+                "Fecha": "26 de septiembre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=54910"
+            }
+        ]
+    },
+    {
+        "Nombre": "De la Familia y los Derechos de la Niñez",
+        "Tipo": "Comisión",
+        "Enlace": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=itemlist&task=category&id=382:de-la-familia-y-los-derechos-de-la-ninez",
+        "Sesiones": [
+            {
+                "Fecha": "20 de julio 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=64367"
+            },
+            {
+                "Fecha": "20 de mayo 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=63360"
+            },
+            {
+                "Fecha": "03 de febrero 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=62366"
+            },
+            {
+                "Fecha": "28 de octubre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=60862"
+            },
+            {
+                "Fecha": "24 de septiembre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=60459"
+            },
+            {
+                "Fecha": "27 de agosto 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=59638"
+            },
+            {
+                "Fecha": "11 de julio 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=59003"
+            },
+            {
+                "Fecha": "30 de junio 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=58996"
+            },
+            {
+                "Fecha": "30 de mayo 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=58497"
+            },
+            {
+                "Fecha": "11 de abril 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=57660"
+            },
+            {
+                "Fecha": "26 de febrero 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=57386"
+            },
+            {
+                "Fecha": "28 de enero 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56857"
+            },
+            {
+                "Fecha": "12 de diciembre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56718"
+            },
+            {
+                "Fecha": "23 de octubre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56215"
+            },
+            {
+                "Fecha": "26 de septiembre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=54921"
+            }
+        ]
+    },
+    {
+        "Nombre": "Derechos Humanos",
+        "Tipo": "Comisión",
+        "Enlace": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=itemlist&task=category&id=383:derechos-humanos",
+        "Sesiones": [
+            {
+                "Fecha": "20 de agosto de 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=64560"
+            },
+            {
+                "Fecha": "11 de mayo 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=63318"
+            },
+            {
+                "Fecha": "25 de febrero 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=62402"
+            },
+            {
+                "Fecha": "29 de enero 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=64606"
+            },
+            {
+                "Fecha": "30 de octubre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=60870"
+            },
+            {
+                "Fecha": "29 de septiembre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=60017"
+            },
+            {
+                "Fecha": "29 de agosto 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=59644"
+            },
+            {
+                "Fecha": "10 de julio 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=59001"
+            },
+            {
+                "Fecha": "19 de junio 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=58740"
+            },
+            {
+                "Fecha": "22 de mayo 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=58494"
+            },
+            {
+                "Fecha": "23 de abril 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=57906"
+            },
+            {
+                "Fecha": "14 de marzo 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=57658"
+            },
+            {
+                "Fecha": "11 de febrero 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=57473"
+            },
+            {
+                "Fecha": "29 de enero 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56858"
+            },
+            {
+                "Fecha": "09 de diciembre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56707"
+            },
+            {
+                "Fecha": "26 de noviembre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56682"
+            },
+            {
+                "Fecha": "11 de noviembre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56192"
+            },
+            {
+                "Fecha": "04 de noviembre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56185"
+            },
+            {
+                "Fecha": "29 de octubre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56140"
+            },
+            {
+                "Fecha": "25 de octubre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56139"
+            },
+            {
+                "Fecha": "21 de octubre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56135"
+            },
+            {
+                "Fecha": "26 de septiembre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=54917"
+            }
+        ]
+    },
+    {
+        "Nombre": "Desarrollo Económico",
+        "Tipo": "Comisión",
+        "Enlace": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=itemlist&task=category&id=384:desarrollo-economico",
+        "Sesiones": [
+            {
+                "Fecha": "24 de julio 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=64374"
+            },
+            {
+                "Fecha": "14 de julio 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=64290"
+            },
+            {
+                "Fecha": "25 de junio 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=64281"
+            },
+            {
+                "Fecha": "06 de mayo 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=63317"
+            },
+            {
+                "Fecha": "12 de marzo 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=62899"
+            },
+            {
+                "Fecha": "10 de marzo 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=62567"
+            },
+            {
+                "Fecha": "19 de febrero 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=62387"
+            },
+            {
+                "Fecha": "20 de enero 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=61891"
+            },
+            {
+                "Fecha": "10 de diciembre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=61448"
+            },
+            {
+                "Fecha": "03 de diciembre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=61478"
+            },
+            {
+                "Fecha": "26 de noviembre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=61221"
+            },
+            {
+                "Fecha": "21 de octubre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=60855"
+            },
+            {
+                "Fecha": "24 de septiembre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=60458"
+            },
+            {
+                "Fecha": "26 de agosto 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=59628"
+            },
+            {
+                "Fecha": "18 de julio 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=59027"
+            },
+            {
+                "Fecha": "25 de junio 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=58943"
+            },
+            {
+                "Fecha": "21 de mayo 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=58493"
+            },
+            {
+                "Fecha": "28 de febrero 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=57402"
+            },
+            {
+                "Fecha": "29 de enero 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56859"
+            },
+            {
+                "Fecha": "04 de diciembre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56700"
+            },
+            {
+                "Fecha": "24 de octubre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56137"
+            },
+            {
+                "Fecha": "26 de septiembre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=54922"
+            }
+        ]
+    },
+    {
+        "Nombre": "Desarrollo Rural",
+        "Tipo": "Comisión",
+        "Enlace": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=itemlist&task=category&id=375:comision-de-desarrollo-rural",
+        "Sesiones": [
+            {
+                "Fecha": "15 de julio 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=64312"
+            },
+            {
+                "Fecha": "24 de junio 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=64275"
+            },
+            {
+                "Fecha": "21 de mayo 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=63422"
+            },
+            {
+                "Fecha": "23 de abril 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=62943"
+            },
+            {
+                "Fecha": "26 de marzo 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=62898"
+            },
+            {
+                "Fecha": "25 de febrero 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=62393"
+            },
+            {
+                "Fecha": "20 de enero 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=61889"
+            },
+            {
+                "Fecha": "27 de noviembre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=61222"
+            },
+            {
+                "Fecha": "3 de septiembre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=60021"
+            },
+            {
+                "Fecha": "25 de junio 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=59016"
+            },
+            {
+                "Fecha": "28 de mayo 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=58466"
+            },
+            {
+                "Fecha": "28 de abril 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=57767"
+            },
+            {
+                "Fecha": "13 de marzo 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=57465"
+            },
+            {
+                "Fecha": "06 de febrero 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=57441"
+            },
+            {
+                "Fecha": "06 de diciembre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56706"
+            },
+            {
+                "Fecha": "31 de octubre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56183"
+            },
+            {
+                "Fecha": "27 de septiembre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=54953"
+            }
+        ]
+    },
+    {
+        "Nombre": "Desarrollo Urbano",
+        "Tipo": "Comisión",
+        "Enlace": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=itemlist&task=category&id=385:desarrollo-urbano",
+        "Sesiones": [
+            {
+                "Fecha": "28 de enero 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=61895"
+            },
+            {
+                "Fecha": "22 de octubre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=60856"
+            },
+            {
+                "Fecha": "11 de septiembre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=60024"
+            },
+            {
+                "Fecha": "25 de marzo 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=57580"
+            },
+            {
+                "Fecha": "30 de enero 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56853"
+            },
+            {
+                "Fecha": "13 de diciembre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56727"
+            },
+            {
+                "Fecha": "30 de octubre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56170"
+            },
+            {
+                "Fecha": "26 de septiembre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=54908"
+            }
+        ]
+    },
+    {
+        "Nombre": "Educación",
+        "Tipo": "Comisión",
+        "Enlace": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=itemlist&task=category&id=386:educacion",
+        "Sesiones": [
+            {
+                "Fecha": "09 de julio 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=64603"
+            },
+            {
+                "Fecha": "28 de mayo 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=63374"
+            },
+            {
+                "Fecha": "14 de mayo 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=63329"
+            },
+            {
+                "Fecha": "12 de marzo 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=62503"
+            },
+            {
+                "Fecha": "19 de febrero 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=62374"
+            },
+            {
+                "Fecha": "25 de noviembre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=61460"
+            },
+            {
+                "Fecha": "04 de noviembre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=61223"
+            },
+            {
+                "Fecha": "14 de octubre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=60851"
+            },
+            {
+                "Fecha": "22 de septiembre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=60455"
+            },
+            {
+                "Fecha": "25 de agosto 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=59642"
+            },
+            {
+                "Fecha": "17 de julio 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=59100"
+            },
+            {
+                "Fecha": "30 de junio 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=59019"
+            },
+            {
+                "Fecha": "16 de mayo 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=58454"
+            },
+            {
+                "Fecha": "30 de abril 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=57818"
+            },
+            {
+                "Fecha": "04 de marzo 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=57407"
+            },
+            {
+                "Fecha": "28 de enero 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=57262"
+            },
+            {
+                "Fecha": "06 de diciembre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56702"
+            },
+            {
+                "Fecha": "25 de noviembre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56197"
+            },
+            {
+                "Fecha": "12 de noviembre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56194"
+            },
+            {
+                "Fecha": "31 de octubre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56179"
+            },
+            {
+                "Fecha": "26 de septiembre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=54907"
+            }
+        ]
+    },
+    {
+        "Nombre": "Gobernación y Puntos Constitucionales",
+        "Tipo": "Comisión",
+        "Enlace": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=itemlist&task=category&id=376:comision-de-gobernacion-y-puntos-constitucionales",
+        "Sesiones": [
+            {
+                "Fecha": "23 de julio 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=64370"
+            },
+            {
+                "Fecha": "23 de julio 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=64368"
+            },
+            {
+                "Fecha": "13 de julio 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=64308"
+            },
+            {
+                "Fecha": "07 de julio 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=64365"
+            },
+            {
+                "Fecha": "23 de junio 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=63769"
+            },
+            {
+                "Fecha": "29 de mayo 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=63427"
+            },
+            {
+                "Fecha": "23 de abril 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=62925"
+            },
+            {
+                "Fecha": "09 de abril 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=62901"
+            },
+            {
+                "Fecha": "27 de marzo 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=62881"
+            },
+            {
+                "Fecha": "15 de marzo 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=62877"
+            },
+            {
+                "Fecha": "13 de marzo 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=62875"
+            },
+            {
+                "Fecha": "03 de marzo 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=62435"
+            },
+            {
+                "Fecha": "25 de febrero 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=62408"
+            },
+            {
+                "Fecha": "12 de diciembre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=61453"
+            },
+            {
+                "Fecha": "10 de diciembre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=61456"
+            },
+            {
+                "Fecha": "02 de diciembre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=61451"
+            },
+            {
+                "Fecha": "30 de octubre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=61224"
+            },
+            {
+                "Fecha": "30 de septiembre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=60467"
+            },
+            {
+                "Fecha": "23 de septiembre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=60013"
+            },
+            {
+                "Fecha": "27 de agosto 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=59630"
+            },
+            {
+                "Fecha": "09 de julio 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=60000"
+            },
+            {
+                "Fecha": "23 de junio 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=58741"
+            },
+            {
+                "Fecha": "17 de junio 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=58822"
+            },
+            {
+                "Fecha": "5 de junio de 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=58598"
+            },
+            {
+                "Fecha": "3 de junio 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=58477"
+            },
+            {
+                "Fecha": "29 de mayo 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=58498"
+            },
+            {
+                "Fecha": "26 de mayo 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=58479"
+            },
+            {
+                "Fecha": "26 de mayo 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=58495"
+            },
+            {
+                "Fecha": "20 de mayo 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=58492"
+            },
+            {
+                "Fecha": "19 de mayo 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=58501"
+            },
+            {
+                "Fecha": "07 de abril de 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=57748"
+            },
+            {
+                "Fecha": "21 de marzo 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=57572"
+            },
+            {
+                "Fecha": "15 de marzo 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=57668"
+            },
+            {
+                "Fecha": "10 de marzo 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=57570"
+            },
+            {
+                "Fecha": "04 de marzo 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=57430"
+            },
+            {
+                "Fecha": "25 de febrero 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=57293"
+            },
+            {
+                "Fecha": "19 de febrero 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=57292"
+            },
+            {
+                "Fecha": "28 de enero 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56860"
+            },
+            {
+                "Fecha": "19 de diciembre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56730"
+            },
+            {
+                "Fecha": "13 de diciembre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56719"
+            },
+            {
+                "Fecha": "05 de diciembre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56701"
+            },
+            {
+                "Fecha": "02 de diciembre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56684"
+            },
+            {
+                "Fecha": "28 de noviembre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56683"
+            },
+            {
+                "Fecha": "12 de noviembre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56203"
+            },
+            {
+                "Fecha": "31 de octubre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56148"
+            },
+            {
+                "Fecha": "30 de octubre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=62582"
+            },
+            {
+                "Fecha": "22 de octubre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56087"
+            }
+        ]
+    },
+    {
+        "Nombre": "Hacienda y Patrimonio Municipal",
+        "Tipo": "Comisión",
+        "Enlace": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=itemlist&task=category&id=388:hacienda-y-patrimonio-municipal",
+        "Sesiones": [
+            {
+                "Fecha": "07 de julio 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=64283"
+            },
+            {
+                "Fecha": "16 de junio 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=63767"
+            },
+            {
+                "Fecha": "26 de mayo 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=63520"
+            },
+            {
+                "Fecha": "20 de marzo 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=62878"
+            },
+            {
+                "Fecha": "12 de marzo 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=62505"
+            },
+            {
+                "Fecha": "03 de marzo 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=62434"
+            },
+            {
+                "Fecha": "10 de febrero 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=62367"
+            },
+            {
+                "Fecha": "27 de enero 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=62357"
+            },
+            {
+                "Fecha": "12 de diciembre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=61452"
+            },
+            {
+                "Fecha": "11 de diciembre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=61485"
+            },
+            {
+                "Fecha": "09 de diciembre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=61457"
+            },
+            {
+                "Fecha": "02 de diciembre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=61454"
+            },
+            {
+                "Fecha": "25 de noviembre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=61455"
+            },
+            {
+                "Fecha": "05 de noviembre de 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=61466"
+            },
+            {
+                "Fecha": "20 de octubre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=60732"
+            },
+            {
+                "Fecha": "08 de octubre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=60472"
+            },
+            {
+                "Fecha": "25 de septiembre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=60461"
+            },
+            {
+                "Fecha": "27 de agosto 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=59643"
+            },
+            {
+                "Fecha": "14 de julio 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=59026"
+            },
+            {
+                "Fecha": "3 de junio 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=58932"
+            },
+            {
+                "Fecha": "27 de mayo 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=58475"
+            },
+            {
+                "Fecha": "29 de abril 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=57817"
+            },
+            {
+                "Fecha": "20 de marzo 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=57670"
+            },
+            {
+                "Fecha": "26 de febrero 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=57392"
+            },
+            {
+                "Fecha": "28 de enero 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=57263"
+            },
+            {
+                "Fecha": "10 de diciembre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56708"
+            },
+            {
+                "Fecha": "04 de diciembre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56698"
+            },
+            {
+                "Fecha": "04 de diciembre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56697"
+            },
+            {
+                "Fecha": "03 de diciembre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56696"
+            },
+            {
+                "Fecha": "26 de noviembre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56689"
+            },
+            {
+                "Fecha": "13 de noviembre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=59044"
+            },
+            {
+                "Fecha": "08 de noviembre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56191"
+            },
+            {
+                "Fecha": "30 de octubre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56166"
+            },
+            {
+                "Fecha": "26 de septiembre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=54906"
+            }
+        ]
+    },
+    {
+        "Nombre": "Igualdad de Género",
+        "Tipo": "Comisión",
+        "Enlace": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=itemlist&task=category&id=380:de-igualdad-de-género",
+        "Sesiones": [
+            {
+                "Fecha": "09 de julio 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=64381"
+            },
+            {
+                "Fecha": "04 de junio 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=63431"
+            },
+            {
+                "Fecha": "15 de mayo 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=63513"
+            },
+            {
+                "Fecha": "16 de abril 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=62921"
+            },
+            {
+                "Fecha": "11 de marzo 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=62568"
+            },
+            {
+                "Fecha": "19 de febrero 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=62381"
+            },
+            {
+                "Fecha": "16 de enero 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=61626"
+            },
+            {
+                "Fecha": "15 de diciembre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=61423"
+            },
+            {
+                "Fecha": "26 de noviembre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=61236"
+            },
+            {
+                "Fecha": "04 de noviembre de 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=61226"
+            },
+            {
+                "Fecha": "18 de septiembre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=60010"
+            },
+            {
+                "Fecha": "28 de agosto 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=59641"
+            },
+            {
+                "Fecha": "15 de julio 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=59028"
+            },
+            {
+                "Fecha": "12 de junio 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=58619"
+            },
+            {
+                "Fecha": "26 de mayo 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=58620"
+            },
+            {
+                "Fecha": "24 de abril 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=57768"
+            },
+            {
+                "Fecha": "04 de marzo 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=57431"
+            },
+            {
+                "Fecha": "27 de febrero 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=57399"
+            },
+            {
+                "Fecha": "29 de enero 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=57268"
+            },
+            {
+                "Fecha": "02 de diciembre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56691"
+            },
+            {
+                "Fecha": "21 de noviembre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56196"
+            },
+            {
+                "Fecha": "12 de noviembre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56209"
+            },
+            {
+                "Fecha": "06 de noviembre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56187"
+            },
+            {
+                "Fecha": "22 de octubre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56204"
+            },
+            {
+                "Fecha": "27 de septiembre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=54924"
+            }
+        ]
+    },
+    {
+        "Nombre": "Instructora",
+        "Tipo": "Comisión",
+        "Enlace": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=itemlist&task=category&id=389:instructora",
+        "Sesiones": [
+            {
+                "Fecha": "18 de febrero 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=62373"
+            },
+            {
+                "Fecha": "09 de diciembre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=61481"
+            },
+            {
+                "Fecha": "08 de octubre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=60847"
+            },
+            {
+                "Fecha": "25 de junio 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=58945"
+            },
+            {
+                "Fecha": "28 de mayo 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=58465"
+            },
+            {
+                "Fecha": "30 de abril 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=57807"
+            },
+            {
+                "Fecha": "14 de marzo 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=57574"
+            },
+            {
+                "Fecha": "27 de febrero 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=57394"
+            },
+            {
+                "Fecha": "30 de enero 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56866"
+            },
+            {
+                "Fecha": "13 de diciembre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56721"
+            },
+            {
+                "Fecha": "31 de octubre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56182"
+            },
+            {
+                "Fecha": "26 de septiembre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=54902"
+            }
+        ]
+    },
+    {
+        "Nombre": "Juventud y Deporte",
+        "Tipo": "Comisión",
+        "Enlace": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=itemlist&task=category&id=390:juventud-y-deporte",
+        "Sesiones": [
+            {
+                "Fecha": "02 de julio 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=64285"
+            },
+            {
+                "Fecha": "18 de junio 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=63768"
+            },
+            {
+                "Fecha": "15 de mayo 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=63342"
+            },
+            {
+                "Fecha": "19 de marzo 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=62897"
+            },
+            {
+                "Fecha": "25 de febrero 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=62390"
+            },
+            {
+                "Fecha": "19 de enero 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=61888"
+            },
+            {
+                "Fecha": "04 de diciembre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=61479"
+            },
+            {
+                "Fecha": "06 de noviembre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=60948"
+            },
+            {
+                "Fecha": "25 de septiembre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=60460"
+            },
+            {
+                "Fecha": "28 de agosto 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=59639"
+            },
+            {
+                "Fecha": "16 de julio 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=59037"
+            },
+            {
+                "Fecha": "03 de julio 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=59020"
+            },
+            {
+                "Fecha": "28 de mayo 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=58632"
+            },
+            {
+                "Fecha": "30 de abril 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=57809"
+            },
+            {
+                "Fecha": "01 de abril 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=57581"
+            },
+            {
+                "Fecha": "27 de febrero 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=59045"
+            },
+            {
+                "Fecha": "30 de enero 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56854"
+            },
+            {
+                "Fecha": "11 de diciembre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56713"
+            },
+            {
+                "Fecha": "30 de octubre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56167"
+            },
+            {
+                "Fecha": "26 de septiembre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=54912"
+            }
+        ]
+    },
+    {
+        "Nombre": "Medio Ambiente, Recursos Naturales y Cambio Climático",
+        "Tipo": "Comisión",
+        "Enlace": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=itemlist&task=category&id=391:medio-ambiente-recursos-naturales-y-cambio-climatico",
+        "Sesiones": [
+            {
+                "Fecha": "25 de junio 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=64279"
+            },
+            {
+                "Fecha": "21 de mayo 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=63338"
+            },
+            {
+                "Fecha": "12 de marzo 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=62506"
+            },
+            {
+                "Fecha": "12 de febrero 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=62368"
+            },
+            {
+                "Fecha": "15 de enero 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=61625"
+            },
+            {
+                "Fecha": "15 de diciembre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=61444"
+            },
+            {
+                "Fecha": "12 de noviembre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=61227"
+            },
+            {
+                "Fecha": "28 de octubre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=60865"
+            },
+            {
+                "Fecha": "17 de septiembre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=60023"
+            },
+            {
+                "Fecha": "14 de julio 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=64602"
+            },
+            {
+                "Fecha": "18 de junio 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=58938"
+            },
+            {
+                "Fecha": "03 de junio 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=58630"
+            },
+            {
+                "Fecha": "15 de mayo 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=58017"
+            },
+            {
+                "Fecha": "24 de abril 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=57803"
+            },
+            {
+                "Fecha": "26 de febrero 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=57443"
+            },
+            {
+                "Fecha": "30 de enero 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=57261"
+            },
+            {
+                "Fecha": "06 de diciembre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56705"
+            },
+            {
+                "Fecha": "29 de octubre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56160"
+            },
+            {
+                "Fecha": "27 de septiembre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=54952"
+            }
+        ]
+    },
+    {
+        "Nombre": "Migración y Asuntos Internacionales",
+        "Tipo": "Comisión",
+        "Enlace": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=itemlist&task=category&id=392:migracion-y-asuntos-internacionales",
+        "Sesiones": [
+            {
+                "Fecha": "15 de julio 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=64311"
+            },
+            {
+                "Fecha": "24 de junio 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=64273"
+            },
+            {
+                "Fecha": "21 de mayo 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=63470"
+            },
+            {
+                "Fecha": "13 de marzo 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=62893"
+            },
+            {
+                "Fecha": "24 de febrero 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=62392"
+            },
+            {
+                "Fecha": "29 de enero 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=61899"
+            },
+            {
+                "Fecha": "25 de noviembre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=61235"
+            },
+            {
+                "Fecha": "28 de octubre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=60866"
+            },
+            {
+                "Fecha": "25 de septiembre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=60014"
+            },
+            {
+                "Fecha": "27 de agosto 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=59506"
+            },
+            {
+                "Fecha": "26 de junio 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=58947"
+            },
+            {
+                "Fecha": "29 de mayo 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=58468"
+            },
+            {
+                "Fecha": "24 de abril 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=57802"
+            },
+            {
+                "Fecha": "25 de marzo 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=59053"
+            },
+            {
+                "Fecha": "27 de febrero 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=57398"
+            },
+            {
+                "Fecha": "29 de enero 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56864"
+            },
+            {
+                "Fecha": "30 de octubre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56168"
+            },
+            {
+                "Fecha": "26 de septiembre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=54926"
+            }
+        ]
+    },
+    {
+        "Nombre": "Organizaciones No Gubernamentales",
+        "Tipo": "Comisión",
+        "Enlace": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=itemlist&task=category&id=393:organizaciones-no-gubernamentales",
+        "Sesiones": [
+            {
+                "Fecha": "13 de julio 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=64398"
+            },
+            {
+                "Fecha": "22 de junio 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=64270"
+            },
+            {
+                "Fecha": "13 de mayo 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=63328"
+            },
+            {
+                "Fecha": "15 de abril 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=62907"
+            },
+            {
+                "Fecha": "18 de marzo 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=62895"
+            },
+            {
+                "Fecha": "27 de febrero 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=62410"
+            },
+            {
+                "Fecha": "28 de enero 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=62358"
+            },
+            {
+                "Fecha": "10 de diciembre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=61482"
+            },
+            {
+                "Fecha": "19 de noviembre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=61232"
+            },
+            {
+                "Fecha": "08 de octubre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=60845"
+            },
+            {
+                "Fecha": "29 de septiembre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=60016"
+            },
+            {
+                "Fecha": "28 de Agosto 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=59637"
+            },
+            {
+                "Fecha": "24 de julio 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=59101"
+            },
+            {
+                "Fecha": "30 de junio 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=58948"
+            },
+            {
+                "Fecha": "19 de mayo 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=58370"
+            },
+            {
+                "Fecha": "23 de abril 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=57801"
+            },
+            {
+                "Fecha": "13 de marzo 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=57466"
+            },
+            {
+                "Fecha": "20 de febrero 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=57411"
+            },
+            {
+                "Fecha": "29 de enero 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56865"
+            },
+            {
+                "Fecha": "13 de diciembre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56723"
+            },
+            {
+                "Fecha": "31 de octubre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56177"
+            },
+            {
+                "Fecha": "26 de septiembre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=54901"
+            }
+        ]
+    },
+    {
+        "Nombre": "Participación Ciudadana y Combate a la Corrupción",
+        "Tipo": "Comisión",
+        "Enlace": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=itemlist&task=category&id=394:participacion-ciudadana-y-combate-a-la-corrupcion",
+        "Sesiones": [
+            {
+                "Fecha": "21 de mayo 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=63425"
+            },
+            {
+                "Fecha": "16 de octubre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=60853"
+            },
+            {
+                "Fecha": "15 de julio 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=58994"
+            },
+            {
+                "Fecha": "30 de mayo 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=58471"
+            },
+            {
+                "Fecha": "27 de febrero 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=57444"
+            },
+            {
+                "Fecha": "13 de diciembre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56726"
+            },
+            {
+                "Fecha": "29 de octubre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56161"
+            },
+            {
+                "Fecha": "26 de septiembre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=54905"
+            }
+        ]
+    },
+    {
+        "Nombre": "Presupuesto y Crédito Público",
+        "Tipo": "Comisión",
+        "Enlace": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=itemlist&task=category&id=395:presupuesto-y-crédito-publico",
+        "Sesiones": [
+            {
+                "Fecha": "02 de marzo 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=62433"
+            },
+            {
+                "Fecha": "02 de diciembre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=61234"
+            },
+            {
+                "Fecha": "18 de noviembre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=61464"
+            },
+            {
+                "Fecha": "09 de octubre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=60849"
+            },
+            {
+                "Fecha": "18 de septiembre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=60009"
+            },
+            {
+                "Fecha": "27 de agosto 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=59505"
+            },
+            {
+                "Fecha": "25 de junio 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=58942"
+            },
+            {
+                "Fecha": "13 de marzo 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=57467"
+            },
+            {
+                "Fecha": "27 de febrero 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=57395"
+            },
+            {
+                "Fecha": "10 de diciembre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56710"
+            },
+            {
+                "Fecha": "31 de octubre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56180"
+            },
+            {
+                "Fecha": "26 de septiembre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=54898"
+            }
+        ]
+    },
+    {
+        "Nombre": "Procuración y Administración de Justicia",
+        "Tipo": "Comisión",
+        "Enlace": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=itemlist&task=category&id=396:procuracion-y-administracion-de-justicia",
+        "Sesiones": [
+            {
+                "Fecha": "13 de julio 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=64399"
+            },
+            {
+                "Fecha": "25 de junio 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=64277"
+            },
+            {
+                "Fecha": "19 de mayo 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=63358"
+            },
+            {
+                "Fecha": "23 de abril 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=62904"
+            },
+            {
+                "Fecha": "13 de marzo 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=62876"
+            },
+            {
+                "Fecha": "18 de febrero 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=62372"
+            },
+            {
+                "Fecha": "29 de enero 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=61897"
+            },
+            {
+                "Fecha": "12 de diciembre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=61450"
+            },
+            {
+                "Fecha": "06 de noviembre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=61470"
+            },
+            {
+                "Fecha": "23 de octubre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=60730"
+            },
+            {
+                "Fecha": "25 de septiembre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=60015"
+            },
+            {
+                "Fecha": "2 de septiembre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=59511"
+            },
+            {
+                "Fecha": "10 de julio 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=58991"
+            },
+            {
+                "Fecha": "11 de junio 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=58934"
+            },
+            {
+                "Fecha": "26 de mayo 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=58464"
+            },
+            {
+                "Fecha": "29 de abril 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=57805"
+            },
+            {
+                "Fecha": "25 de marzo 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=57471"
+            },
+            {
+                "Fecha": "13 de marzo 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=57468"
+            },
+            {
+                "Fecha": "04 de marzo 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=57410"
+            },
+            {
+                "Fecha": "28 de febrero 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=62573"
+            },
+            {
+                "Fecha": "31 de enero 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=57264"
+            },
+            {
+                "Fecha": "06 de noviembre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56189"
+            },
+            {
+                "Fecha": "27 de septiembre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=54930"
+            }
+        ]
+    },
+    {
+        "Nombre": "Protección Civil",
+        "Tipo": "Comisión",
+        "Enlace": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=itemlist&task=category&id=397:proteccion-civil",
+        "Sesiones": [
+            {
+                "Fecha": "21 de julio 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=64320"
+            },
+            {
+                "Fecha": "24 de junio 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=64274"
+            },
+            {
+                "Fecha": "12 de febrero 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=62369"
+            },
+            {
+                "Fecha": "27 de enero 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=62356"
+            },
+            {
+                "Fecha": "09 de diciembre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=61427"
+            },
+            {
+                "Fecha": "04 de diciembre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=61264"
+            },
+            {
+                "Fecha": "29 de octubre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=60863"
+            },
+            {
+                "Fecha": "19 de septiembre de 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=60012"
+            },
+            {
+                "Fecha": "28 de agosto 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=59508"
+            },
+            {
+                "Fecha": "03 de julio 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=58985"
+            },
+            {
+                "Fecha": "22 de mayo 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=58457"
+            },
+            {
+                "Fecha": "24 de abril 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=57804"
+            },
+            {
+                "Fecha": "25 de marzo 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=57575"
+            },
+            {
+                "Fecha": "27 de febrero 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=57396"
+            },
+            {
+                "Fecha": "12 de diciembre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56717"
+            },
+            {
+                "Fecha": "06 de noviembre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56188"
+            },
+            {
+                "Fecha": "3 de octubre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=55972"
+            }
+        ]
+    },
+    {
+        "Nombre": "Pueblos, Comunidades Indígenas y Afromexicanas",
+        "Tipo": "Comisión",
+        "Enlace": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=itemlist&task=category&id=398:pueblos-comunidades-indigenas-y-afromexicanas",
+        "Sesiones": [
+            {
+                "Fecha": "15 de julio 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=64400"
+            },
+            {
+                "Fecha": "25 de junio 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=64278"
+            },
+            {
+                "Fecha": "21 de mayo 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=63424"
+            },
+            {
+                "Fecha": "23 de abril 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=62900"
+            },
+            {
+                "Fecha": "12 de marzo 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=62504"
+            },
+            {
+                "Fecha": "19 de febrero 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=62379"
+            },
+            {
+                "Fecha": "29 de enero 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=62380"
+            },
+            {
+                "Fecha": "11 de diciembre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=61429"
+            },
+            {
+                "Fecha": "20 de noviembre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=61475"
+            },
+            {
+                "Fecha": "28 de octubre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=60867"
+            },
+            {
+                "Fecha": "30 de septiembre 2025",
+                "Estenografica": [
+                    "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=60019",
+                    "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=60469"
+                ]
+            },
+            {
+                "Fecha": "26 de agosto 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=59503"
+            },
+            {
+                "Fecha": "24 de julio 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=59097"
+            },
+            {
+                "Fecha": "26 de junio 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=58951"
+            },
+            {
+                "Fecha": "29 de mayo 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=59061"
+            },
+            {
+                "Fecha": "29 de abril 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=57820"
+            },
+            {
+                "Fecha": "25 de marzo 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=57472"
+            },
+            {
+                "Fecha": "26 de febrero 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=59063"
+            },
+            {
+                "Fecha": "29 de enero 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=59062"
+            },
+            {
+                "Fecha": "13 de diciembre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56729"
+            },
+            {
+                "Fecha": "25 de octubre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56142"
+            },
+            {
+                "Fecha": "26 de septiembre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=54900"
+            }
+        ]
+    },
+    {
+        "Nombre": "Salud",
+        "Tipo": "Comisión",
+        "Enlace": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=itemlist&task=category&id=399:salud",
+        "Sesiones": [
+            {
+                "Fecha": "22 de julio 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=64378"
+            },
+            {
+                "Fecha": "30 de junio 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=64081"
+            },
+            {
+                "Fecha": "12 de mayo 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=63319"
+            },
+            {
+                "Fecha": "16 de enero 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=61886"
+            },
+            {
+                "Fecha": "12 de diciembre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=61483"
+            },
+            {
+                "Fecha": "30 de octubre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=60871"
+            },
+            {
+                "Fecha": "11 de septiembre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=60006"
+            },
+            {
+                "Fecha": "27 de agosto 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=59635"
+            },
+            {
+                "Fecha": "24 de julio 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=59099"
+            },
+            {
+                "Fecha": "24 de junio 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=58941"
+            },
+            {
+                "Fecha": "3 de junio 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=58581"
+            },
+            {
+                "Fecha": "30 de mayo 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=58484"
+            },
+            {
+                "Fecha": "30 de abril 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=57819"
+            },
+            {
+                "Fecha": "28 de febrero 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=57401"
+            },
+            {
+                "Fecha": "06 de diciembre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56704"
+            },
+            {
+                "Fecha": "31 de octubre de 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56149"
+            },
+            {
+                "Fecha": "26 de septiembre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=54920"
+            }
+        ]
+    },
+    {
+        "Nombre": "Seguridad Pública",
+        "Tipo": "Comisión",
+        "Enlace": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=itemlist&task=category&id=400:seguridad-publica",
+        "Sesiones": [
+            {
+                "Fecha": "04 de noviembre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=61471"
+            },
+            {
+                "Fecha": "14 de octubre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=60852"
+            },
+            {
+                "Fecha": "29 de agosto 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=59646"
+            },
+            {
+                "Fecha": "3 de junio 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=58478"
+            },
+            {
+                "Fecha": "10 de diciembre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56711"
+            },
+            {
+                "Fecha": "02 de diciembre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56685"
+            },
+            {
+                "Fecha": "31 de octubre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56145"
+            },
+            {
+                "Fecha": "26 de septiembre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=54918"
+            }
+        ]
+    },
+    {
+        "Nombre": "Trabajo, Competitividad y Previsión Social",
+        "Tipo": "Comisión",
+        "Enlace": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=itemlist&task=category&id=401:trabajo-competitividad-y-prevision-social",
+        "Sesiones": [
+            {
+                "Fecha": "19 de agosto de 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=64402"
+            },
+            {
+                "Fecha": "24 de julio 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=64373"
+            },
+            {
+                "Fecha": "08 de julio 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=64289"
+            },
+            {
+                "Fecha": "24 de junio 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=64284"
+            },
+            {
+                "Fecha": "13 de mayo 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=63340"
+            },
+            {
+                "Fecha": "16 de abril 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=64316"
+            },
+            {
+                "Fecha": "11 de marzo 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=62673"
+            },
+            {
+                "Fecha": "11 de febrero 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=62404"
+            },
+            {
+                "Fecha": "20 de enero 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=61890"
+            },
+            {
+                "Fecha": "02 de diciembre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=61458"
+            },
+            {
+                "Fecha": "12 de noviembre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=61462"
+            },
+            {
+                "Fecha": "08 de octubre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=60846"
+            },
+            {
+                "Fecha": "17 de septiembre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=60022"
+            },
+            {
+                "Fecha": "26 de agosto 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=64315"
+            },
+            {
+                "Fecha": "14 de julio 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=59022"
+            },
+            {
+                "Fecha": "19 de junio 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=58939"
+            },
+            {
+                "Fecha": "28 de mayo 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=58633"
+            },
+            {
+                "Fecha": "30 de abril 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=57816"
+            },
+            {
+                "Fecha": "24 de marzo 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=57671"
+            },
+            {
+                "Fecha": "25 de febrero 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=57559"
+            },
+            {
+                "Fecha": "28 de enero 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=59048"
+            },
+            {
+                "Fecha": "03 de diciembre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56694"
+            },
+            {
+                "Fecha": "13 de noviembre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=59047"
+            },
+            {
+                "Fecha": "30 de octubre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=59046"
+            },
+            {
+                "Fecha": "26 de septiembre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=54909"
+            }
+        ]
+    },
+    {
+        "Nombre": "Transparencia y Acceso a la Información",
+        "Tipo": "Comisión",
+        "Enlace": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=itemlist&task=category&id=402:transparencia-y-acceso-a-la-informacion",
+        "Sesiones": [
+            {
+                "Fecha": "23 de julio 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=64376"
+            },
+            {
+                "Fecha": "23 de julio 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=64371"
+            },
+            {
+                "Fecha": "09 de julio 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=64604"
+            },
+            {
+                "Fecha": "23 de junio 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=63770"
+            },
+            {
+                "Fecha": "20 de enero 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=64605"
+            },
+            {
+                "Fecha": "16 de octubre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=60854"
+            },
+            {
+                "Fecha": "30 de septiembre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=60468"
+            },
+            {
+                "Fecha": "09 de julio 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=58999"
+            },
+            {
+                "Fecha": "5 de junio 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=58933"
+            },
+            {
+                "Fecha": "29 de abril 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=57806"
+            },
+            {
+                "Fecha": "27 de febrero 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=57397"
+            },
+            {
+                "Fecha": "30 de enero 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56855"
+            },
+            {
+                "Fecha": "11 de diciembre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56712"
+            },
+            {
+                "Fecha": "25 de octubre 2024",
+                "Estenografica": [
+                    "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56155",
+                    "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56158"
+                ]
+            },
+            {
+                "Fecha": "26 de septiembre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=54911"
+            }
+        ]
+    },
+    {
+        "Nombre": "Transportes y Movilidad",
+        "Tipo": "Comisión",
+        "Enlace": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=itemlist&task=category&id=403:transportes-y-movilidad",
+        "Sesiones": [
+            {
+                "Fecha": "20 de agosto de 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=64592"
+            },
+            {
+                "Fecha": "18 de junio 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=64599"
+            },
+            {
+                "Fecha": "21 de mayo 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=63359"
+            },
+            {
+                "Fecha": "23 de abril 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=62905"
+            },
+            {
+                "Fecha": "12 de marzo 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=62873"
+            },
+            {
+                "Fecha": "19 de febrero 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=62386"
+            },
+            {
+                "Fecha": "29 de enero 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=61898"
+            },
+            {
+                "Fecha": "16 de enero 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=61883"
+            },
+            {
+                "Fecha": "02 de diciembre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=61461"
+            },
+            {
+                "Fecha": "27 de noviembre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=61463"
+            },
+            {
+                "Fecha": "23 de octubre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=60858"
+            },
+            {
+                "Fecha": "10 de septiembre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=60020"
+            },
+            {
+                "Fecha": "28 de agosto 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=59648"
+            },
+            {
+                "Fecha": "10 de julio 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=59021"
+            },
+            {
+                "Fecha": "17 de junio 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=58936"
+            },
+            {
+                "Fecha": "24 de abril 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=57766"
+            },
+            {
+                "Fecha": "14 de marzo 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=57578"
+            },
+            {
+                "Fecha": "27 de febrero 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=57400"
+            },
+            {
+                "Fecha": "02 de diciembre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56690"
+            },
+            {
+                "Fecha": "30 de octubre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56175"
+            },
+            {
+                "Fecha": "26 de septiembre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=54928"
+            }
+        ]
+    },
+    {
+        "Nombre": "Turismo",
+        "Tipo": "Comisión",
+        "Enlace": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=itemlist&task=category&id=404:turismo",
+        "Sesiones": [
+            {
+                "Fecha": "15 de julio 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=64401"
+            },
+            {
+                "Fecha": "25 de junio 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=64276"
+            },
+            {
+                "Fecha": "14 de mayo 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=63341"
+            },
+            {
+                "Fecha": "10 de marzo 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=62501"
+            },
+            {
+                "Fecha": "25 de febrero 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=62403"
+            },
+            {
+                "Fecha": "15 de enero 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=61882"
+            },
+            {
+                "Fecha": "02 de diciembre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=61459"
+            },
+            {
+                "Fecha": "30 de octubre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=60869"
+            },
+            {
+                "Fecha": "18 de septiembre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=60007"
+            },
+            {
+                "Fecha": "28 de agosto 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=64319"
+            },
+            {
+                "Fecha": "22 de mayo 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=58456"
+            },
+            {
+                "Fecha": "23 de abril 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=57775"
+            },
+            {
+                "Fecha": "11 de marzo 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=57462"
+            },
+            {
+                "Fecha": "28 de febrero 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=57403"
+            },
+            {
+                "Fecha": "30 de enero 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56867"
+            },
+            {
+                "Fecha": "13 de diciembre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56725"
+            },
+            {
+                "Fecha": "03 de diciembre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56693"
+            },
+            {
+                "Fecha": "30 de octubre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56169"
+            },
+            {
+                "Fecha": "26 de septiembre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=54927"
+            }
+        ]
+    },
+    {
+        "Nombre": "Vivienda",
+        "Tipo": "Comisión",
+        "Enlace": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=itemlist&task=category&id=418:vivienda",
+        "Sesiones": [
+            {
+                "Fecha": "28 de mayo 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=63481"
+            },
+            {
+                "Fecha": "28 de octubre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=60861"
+            },
+            {
+                "Fecha": "29 de septiembre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=60463"
+            },
+            {
+                "Fecha": "25 de junio 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=58944"
+            },
+            {
+                "Fecha": "29 de mayo 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=58599"
+            },
+            {
+                "Fecha": "09 de abril 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=57659"
+            },
+            {
+                "Fecha": "11 de marzo 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=57571"
+            },
+            {
+                "Fecha": "13 de febrero 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=57291"
+            },
+            {
+                "Fecha": "12 de diciembre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56714"
+            },
+            {
+                "Fecha": "31 de octubre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56146"
+            },
+            {
+                "Fecha": "26 de septiembre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=54923"
+            }
+        ]
+    },
+    {
+        "Nombre": "Adquisiciones, Arrendamientos y Servicios",
+        "Tipo": "Comité",
+        "Enlace": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=itemlist&task=category&id=410:adquisiciones-arrendamientos-y-servicios",
+        "Sesiones": [
+            {
+                "Fecha": "23 de septiembre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=54954"
+            }
+        ]
+    },
+    {
+        "Nombre": "Atención Ciudadana",
+        "Tipo": "Comité",
+        "Enlace": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=itemlist&task=category&id=411:atencion-ciudadana",
+        "Sesiones": [
+            {
+                "Fecha": "09 de julio 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=64591"
+            },
+            {
+                "Fecha": "18 de febrero 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=62405"
+            },
+            {
+                "Fecha": "19 de noviembre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=61468"
+            },
+            {
+                "Fecha": "23 de octubre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=60859"
+            },
+            {
+                "Fecha": "02 de octubre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=60470"
+            },
+            {
+                "Fecha": "4 de Septiembre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=60453"
+            },
+            {
+                "Fecha": "30 de junio 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=58995"
+            },
+            {
+                "Fecha": "29 de mayo 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=58634"
+            },
+            {
+                "Fecha": "30 de abril 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=57905"
+            },
+            {
+                "Fecha": "25 de marzo 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=57592"
+            },
+            {
+                "Fecha": "10 de febrero 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=57290"
+            },
+            {
+                "Fecha": "10 de diciembre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56709"
+            },
+            {
+                "Fecha": "30 de octubre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56174"
+            },
+            {
+                "Fecha": "26 de septiembre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=54949"
+            }
+        ]
+    },
+    {
+        "Nombre": "Comunicación Social",
+        "Tipo": "Comité",
+        "Enlace": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=itemlist&task=category&id=412:comunicacion-social",
+        "Sesiones": [
+            {
+                "Fecha": "02 de octubre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=60471"
+            },
+            {
+                "Fecha": "31 de octubre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56150"
+            },
+            {
+                "Fecha": "26 de septiembre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=54950"
+            }
+        ]
+    },
+    {
+        "Nombre": "Diario de Debates, Crónica Legislativa y Asuntos Editoriales",
+        "Tipo": "Comité",
+        "Enlace": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=itemlist&task=category&id=413:diario-de-debates-cronica-legislativa-y-asuntos-editoriales",
+        "Sesiones": [
+            {
+                "Fecha": "05 de marzo 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=62498"
+            },
+            {
+                "Fecha": "06 de noviembre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=61467"
+            },
+            {
+                "Fecha": "12 de junio 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=58950"
+            },
+            {
+                "Fecha": "28 de enero 2025",
+                "Estenografica": [
+                    "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56861",
+                    "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=57266"
+                ]
+            },
+            {
+                "Fecha": "04 de noviembre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56186"
+            },
+            {
+                "Fecha": "26 de septiembre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=54929"
+            }
+        ]
+    },
+    {
+        "Nombre": "Tecnología, Innovación y Sostenibilidad",
+        "Tipo": "Comité",
+        "Enlace": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=itemlist&task=category&id=414:innovacion-y-tecnologia",
+        "Sesiones": [
+            {
+                "Fecha": "09 de julio 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=64309"
+            },
+            {
+                "Fecha": "25 de junio 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=64601"
+            },
+            {
+                "Fecha": "12 de marzo 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=62864"
+            },
+            {
+                "Fecha": "29 de enero 2026",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=62370"
+            },
+            {
+                "Fecha": "15 de diciembre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=61469"
+            },
+            {
+                "Fecha": "06 de noviembre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=61474"
+            },
+            {
+                "Fecha": "29 de septiembre 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=60465"
+            },
+            {
+                "Fecha": "29 de agosto 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=59649"
+            },
+            {
+                "Fecha": "29 de mayo 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=58490"
+            },
+            {
+                "Fecha": "25 de marzo 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=57573"
+            },
+            {
+                "Fecha": "30 de enero 2025",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=57269"
+            },
+            {
+                "Fecha": "31 de octubre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=56147"
+            },
+            {
+                "Fecha": "26 de septiembre 2024",
+                "Estenografica": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=54935"
+            }
+        ]
+    }
+]
