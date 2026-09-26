@@ -12,6 +12,9 @@ from bs4 import BeautifulSoup
 
 from lib.DateHandler import DateHandler
 from lib.EventClassifier import EventClassifier
+from lib.PDFProcessor import PDFProcessor
+from extractors.SVProcessor import SVProcessor
+from extractors.PMProcessor import PMProcessor
 
 
 # Establecer parámetros iniciales
@@ -23,6 +26,15 @@ parser = "html.parser"
 
 dh = DateHandler()
 ec = EventClassifier()
+pdf_processor = PDFProcessor()
+sv_processor = SVProcessor()
+pm_processor = PMProcessor()
+
+# Rutas de descarga de versiones estenográficas y actas anteriores
+sv_pdf_dir = os.path.join(os.path.dirname(__file__), '..', 'data', 'pdfs', 'svs')
+pm_pdf_dir = os.path.join(os.path.dirname(__file__), '..', 'data', 'pdfs', 'pms')
+os.makedirs(sv_pdf_dir, exist_ok=True)
+os.makedirs(pm_pdf_dir, exist_ok=True)
 
 
 data = []
@@ -83,27 +95,95 @@ if response.status_code == 200:
                     current_date = ' '.join(block.get_text(separator=' ', strip=True).split())
                     continue
 
-                # Aquí ya es un contenedorAdjuntosComision: buscamos el botón de versión estenográfica
-                stenographic_links = []
+                # Aquí ya es un contenedorAdjuntosComision: buscamos acta anterior y versión estenográfica, priorizando PDF
+                stenographic_link = None
+                acta_link = None
 
                 for a in block.find_all('a', href=True):
-                    # Juntamos texto visible y title, quitamos acentos y pasamos a minúsculas
-                    label = unicodedata.normalize('NFKD', f"{a.get_text()} {a.get('title', '')}")
+                    # Texto visible del botón, sin acentos y en minúsculas
+                    label = unicodedata.normalize('NFKD', a.get_text())
                     label = ''.join(c for c in label if not unicodedata.combining(c)).lower()
+                    label = ' '.join(label.split())
 
-                    if 'estenograf' in label:
-                        href = a['href']
-                        stenographic_links.append(href if href.startswith('http') else f'{domain}{href}')
+                    # Title del enlace, normalmente trae el nombre de archivo con extensión
+                    title_attr = unicodedata.normalize('NFKD', a.get('title', '').strip())
+                    title_attr = ''.join(c for c in title_attr if not unicodedata.combining(c)).lower()
 
-                if not stenographic_links:
-                    continue
+                    # El ícono dentro del botón delata si es .docx o .pdf
+                    icon_span = a.find('span')
+                    icon_classes = icon_span.get('class', []) if icon_span else []
 
-                if current_date is None:
+                    if 'icon-documento' in icon_classes or title_attr.endswith('.docx') or title_attr.endswith('.doc'):
+                        is_pdf = False
+                    elif 'icon-pdf' in icon_classes or title_attr.endswith('.pdf'):
+                        is_pdf = True
+                    else:
+                        # Sin ícono ni extensión que lo descarte, se acepta como válido
+                        is_pdf = True
+
+                    href = a['href']
+                    url = href if href.startswith('http') else f'{domain}{href}'
+
+                    if 'estenograf' in label and stenographic_link is None and is_pdf:
+                        stenographic_link = url
+
+                    if 'acta anterior' in label and acta_link is None and is_pdf:
+                        acta_link = url
+
+                if (stenographic_link or acta_link) and current_date is None:
                     print(f"  Aviso: adjuntos sin fecha previa en {commision_title}")
 
+                # ------------------- Descarga y procesamiento del documento de la sesión -------------------
+                extracted_data = {
+                    "Tipo": None,
+                    "Asunto abordado": None,
+                    "Presentador": None,
+                    "Partido": None,
+                    "Estatus": None,
+                    "Hora Programada": None,
+                    "Inicio de la sesión": None,
+                    "Fin de la sesión": None,
+                    "Tiempo": None,
+                    "Observaciones": None
+                }
+
+                if stenographic_link:
+                    print(f"  Descargando versión estenográfica: {stenographic_link}")
+                    local_pdf_path = pdf_processor.download_pdf(stenographic_link, sv_pdf_dir, browser)
+
+                    if local_pdf_path:
+                        raw_text = pdf_processor.extract_text(local_pdf_path)
+                        clean_text = pdf_processor.clean_text(raw_text)
+
+                        if clean_text:
+                            extracted_data = sv_processor.process_file(clean_text)
+
+                elif acta_link:
+                    print(f"  No hay versión estenográfica, descargando acta anterior: {acta_link}")
+                    local_pdf_path = pdf_processor.download_pdf(acta_link, pm_pdf_dir, browser)
+
+                    if local_pdf_path:
+                        raw_text = pdf_processor.extract_text(local_pdf_path)
+                        clean_text = pdf_processor.clean_text(raw_text)
+
+                        if clean_text:
+                            extracted_data = pm_processor.process_file(clean_text)
+
+                    extracted_data["Observaciones"] = "No hay versión estenográfica, datos obtenidos del acta anterior"
+
+                else:
+                    extracted_data["Observaciones"] = "No hay versión estenográfica ni otra fuente para completar el llenado de datos"
+
+                # La fecha del HTML (current_date) es la fuente confiable; descartamos la
+                # "Fecha de sesión en comisión / comité" que pudieran regresar los procesadores,
+                # para no terminar con dos fechas distintas o una clave inconsistente entre sesiones.
+                extracted_data.pop("Fecha de sesión en comisión / comité", None)
+
                 sessions.append({
-                    "Fecha": current_date,
-                    "Estenografica": stenographic_links[0] if len(stenographic_links) == 1 else stenographic_links
+                    "Fecha de sesión en comisión": current_date,
+                    "Estenografica": stenographic_link,
+                    "Acta": acta_link,
+                    **extracted_data
                 })
 
             commission_data = {
@@ -179,27 +259,95 @@ if response.status_code == 200:
                     current_date = ' '.join(block.get_text(separator=' ', strip=True).split())
                     continue
 
-                # Aquí ya es un contenedorAdjuntosComision: buscamos el botón de versión estenográfica
-                stenographic_links = []
+                # Aquí ya es un contenedorAdjuntosComision: buscamos acta anterior y versión estenográfica, priorizando PDF
+                stenographic_link = None
+                acta_link = None
 
                 for a in block.find_all('a', href=True):
-                    # Juntamos texto visible y title, quitamos acentos y pasamos a minúsculas
-                    label = unicodedata.normalize('NFKD', f"{a.get_text()} {a.get('title', '')}")
+                    # Texto visible del botón, sin acentos y en minúsculas
+                    label = unicodedata.normalize('NFKD', a.get_text())
                     label = ''.join(c for c in label if not unicodedata.combining(c)).lower()
+                    label = ' '.join(label.split())
 
-                    if 'estenograf' in label:
-                        href = a['href']
-                        stenographic_links.append(href if href.startswith('http') else f'{domain}{href}')
+                    # Title del enlace, normalmente trae el nombre de archivo con extensión
+                    title_attr = unicodedata.normalize('NFKD', a.get('title', '').strip())
+                    title_attr = ''.join(c for c in title_attr if not unicodedata.combining(c)).lower()
 
-                if not stenographic_links:
-                    continue
+                    # El ícono dentro del botón delata si es .docx o .pdf
+                    icon_span = a.find('span')
+                    icon_classes = icon_span.get('class', []) if icon_span else []
 
-                if current_date is None:
+                    if 'icon-documento' in icon_classes or title_attr.endswith('.docx') or title_attr.endswith('.doc'):
+                        is_pdf = False
+                    elif 'icon-pdf' in icon_classes or title_attr.endswith('.pdf'):
+                        is_pdf = True
+                    else:
+                        # Sin ícono ni extensión que lo descarte, se acepta como válido
+                        is_pdf = True
+
+                    href = a['href']
+                    url = href if href.startswith('http') else f'{domain}{href}'
+
+                    if 'estenograf' in label and stenographic_link is None and is_pdf:
+                        stenographic_link = url
+
+                    if 'acta anterior' in label and acta_link is None and is_pdf:
+                        acta_link = url
+
+                if (stenographic_link or acta_link) and current_date is None:
                     print(f"  Aviso: adjuntos sin fecha previa en {commitee_title}")
 
+                # ------------------- Descarga y procesamiento del documento de la sesión -------------------
+                extracted_data = {
+                    "Tipo": None,
+                    "Asunto abordado": None,
+                    "Presentador": None,
+                    "Partido": None,
+                    "Estatus": None,
+                    "Hora Programada": None,
+                    "Inicio de la sesión": None,
+                    "Fin de la sesión": None,
+                    "Tiempo": None,
+                    "Observaciones": None
+                }
+
+                if stenographic_link:
+                    print(f"  Descargando versión estenográfica: {stenographic_link}")
+                    local_pdf_path = pdf_processor.download_pdf(stenographic_link, sv_pdf_dir, browser)
+
+                    if local_pdf_path:
+                        raw_text = pdf_processor.extract_text(local_pdf_path)
+                        clean_text = pdf_processor.clean_text(raw_text)
+
+                        if clean_text:
+                            extracted_data = sv_processor.process_file(clean_text)
+
+                elif acta_link:
+                    print(f"  No hay versión estenográfica, descargando acta anterior: {acta_link}")
+                    local_pdf_path = pdf_processor.download_pdf(acta_link, pm_pdf_dir, browser)
+
+                    if local_pdf_path:
+                        raw_text = pdf_processor.extract_text(local_pdf_path)
+                        clean_text = pdf_processor.clean_text(raw_text)
+
+                        if clean_text:
+                            extracted_data = pm_processor.process_file(clean_text)
+
+                    extracted_data["Observaciones"] = "No hay versión estenográfica, datos obtenidos del acta anterior"
+
+                else:
+                    extracted_data["Observaciones"] = "No hay versión estenográfica ni otra fuente para completar el llenado de datos"
+
+                # La fecha del HTML (current_date) es la fuente confiable; descartamos la
+                # "Fecha de sesión en comisión / comité" que pudieran regresar los procesadores,
+                # para no terminar con dos fechas distintas o una clave inconsistente entre sesiones.
+                extracted_data.pop("Fecha de sesión en comisión / comité", None)
+
                 sessions.append({
-                    "Fecha": current_date,
-                    "Estenografica": stenographic_links[0] if len(stenographic_links) == 1 else stenographic_links
+                    "Fecha de sesión en comisión": current_date,
+                    "Estenografica": stenographic_link,
+                    "Acta": acta_link,
+                    **extracted_data
                 })
 
             commitee_data = {
