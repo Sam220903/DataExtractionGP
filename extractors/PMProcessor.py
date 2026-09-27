@@ -1,8 +1,10 @@
 # PMProcessor.py
 
 import os
+import re
 import sys
 import json
+import time
 from datetime import datetime
 
 # Nuevas importaciones del SDK actualizado
@@ -13,6 +15,7 @@ from dotenv import load_dotenv
 # Añadir la carpeta principal al directorio de búsqueda
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from lib.PDFProcessor import PDFProcessor
+from lib.ExtractionErrors import ExtractionFailedError
 
 # ==========================================
 # CONFIGURACIÓN DE LA API DE GEMINI 3.1
@@ -23,6 +26,19 @@ load_dotenv()
 
 # Obtener de variables de entorno, de archivo .env
 API_KEY = os.getenv("GEMINI_API_KEY")
+
+# Tope máximo de espera entre reintentos (segundos). Se mantiene deliberadamente
+# corto: si la cuota diaria/por minuto de Gemini está agotada, el retryDelay que
+# regresa la API puede ser grande, y con muchos documentos por procesar esas
+# esperas se acumulan hasta hacer que el proceso completo tome horas. Es
+# preferible fallar rápido, marcar el registro como pendiente y seguir con el
+# siguiente archivo; los pendientes se reintentan en la siguiente ejecución.
+MAX_RETRY_WAIT_SECONDS = 10
+
+# Número máximo de intentos por registro. Al agotarse, se lanza
+# ExtractionFailedError para que el scraper marque el registro como pendiente
+# y continúe de inmediato con el siguiente archivo.
+MAX_ATTEMPTS = 2
 
 class PMProcessor:
 
@@ -47,8 +63,75 @@ class PMProcessor:
         except (ValueError, AttributeError, TypeError):
             return None
 
+    def _extract_retry_delay(self, error_text: str):
+        """
+        Busca un retryDelay explícito en el mensaje de error de la API
+        (por ejemplo: 'Please retry in 5.088741897s.' o "'retryDelay': '5s'").
+        Regresa los segundos a esperar, o None si no se encontró.
+        """
+        match = re.search(r"retryDelay['\"]?\s*:\s*['\"](\d+(?:\.\d+)?)s['\"]", error_text)
+        if match:
+            return float(match.group(1))
+
+        match = re.search(r"retry in\s+(\d+(?:\.\d+)?)s", error_text, re.IGNORECASE)
+        if match:
+            return float(match.group(1))
+
+        return None
+
+    def _call_gemini_with_retry(self, full_prompt: str) -> dict:
+        """
+        Llama a la API de Gemini y parsea el JSON de respuesta, reintentando
+        hasta MAX_ATTEMPTS veces ante cualquier falla (429 RESOURCE_EXHAUSTED,
+        cortes de red, errores 5xx, respuesta con JSON mal formado, etc.).
+
+        - Si el error trae un retryDelay explícito (típico del 429), se respeta ese tiempo.
+        - Si no, se aplica backoff exponencial (2, 4, 8... segundos) con un tope máximo.
+        - Si se agotan los MAX_ATTEMPTS intentos, se lanza ExtractionFailedError.
+        """
+        last_error = None
+
+        for attempt in range(1, MAX_ATTEMPTS + 1):
+            try:
+                response = self.client.models.generate_content(
+                    model=self.model_id,
+                    contents=full_prompt,
+                    config=types.GenerateContentConfig(
+                        response_mime_type="application/json"
+                    )
+                )
+                return json.loads(response.text)
+
+            except Exception as e:
+                last_error = e
+                error_text = str(e)
+                print(f"Error procesando con Gemini (intento {attempt}/{MAX_ATTEMPTS}): {error_text}")
+
+                if attempt == MAX_ATTEMPTS:
+                    break
+
+                wait_seconds = self._extract_retry_delay(error_text)
+
+                if wait_seconds is None:
+                    # Sin retryDelay explícito: una espera corta y fija basta,
+                    # ya que solo hay un segundo intento por delante.
+                    wait_seconds = 3
+                else:
+                    # Respetamos el retryDelay indicado por la API, pero acotado
+                    # a MAX_RETRY_WAIT_SECONDS para no acumular esperas largas
+                    # a lo largo de muchos documentos.
+                    wait_seconds = min(wait_seconds + 1, MAX_RETRY_WAIT_SECONDS)
+
+                print(f"Reintentando en {wait_seconds:.1f} segundos...")
+                time.sleep(wait_seconds)
+
+        raise ExtractionFailedError(
+            f"No fue posible obtener una respuesta válida de Gemini tras {MAX_ATTEMPTS} intentos. "
+            f"Último error: {last_error}"
+        )
+
     def _extract_session_data(self, cleaned_text: str) -> dict:
-        """Envía el texto a Gemini utilizando el prompt estructurado"""
+        """Envía el texto a Gemini utilizando el prompt estructurado, con reintentos limitados"""
 
         prompt_instructions = """
 === CONTEXTO === 
@@ -248,24 +331,20 @@ objeto JSON. Dicho JSON debe tener la siguiente estructura con todos los datos a
 
         full_prompt = f"{prompt_instructions}\n\n=== TEXTO ===\n{cleaned_text}\n=== FIN DE TEXTO ==="
 
-        try:
-            response = self.client.models.generate_content(
-                model=self.model_id,
-                contents=full_prompt,
-                config=types.GenerateContentConfig(
-                    response_mime_type="application/json"
-                )
-            )
-
-            extracted_data = json.loads(response.text)
-            return extracted_data
-
-        except Exception as e:
-            print(f"Error procesando con Gemini: {e}")
-            return {}
+        # Lanza ExtractionFailedError si se agotan los MAX_ATTEMPTS intentos.
+        # No se captura aquí a propósito: process_file y, en última instancia,
+        # el scraper son quienes deciden qué hacer con un registro fallido.
+        return self._call_gemini_with_retry(full_prompt)
 
     def process_file(self, file_content: str) -> dict:
-        """Procesa el texto de un acta anterior y regresa los datos de la sesión"""
+        """
+        Procesa el texto de un acta anterior y regresa los datos de la sesión.
+
+        Lanza ExtractionFailedError si, tras MAX_ATTEMPTS intentos, no fue posible
+        obtener una respuesta válida de Gemini. El llamador debe capturar esta
+        excepción explícitamente; no se atrapa aquí para no confundir un registro
+        fallido con uno cuyos campos legítimamente vienen vacíos.
+        """
 
         default_record = {
             "Tipo": None,
@@ -288,9 +367,6 @@ objeto JSON. Dicho JSON debe tener la siguiente estructura con todos los datos a
         print("Enviando texto a Gemini 3.1 Flash Lite para extraer datos de la sesión...")
         extracted = self._extract_session_data(file_content)
 
-        if not extracted:
-            return default_record
-
         record = {**default_record, **extracted}
 
         # Calculamos "Tiempo" de forma aritmética, no se lo pedimos a la IA
@@ -312,11 +388,14 @@ if __name__ == '__main__':
     text = pdf_processor.extract_text(file_path)
     cleaned_text = pdf_processor.clean_text(text)
 
-    data = processor.process_file(cleaned_text)
+    try:
+        data = processor.process_file(cleaned_text)
+    except ExtractionFailedError as e:
+        print(f"La extracción falló tras varios intentos: {e}")
+        data = None
 
-    output_filename = "temp_pm_output.json"
-
-    with open(output_filename, 'w', encoding='utf-8') as f:
-        json.dump(data, f, indent=4, ensure_ascii=False)
-
-    print(f"¡Listo! Los datos se han guardado en: {output_filename}")
+    if data is not None:
+        output_filename = "temp_pm_output.json"
+        with open(output_filename, 'w', encoding='utf-8') as f:
+            json.dump(data, f, indent=4, ensure_ascii=False)
+        print(f"¡Listo! Los datos se han guardado en: {output_filename}")
