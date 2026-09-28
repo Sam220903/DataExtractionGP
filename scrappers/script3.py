@@ -137,7 +137,7 @@ if data["registros"]:
     # ==========================================================================
     output_dir = os.path.join(os.path.dirname(__file__), '..', 'data')
     os.makedirs(output_dir, exist_ok=True)
-    json_path = os.path.join(output_dir, 'unidad_participacion_test.json')
+    json_path = os.path.join(output_dir, 'unidad_participacion.json')
     
     try:
         with open(json_path, 'w', encoding='utf-8') as f:

@@ -403,7 +403,7 @@ class GMProcessor:
     _RE_INICIO = re.compile(
         r'(?:HUBO\s+QU[OÓ]RUM\s+Y\s+SE|SE)\s+(?:ABRI[OÓ]|INICI[OÓ])\s+LA\s+SESI[OÓ]N'
         r'[^.]{0,150}?'
-        r'SIENDO\s+LAS\s+([A-ZÁÉÍÓÚÑ]+)\s+HORAS?'
+        r'SIENDO\s+LAS\s+([A-ZÁÉÍÓÚÑ]+)[^.]{0,150}?HORAS?'
         r'(?:\s+CON\s+([A-ZÁÉÍÓÚÑ ]+?)\s+MINUTOS?)?\.',
         re.IGNORECASE
     )
@@ -411,7 +411,7 @@ class GMProcessor:
     _RE_FIN = re.compile(
         r'(?:LEVANT[OÓ]|CLAUSUR[OÓ])\s+LA\s+SESI[OÓ]N'
         r'[^.]{0,150}?'
-        r'SIENDO\s+LAS\s+([A-ZÁÉÍÓÚÑ]+)\s+HORAS?'
+        r'SIENDO\s+LAS\s+([A-ZÁÉÍÓÚÑ]+)[^.]{0,150}?HORAS?'
         r'(?:\s+CON\s+([A-ZÁÉÍÓÚÑ ]+?)\s+MINUTOS?)?',
         re.IGNORECASE
     )
@@ -554,12 +554,43 @@ class GMProcessor:
             )
 
         # --- Hora de cita (para inicio de sesión) ---
+        # Si no se encontró convocatoria explícita en el documento, se
+        # calcula una hora de cita SUPUESTA a partir de la hora de inicio
+        # real, redondeando hacia abajo a la hora en punto anterior (ej.
+        # inicio 9:37 -> cita supuesta 9:00). Solo se puede estimar si sí
+        # se conoce la hora de inicio; si tampoco hay hora de inicio
+        # (Acta sin texto narrativo), no hay base para suponer nada y se
+        # deja la nota original de "no disponible".
         hora_cita = citas_dict.get(fecha_obj) if fecha_obj else None
+        hora_cita_estimada = False
         if fecha_obj and hora_cita is None:
+            if hora_inicio is not None:
+                hora_cita = time(hour=hora_inicio.hour, minute=0, second=0)
+                hora_cita_estimada = True
+                observaciones.append(
+                     "La hora de cita para inicio de sesión es una estimación, ya que no se encontró el dato en la gaceta correspondiente"
+                )
+            else:
+                observaciones.append(
+                    "Hora de cita no disponible: no se encontró convocatoria "
+                    "previa para esta fecha en esta gaceta."
+                )
+
+        # --- Cita posterior al inicio documentado ---
+        # Si la hora de cita explícita del documento es más tarde que la
+        # hora de inicio real, el retraso saldría negativo. En ese caso la
+        # que se ajusta es la CITA: se redondea hacia abajo a la hora en
+        # punto de la hora de inicio real (misma regla que la cita
+        # estimada). "Inicio de sesión" NO se modifica. La hora de cita
+        # original del documento queda en Observaciones.
+        if (not hora_cita_estimada and hora_cita is not None
+                and hora_inicio is not None and hora_cita > hora_inicio):
             observaciones.append(
-                "Hora de cita no disponible: no se encontró convocatoria "
-                "previa para esta fecha en esta gaceta."
+                "La hora de cita marcada en el documento era "
+                f"{self._fmt_hora_24(hora_cita)}, posterior a la hora de "
+                "inicio real; se ajusto en base al inicio de sesión registrado."
             )
+            hora_cita = time(hour=hora_inicio.hour, minute=0, second=0)
 
         # --- Asuntos programados / abordados / no abordados ---
         programados = self._extract_asuntos_programados(block_original)
@@ -650,7 +681,8 @@ if __name__ == '__main__':
     pdf_processor = PDFProcessor()
     processor = GMProcessor()
 
-    file_path = "C:\\Users\\WARNE\\OneDrive\\Escritorio\\Projects\\Python\\DataExtractionGP\\data\\pdfs\\gms\\Diciembre-2024pdf.pdf"
+    file_path = "C:\\Users\\WARNE\\OneDrive\\Escritorio\\Projects\\Python\\DataExtractionGP\\data\\pdfs\\gms\\marzo-2026pdf.pdf"
+    
     print(f"Procesando archivo: {file_path}")
 
     text = pdf_processor.extract_text(file_path)

@@ -45,7 +45,7 @@ JSON_TO_COL = {"Año Legislatura": 1, "Periodo": 2, "Folio periodo": 3, "Folio l
 # ── Carga de datos ────────────────────────────────────────────────────────────
 print("  > Localizando y cargando datos JSON...")
 CURRENT_FOLDER = os.path.dirname(os.path.abspath(__file__))
-ruta_json = os.path.join(CURRENT_FOLDER, "..", "data", "unidad_participacion_test.json")
+ruta_json = os.path.join(CURRENT_FOLDER, "..", "data", "unidad_participacion.json")
 
 try:
     with open(ruta_json, encoding="utf-8") as f:
