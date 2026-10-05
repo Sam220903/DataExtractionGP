@@ -674,6 +674,474 @@ class GMProcessor:
         }
         return record
 
+    # ==================================================================
+    # EXTRACCIÓN DE LISTAS DE ASISTENCIA (bloque AISLADO)
+    # ------------------------------------------------------------------
+    # Todo lo de esta sección es independiente del resto de la clase:
+    #   - No llama a ningún método anterior (ni _clean_footer_noise,
+    #     ni _segment_sessions, ni _strip_accents, etc.).
+    #   - No usa ninguna constante anterior (ni MESES, ni _NUM_PALABRAS).
+    #   - No toca __init__ ni usa self.event_classifier / self.folio_manager:
+    #     crea sus PROPIAS instancias de EventClassifier y FolioManager,
+    #     de forma perezosa, en self._asist_event_classifier /
+    #     self._asist_folio_manager.
+    #   - No segmenta por sesión (no usa "ORDEN DEL DÍA"): localiza cada
+    #     encabezado "LISTA DE ASISTENCIA DE LA <sesión> CELEBRADA EL
+    #     <fecha>" directamente en el texto; cada lista = un registro.
+    # Todos los nombres nuevos empiezan con "_asist_" / "_ASIST_" (o son
+    # los dos métodos públicos de abajo), así que no pueden chocar con
+    # nada existente.
+    #
+    # Métodos públicos:
+    #   process_file_asistencias(texto, source_file=None) -> list[dict]
+    #   reset_folios_asistencias()
+    #
+    # Formato de salida = el de asistencias.json (el de la web):
+    #   {"Folio legislatura", "Folio periodo", "Año Legislatura",
+    #    "Periodo", "Fecha" (dd/mm/aaaa), "Sesión",
+    #    "Asistencias": [{"Diputado", "Asistencia"}], "Totales": {...}}
+    #
+    # Estructura real de la tabla en las gacetas (validada en
+    # septiembre-2024, octubre-2025 y abril-2026):
+    #   LISTA DE ASISTENCIA DE LA <tipo de sesión>
+    #   CELEBRADA EL <dd> DE <MES> DE <aaaa>
+    #   DIPUTADA / DIPUTADO | ASISTENCIA | INASISTENCIA JUSTIFICADA | RETARDO JUSTIFICADO
+    #   <n>. <Nombre>       | Asistencia | -                        | -
+    #   TOTAL DE ASISTENCIAS  <total> <asistencias> <inasist.> <retardos>
+    # Cada fila tiene 3 celdas; la que aplica trae el texto y las otras
+    # "-". Al convertir el PDF a texto las celdas en blanco desaparecen,
+    # por eso el tipo se decide por el TEXTO de la celda y no por su
+    # posición.
+    # ==================================================================
+
+    # Valor para una fila sin ninguna etiqueta (celda en blanco). La web
+    # usa "No aplica" en ese caso.
+    ASISTENCIA_SIN_DATO = "No aplica"
+
+    _ASIST_MESES = {
+        "enero": 1, "febrero": 2, "marzo": 3, "abril": 4, "mayo": 5,
+        "junio": 6, "julio": 7, "agosto": 8, "septiembre": 9,
+        "octubre": 10, "noviembre": 11, "diciembre": 12,
+    }
+
+    # Mismas claves numéricas que usa script4.py para la web.
+    _ASIST_CODIGOS = {
+        "asistencia": 1,
+        "retardo justificado": 2,
+        "retardo justificada": 2,       # typo real en la gaceta de abril 2026
+        "retardo injustificado": 3,
+        "retardo injustificada": 3,
+        "inasistencia justificada": 4,
+        "inasistencia justificado": 4,
+        "inasistencia injustificada": 5,
+        "inasistencia injustificado": 5,
+        "con licencia": 6,
+        "sin informacion": 7,
+        "fallecimiento": 8,
+        "ya no es diputado": "-",
+        "ya no es diputada": "-",
+    }
+
+    _ASIST_CODIGO_A_NOMBRE = {
+        1: "Asistencia",
+        2: "Retardo Justificado",
+        3: "Retardo Injustificado",
+        4: "Inasistencia Justificada",
+        5: "Inasistencia Injustificada",
+        6: "Con Licencia",
+        7: "Sin información",
+        8: "Fallecimiento",
+    }
+
+    # Encabezado de la lista. El tipo puede ocupar 1-2 líneas ("SESIÓN
+    # PÚBLICA / DE LA COMISIÓN PERMANENTE"); el día puede venir con la
+    # letra O en vez de cero ("O2 DE OCTUBRE", visto en octubre-2025).
+    # Se exige "SESIÓN" justo después de "DE LA" para no confundirlo con
+    # la prosa del Acta ("PASÓ LISTA DE ASISTENCIA DE LAS Y LOS...").
+    _ASIST_RE_ENCABEZADO = re.compile(
+        r'LISTA\s+DE\s+ASISTENCIA\s+DE\s+LA\s+(SESI[OÓ]N.{0,150}?)\s+CELEBRADA\s+EL\s+'
+        r'([O0-9]{1,2})\s+DE\s+([A-ZÁÉÍÓÚÑ]+)\s+DE\s+(\d{4})',
+        re.IGNORECASE | re.DOTALL
+    )
+
+    _ASIST_RE_TOTALES = re.compile(r'TOTAL\s+DE\s+ASISTENCIAS', re.IGNORECASE)
+
+    # Inicio de fila: "12. Nombre" o "12." solo (el nombre cae en la
+    # siguiente línea según cómo el PDF parta la celda).
+    _ASIST_RE_FILA = re.compile(r'^[ \t]*(\d{1,3})\.(?!\d)[ \t]*', re.MULTILINE)
+
+    # Una línea es "celda con etiqueta" si, ya normalizada (minúsculas,
+    # sin acentos, sin guiones de los extremos), es un tipo conocido.
+    _ASIST_RE_ETIQUETA = re.compile(
+        r'^(asistencia|inasistencia\s+\w+|retardo\s+\w+|con\s+licencia|'
+        r'sin\s+informacion|fallecimiento|ya\s+no\s+es\s+diputad[oa])$'
+    )
+
+    @staticmethod
+    def _asist_normalizar(texto: str) -> str:
+        """minúsculas + sin acentos + espacios colapsados."""
+        sin_acentos = ''.join(
+            c for c in unicodedata.normalize('NFD', texto.lower())
+            if unicodedata.category(c) != 'Mn'
+        )
+        return re.sub(r'\s+', ' ', sin_acentos).strip()
+
+    @classmethod
+    def _asist_tipo_sesion(cls, tipo_raw: str) -> str:
+        """'SESIÓN PÚBLICA DE LA COMISIÓN PERMANENTE' -> 'Comisión Permanente',
+        'SESIÓN PÚBLICA ORDINARIA' -> 'Pública Ordinaria' (nombre que usa la
+        web), 'SESIÓN SOLEMNE' -> 'Solemne', etc."""
+        t = cls._asist_normalizar(tipo_raw)
+        if "comision permanente" in t:
+            return "Comisión Permanente"
+        if "solemne" in t:
+            return "Solemne"
+        if "extraordinaria" in t:
+            return "Extraordinaria"
+        if "previa" in t:
+            return "Previa"
+        if "ordinaria" in t:
+            return "Pública Ordinaria"
+        return re.sub(r'\s+', ' ', tipo_raw).strip()
+
+    @classmethod
+    def _asist_clasificar(cls, texto: str):
+        """Texto de la celda -> clave numérica (misma lógica que
+        clasificar_asistencia de script4.py). Si no se reconoce se
+        conserva el texto para no perder el dato."""
+        limpio = cls._asist_normalizar(texto).strip(' -')
+        if limpio in cls._ASIST_CODIGOS:
+            return cls._ASIST_CODIGOS[limpio]
+        print(f"  [AVISO] Tipo de asistencia no reconocido en gaceta: '{texto}'")
+        return texto
+
+    @classmethod
+    def _asist_sumar_totales(cls, asistencias: list) -> dict:
+        totales = {nombre: 0 for nombre in cls._ASIST_CODIGO_A_NOMBRE.values()}
+        for reg in asistencias:
+            nombre = cls._ASIST_CODIGO_A_NOMBRE.get(reg["Asistencia"])
+            if nombre:
+                totales[nombre] += 1
+        return totales
+
+    def _asist_parse_fila(self, chunk: str):
+        """
+        chunk: texto de UNA fila (desde después de "N." hasta antes de la
+        siguiente fila). El nombre es todo lo anterior a la primera celda
+        (etiqueta o "-"); lo que venga después (encabezado/pie de página
+        colado) se ignora. Devuelve {"Diputado", "Asistencia"} o None.
+        """
+        nombre_partes = []
+        etiquetas = []
+        en_celdas = False
+
+        for linea in chunk.split('\n'):
+            linea = linea.strip()
+            if not linea:
+                continue
+            # El PDF a veces pega la etiqueta con el guion de la celda
+            # contigua ("Retardo Justificado-", visto en octubre-2025).
+            norm = self._asist_normalizar(linea).strip(' -')
+            if not norm:                      # celda "-" (vacía por diseño)
+                en_celdas = True
+                continue
+            if self._ASIST_RE_ETIQUETA.match(norm):
+                en_celdas = True
+                etiquetas.append(norm)
+                continue
+            if not en_celdas:
+                nombre_partes.append(linea)
+            # después de las celdas: ruido de página, se descarta
+
+        nombre = re.sub(r'\s+', ' ', ' '.join(nombre_partes)).strip()
+        if not nombre:
+            return None
+
+        if etiquetas:
+            if len(etiquetas) > 1:
+                print(f"  [AVISO] Fila con más de una etiqueta de asistencia "
+                      f"({nombre}: {etiquetas}); se usa la primera.")
+            codigo = self._asist_clasificar(etiquetas[0])
+        else:
+            codigo = self.ASISTENCIA_SIN_DATO
+
+        return {"Diputado": nombre, "Asistencia": codigo}
+
+    def _asist_encontrar_listas(self, texto: str) -> list:
+        """
+        Localiza todas las listas de asistencia del texto. Devuelve una
+        lista (en orden de aparición) de dicts:
+          {"tipo", "fecha" (date|None), "tabla" (str), "totales_pdf"}
+        Si una lista cruza varias páginas y el encabezado se repite en
+        la continuación, las partes se fusionan en una sola.
+        """
+        texto = texto.replace('\x0c', '\n')
+        encabezados = list(self._ASIST_RE_ENCABEZADO.finditer(texto))
+        listas = []
+        anterior_sin_totales = False
+
+        for i, m in enumerate(encabezados):
+            tipo_raw, dia_txt, mes_txt, anio_txt = m.groups()
+            tipo = self._asist_tipo_sesion(tipo_raw)
+
+            fecha = None
+            try:
+                mes = self._ASIST_MESES.get(self._asist_normalizar(mes_txt))
+                if mes:
+                    fecha = date(int(anio_txt), mes, int(dia_txt.upper().replace('O', '0')))
+            except ValueError:
+                fecha = None
+
+            limite = encabezados[i + 1].start() if i + 1 < len(encabezados) else len(texto)
+            resto = texto[m.end():limite]
+
+            totales_pdf = None
+            fin = self._ASIST_RE_TOTALES.search(resto)
+            if fin:
+                tabla = resto[:fin.start()]
+                # Los 4 números del recuadro final: total de asistencias,
+                # asistencias, inasistencias justificadas, retardos
+                # justificados (solo los primeros 4, para no arrastrar
+                # "PAG. 14" u otro ruido posterior).
+                nums = re.findall(r'(?<![\w.])\d+(?![\w.])', resto[fin.end():fin.end() + 250])
+                if len(nums) >= 4:
+                    totales_pdf = [int(n) for n in nums[:4]]
+            else:
+                # Sin recuadro de totales: se acota al inicio del Acta o
+                # a un máximo razonable.
+                acta = re.search(r'ACTA\s+DE\s+LA\s+SESI[OÓ]N', resto, re.IGNORECASE)
+                tabla = resto[:acta.start()] if acta else resto[:15000]
+
+            # Continuación de una lista previa que no había cerrado
+            # (mismo tipo y fecha, y la anterior no trajo totales).
+            if (listas and anterior_sin_totales
+                    and listas[-1]["tipo"] == tipo and listas[-1]["fecha"] == fecha):
+                listas[-1]["tabla"] += "\n" + tabla
+                listas[-1]["totales_pdf"] = totales_pdf
+            else:
+                listas.append({"tipo": tipo, "fecha": fecha,
+                               "tabla": tabla, "totales_pdf": totales_pdf})
+            anterior_sin_totales = totales_pdf is None
+
+        return listas
+
+    def _asist_parse_tabla(self, tabla: str) -> list:
+        """Convierte el texto de una tabla en [{"Diputado","Asistencia"}]."""
+        marcas = list(self._ASIST_RE_FILA.finditer(tabla))
+        filas = []
+        for i, m in enumerate(marcas):
+            fin_chunk = marcas[i + 1].start() if i + 1 < len(marcas) else len(tabla)
+            fila = self._asist_parse_fila(tabla[m.end():fin_chunk])
+            if fila:
+                filas.append(fila)
+        return filas
+
+    def _asist_clasificadores(self):
+        """Instancias PROPIAS de EventClassifier / FolioManager (no se
+        comparten con self.event_classifier / self.folio_manager). Se
+        crean la primera vez que se necesitan, sin tocar __init__."""
+        if getattr(self, "_asist_folio_manager", None) is None:
+            self._asist_event_classifier = EventClassifier()
+            self._asist_folio_manager = FolioManager()
+        return self._asist_event_classifier, self._asist_folio_manager
+
+    def _asist_armar_registro(self, lista: dict) -> dict:
+        """Arma el registro de asistencias de UNA lista (mismo formato
+        que asistencias.json de la web). Año/Periodo/Folios y la Clave de
+        sesión quedan en None: se asignan en consolidar_asistencias(),
+        cuando ya se conoce el orden cronológico global."""
+        asistencias = self._asist_parse_tabla(lista["tabla"])
+        fecha_obj = lista["fecha"]
+        tipo = lista["tipo"]
+
+        if not asistencias:
+            print(f"  [AVISO] Lista sin filas de diputados para la sesión "
+                  f"'{tipo}' del {fecha_obj}.")
+
+        totales = self._asist_sumar_totales(asistencias)
+
+        # Verificación contra el recuadro "TOTAL DE ASISTENCIAS" del PDF:
+        # [total asistencias (= asistencias + retardos), asistencias,
+        #  inasistencias justificadas, retardos justificados]
+        tp = lista["totales_pdf"]
+        if tp and asistencias:
+            retardos = totales["Retardo Justificado"] + totales["Retardo Injustificado"]
+            propio = [
+                totales["Asistencia"] + retardos,
+                totales["Asistencia"],
+                totales["Inasistencia Justificada"],
+                retardos,
+            ]
+            if tp != propio:
+                print(f"  [AVISO] Totales del PDF {tp} != totales calculados {propio} "
+                      f"({tipo}, {fecha_obj}); revisar esa lista.")
+
+        return {
+            "Clave sesión": None,
+            "Folio legislatura": None,
+            "Folio periodo": None,
+            "Año Legislatura": None,
+            "Periodo": None,
+            "Fecha": fecha_obj.strftime("%d/%m/%Y") if fecha_obj else None,
+            "Sesión": tipo,
+            "Asistencias": asistencias,
+            "Totales": totales,
+        }
+
+    # ------------------------------------------------------------------
+    # LLAVE DE SESIÓN (para emparejar gacetas <-> scraping)
+    # ------------------------------------------------------------------
+    # El folio NO sirve para emparejar: FolioManager acumula sesión tras
+    # sesión, así que se desfasa si a un lado le faltan sesiones (la web
+    # se actualiza por sesión, las gacetas por mes; la Sesión Previa solo
+    # está en la gaceta, etc.). La llave se construye solo con datos de
+    # la propia sesión:
+    #     "AAAA-MM-DD|<tipo>|<n>"
+    #   - fecha ISO de la sesión
+    #   - tipo normalizado (comision-permanente, solemne, extraordinaria,
+    #     previa, ordinaria): tolera "Pública Ordinaria" vs "Ordinaria"
+    #   - n = posición de esa sesión entre las del MISMO día y MISMO tipo,
+    #     contadas en orden cronológico (caso real: dos Ordinarias el
+    #     19/09/2024, dos Comisión Permanente el 18/12/2024).
+    # La misma función se usa para ambos JSON, así que la llave es
+    # idéntica por construcción.
+    # ------------------------------------------------------------------
+
+    @classmethod
+    def _asist_tipo_clave(cls, tipo) -> str:
+        t = cls._asist_normalizar(tipo or "")
+        for clave, fragmento in (
+            ("comision-permanente", "comision permanente"),
+            ("solemne", "solemne"),
+            ("extraordinaria", "extraordinaria"),
+            ("previa", "previa"),
+            ("ordinaria", "ordinaria"),
+        ):
+            if fragmento in t:
+                return clave
+        return t.replace(" ", "-") or "desconocida"
+
+    @staticmethod
+    def _asist_fecha_a_date(fecha_str):
+        """'19/09/2024' -> date(2024, 9, 19); None si no se puede."""
+        try:
+            return datetime.strptime(fecha_str, "%d/%m/%Y").date()
+        except (TypeError, ValueError):
+            return None
+
+    @classmethod
+    def clave_sesion_asistencias(cls, fecha: str, tipo: str, ordinal: int) -> str:
+        d = cls._asist_fecha_a_date(fecha)
+        f = d.strftime("%Y-%m-%d") if d else "sin-fecha"
+        return f"{f}|{cls._asist_tipo_clave(tipo)}|{ordinal}"
+
+    @classmethod
+    def asignar_claves_sesion_asistencias(cls, registros: list) -> list:
+        """
+        Agrega "Clave sesión" (como PRIMER campo) a cada registro. Los
+        registros deben venir en orden cronológico ascendente (el
+        ordinal del día depende de ese orden); si detecta que no lo
+        están, avisa. Sirve igual para los registros de gacetas y para
+        los del scraping (script4). Modifica la lista in situ y la
+        devuelve.
+        """
+        contador = {}
+        previa = None
+        for i, reg in enumerate(registros):
+            d = cls._asist_fecha_a_date(reg.get("Fecha"))
+            if d is None:
+                print(f"  [AVISO] Registro {i} sin fecha válida; su llave no será única.")
+            else:
+                if previa is not None and d < previa:
+                    print(f"  [AVISO] Registros fuera de orden cronológico en la "
+                          f"posición {i} ({reg.get('Fecha')}); los ordinales del "
+                          f"día podrían no coincidir.")
+                previa = d
+            base = (reg.get("Fecha"), cls._asist_tipo_clave(reg.get("Sesión")))
+            contador[base] = contador.get(base, 0) + 1
+            clave = cls.clave_sesion_asistencias(
+                reg.get("Fecha"), reg.get("Sesión"), contador[base]
+            )
+            resto = {k: v for k, v in reg.items() if k != "Clave sesión"}
+            registros[i] = {"Clave sesión": clave, **resto}
+        return registros
+
+    def consolidar_asistencias(self, registros: list) -> list:
+        """
+        Paso final sobre los registros de TODAS las gacetas:
+          1. Ordena de la fecha más antigua a la más reciente (estable:
+             sesiones del mismo día conservan el orden en que aparecen
+             en el PDF; los registros sin fecha se van al final).
+          2. Recalcula Año Legislatura / Periodo / Folios en ese orden
+             (con el FolioManager propio, reiniciado aquí).
+          3. Asigna la "Clave sesión" a cada registro.
+        Devuelve una lista nueva; no modifica los registros recibidos.
+        """
+        ordenados = sorted(
+            (dict(r) for r in registros),
+            key=lambda r: self._asist_fecha_a_date(r.get("Fecha")) or date.max
+        )
+
+        self.reset_folios_asistencias()
+        clasificador, folios = self._asist_clasificadores()
+        for reg in ordenados:
+            d = self._asist_fecha_a_date(reg.get("Fecha"))
+            if d is None:
+                print(f"  [AVISO] Sesión '{reg.get('Sesión')}' sin fecha; "
+                      f"queda sin año/periodo/folios.")
+                continue
+            fecha_iso = d.strftime("%Y-%m-%d")
+            anio_leg = clasificador.classify_per_year(fecha_iso)
+            periodo_num = clasificador.classify_per_period(fecha_iso)
+            folio_leg, folio_per = folios.generate_folios(fecha_iso, anio_leg, periodo_num)
+            reg["Año Legislatura"] = anio_leg
+            reg["Periodo"] = periodo_num
+            reg["Folio legislatura"] = folio_leg
+            reg["Folio periodo"] = folio_per
+
+        return self.asignar_claves_sesion_asistencias(ordenados)
+
+    def reset_folios_asistencias(self):
+        """Reinicia el acumulado de folios de asistencias (su
+        FolioManager propio). No afecta a self.folio_manager.
+        consolidar_asistencias() ya lo llama por su cuenta."""
+        self._asist_event_classifier = EventClassifier()
+        self._asist_folio_manager = FolioManager()
+
+    def process_file_asistencias(self, file_content: str, source_file: str = None,
+                                 consolidar: bool = False) -> list:
+        """
+        Extrae las listas de asistencia de TODAS las sesiones de una
+        gaceta mensual y devuelve una lista de registros (uno por sesión)
+        con el formato de asistencias.json.
+
+        file_content: texto con saltos de línea preservados (por ejemplo
+        PDFProcessor.clean_text_preserve_lines), porque la tabla se lee
+        por líneas.
+
+        Por defecto devuelve los registros "crudos" (sin folios, año,
+        periodo ni llave de sesión) en el orden en que aparecen en el
+        PDF. Cuando se procesan VARIAS gacetas, juntar los registros de
+        todas y llamar UNA vez a consolidar_asistencias(), que ordena
+        cronológicamente y calcula folios/llaves. Con consolidar=True se
+        consolida solo este archivo (útil para pruebas de un solo PDF).
+        """
+        if source_file:
+            print(f"Procesando asistencias (regex, sin IA): {source_file}")
+
+        listas = self._asist_encontrar_listas(file_content)
+        if not listas:
+            print("  Aviso: no se encontraron listas de asistencia en este archivo.")
+            return []
+
+        registros = []
+        for lista in listas:
+            registro = self._asist_armar_registro(lista)
+            registros.append(registro)
+            print(f"  Sesión '{registro['Sesión']}' del {registro['Fecha']}: "
+                  f"{len(registro['Asistencias'])} diputados registrados")
+        return self.consolidar_asistencias(registros) if consolidar else registros
+
 
 if __name__ == '__main__':
     from lib.PDFProcessor import PDFProcessor

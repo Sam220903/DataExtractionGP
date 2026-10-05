@@ -16,12 +16,15 @@ import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 import json
+import re
 import time
 import unicodedata
 from curl_cffi import requests
 from bs4 import BeautifulSoup
 from lib.EventClassifier import EventClassifier
 from lib.FolioManager import FolioManager
+from lib.PDFProcessor import PDFProcessor
+from extractors.GMProcessor import GMProcessor
 
 
 # ---------------------------------------------------------------------------
@@ -272,6 +275,13 @@ if response.status_code == 200:
             # Pausa ética para no saturar el servidor del Congreso
             time.sleep(1)
 
+    # --- Llave de sesión ---
+    # Los registros ya están en orden cronológico ascendente (se invirtió
+    # el listado del sitio). La "Clave sesión" ("AAAA-MM-DD|tipo|n") NO
+    # depende del folio, así que sirve para emparejar cada sesión con la
+    # de asistencias_gacetas.json aunque a un lado le falten sesiones.
+    GMProcessor.asignar_claves_sesion_asistencias(data["registros"])
+
     # --- Guardado del archivo ---
     folder = "data"
     os.makedirs(folder, exist_ok=True)
@@ -285,3 +295,94 @@ if response.status_code == 200:
 
 else:
     print(f"Error accediendo a la página inicial: {response.status_code}")
+
+
+# ===========================================================================
+# PARTE 2: ASISTENCIAS EXTRAÍDAS DE LAS GACETAS MENSUALES (PDF)
+#
+# Usa GMProcessor.process_file_asistencias() sobre cada PDF de gaceta mensual
+# y arma un SEGUNDO JSON (asistencias_gacetas.json) con la misma estructura
+# que asistencias.json (el de la web), para poder compararlos.
+#
+# Notas:
+#   - Se usa una instancia PROPIA de GMProcessor (y por lo tanto su propio
+#     FolioManager), independiente del folio_manager de la parte web.
+#   - El orden final de los registros es siempre cronológico ascendente (se
+#     ordena por fecha al final; los PDFs se leen por nombre "mes-aaaapdf.pdf"
+#     solo por comodidad).
+#   - Los FOLIOS de este JSON dependen de qué gacetas se procesen (FolioManager
+#     acumula) y pueden diferir de los de la web. Para emparejar sesiones usar
+#     "Clave sesión" ("AAAA-MM-DD|tipo|n"), que es igual en ambos JSON y no
+#     depende de folios ni de que a un lado le falten sesiones.
+# ===========================================================================
+ROOT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+# Carpeta donde gacetas_mensuales_scraper.py deja los PDFs. Ajustar si cambia.
+GACETAS_DIR = os.path.join(ROOT_DIR, "data", "pdfs", "gms")
+
+
+def _orden_cronologico_gaceta(nombre_archivo: str):
+    # "septiembre-2024pdf.pdf" -> (2024, 9, nombre). Los que no sigan el
+    # patrón se mandan al final para no perderlos ni romper el orden.
+    m = re.match(r'([a-záéíóúñ]+)-(\d{4})', nombre_archivo.lower())
+    if m:
+        mes = GMProcessor.MESES.get(m.group(1))
+        if mes:
+            return (int(m.group(2)), mes, nombre_archivo)
+    return (9999, 99, nombre_archivo)
+
+
+def extraer_asistencias_gacetas():
+    if not os.path.isdir(GACETAS_DIR):
+        print(f"\nNo existe la carpeta de gacetas mensuales: {GACETAS_DIR}")
+        return None
+
+    pdfs = sorted(
+        [f for f in os.listdir(GACETAS_DIR) if f.lower().endswith(".pdf")],
+        key=_orden_cronologico_gaceta
+    )
+    if not pdfs:
+        print(f"\nNo hay PDFs en {GACETAS_DIR}")
+        return None
+
+    print(f"\n=== Asistencias desde gacetas mensuales: {len(pdfs)} PDF(s) ===")
+
+    pdf_processor = PDFProcessor()
+    gm_processor = GMProcessor()   # instancia propia -> FolioManager propio
+
+    registros_crudos = []
+
+    for nombre_pdf in pdfs:
+        ruta_pdf = os.path.join(GACETAS_DIR, nombre_pdf)
+
+        try:
+            texto = pdf_processor.extract_text(ruta_pdf)
+            # clean_text_preserve_lines(), NO clean_text(): GMProcessor
+            # necesita los saltos de línea para segmentar y leer la tabla.
+            texto_limpio = pdf_processor.clean_text_preserve_lines(texto)
+        except Exception as e:
+            print(f"  Error leyendo {nombre_pdf}: {e}")
+            continue
+
+        registros = gm_processor.process_file_asistencias(
+            texto_limpio, source_file=ruta_pdf
+        )
+        registros_crudos.extend(registros)
+
+    # Consolidación global: ordena de la fecha más antigua a la más
+    # reciente (sin depender del orden de los PDFs), calcula año/periodo/
+    # folios en ese orden y asigna la "Clave sesión" de cada registro.
+    data_gacetas = {"registros": gm_processor.consolidar_asistencias(registros_crudos)}
+
+    folder_gm = "data"
+    os.makedirs(folder_gm, exist_ok=True)
+    ruta_salida = os.path.join(folder_gm, "asistencias_gacetas.json")
+
+    with open(ruta_salida, "w", encoding="utf-8") as file:
+        json.dump(data_gacetas, file, ensure_ascii=False, indent=5)
+
+    print("\n¡Archivo JSON de asistencias de gacetas guardado con éxito!")
+    print(f"Sesiones extraídas de gacetas: {len(data_gacetas['registros'])}")
+    return data_gacetas
+
+
+extraer_asistencias_gacetas()
