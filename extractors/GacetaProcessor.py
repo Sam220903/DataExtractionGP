@@ -214,7 +214,17 @@ de los siguientes temas:
     | 20 | Justicia y Estado de Derecho en temas de Mujeres | 
 Resultado: El número de tema de la votación como <Tema 1> y el tema de la votación como <Tema>
 
-7. Retorna un JSON que cumpla estrictamente con la estructura especificada en la sección de "SALIDA REQUERIDA", donde TODO DATO DEBE TENER UN VALOR ASIGNADO.
+7. Para cada votación extrae además 4 datos complementarios, usando ÚNICAMENTE lo que dice el texto (no inventes información):
+    A. Contenido: resumen de 1 a 3 oraciones, en español neutro, de lo que propone o resuelve el asunto votado (qué ley, código o decreto se reforma, adiciona o expide y en qué consiste el cambio; a qué autoridad se exhorta y con qué fin; qué cargo, comisión o comité se elige o integra, etc.). Si el texto solo da el título del asunto, parafrasea ese título sin agregar detalles que no estén en el texto. | <Contenido>
+    B. Comentario: observaciones relevantes que el acta consigna sobre ESTA votación, en una o dos oraciones: tipo de votación (nominal, secreta o económica), si hubo discusión y quién intervino, si el dictamen concentra varias iniciativas, ausencias o retardos justificados, instrucciones de publicación o envío. Si no hay nada relevante, usa "" (cadena vacía). | <Comentario>
+    C. Presentador: persona, comisión u órgano que presenta o propone el asunto votado, tal como lo nombra el texto (por ejemplo "que presenta la Comisión de ...", "propuesta presentada por la diputada ..."). Si el texto no lo nombra, evalúa si se puede inferir con estas reglas:
+        - Asuntos internos del Congreso (integración o elección de comisiones y comités, designaciones internas, habilitación de recintos, convocatorias a sesiones) cuyo origen no se atribuye a nadie en el texto: "Junta de Gobierno y Coordinación Política".
+        - Asuntos que el texto atribuye a las coordinaciones de los grupos y representaciones legislativas o a una propuesta de las bancadas: "Coordinadores de bancadas".
+        - Si el texto NO hace ninguna referencia al presentador y no aplica ninguna de las reglas anteriores, usa null. Nunca inventes nombres de personas.
+      | <Presentador>
+    D. Presentador fuente: "Acta" si el texto nombra al presentador; "Inferido" si lo asignaste con las reglas anteriores; "Ninguno" si el presentador es null. | <Presentador fuente>
+
+8. Retorna un JSON que cumpla estrictamente con la estructura especificada en la sección de "SALIDA REQUERIDA", donde TODO DATO DEBE TENER UN VALOR ASIGNADO, con dos excepciones: "Presentador" puede ser null (solo si no hay ninguna referencia a quién lo presenta) y "Comentario" puede ser "".
 
 
 === FIN DE INSTRUCCIONES ===
@@ -235,7 +245,11 @@ Arreglo de objetos en formato JSON, tu respuesta debe contener ÚNICA Y EXCLUSIV
         "A favor" : <Votos a favor>,
         "Contra" : <Votos en contra>,
         "Abstenciones" : <Abstenciones>,
-        "Total" : <Total>
+        "Total" : <Total>,
+        "Contenido" : <Contenido>,
+        "Comentario" : <Comentario>,
+        "Presentador" : <Presentador>,
+        "Presentador fuente" : <Presentador fuente>
     }
         
 ]
@@ -275,7 +289,7 @@ Arreglo de objetos en formato JSON, tu respuesta debe contener ÚNICA Y EXCLUSIV
             print("Advertencia: Se encontraron valores no numéricos en los votos.")
             return 0
 
-    def process_file(self, file_content: str, folio_manager=None) -> list[dict]:
+    def process_file(self, file_content: str, folio_manager=None, acta_id=None) -> list[dict]:
         """Procesa el archivo combinando reglas estáticas y la extracción de la IA"""
 
         periods = { 1 : "Primer periodo", 2 : "Segundo periodo", 3 : "Tercer periodo" }
@@ -325,6 +339,27 @@ Arreglo de objetos en formato JSON, tu respuesta debe contener ÚNICA Y EXCLUSIV
             # Asumimos 41 por defecto para el total si algo sale mal
             vote["Total"] = safe_int("Total", default=41) 
 
+            # Datos complementarios (solo los consume script7 / ActasProcessor; el writer de Excel los ignora).
+            # Se sacan de 'vote' para añadirlos AL FINAL del registro y no alterar el orden de las llaves existentes.
+            presenter = vote.pop("Presentador", None)
+            presenter = str(presenter).strip() if presenter else None
+            if presenter and presenter.lower() in ("null", "none", "n/a", "ninguno"):
+                presenter = None
+            presenter_src = str(vote.pop("Presentador fuente", "") or "").strip().capitalize()
+            if not presenter:
+                presenter_src = "Ninguno"
+            elif presenter_src not in ("Acta", "Inferido"):
+                presenter_src = "Inferido" if presenter in ("Junta de Gobierno y Coordinación Política",
+                                                            "Coordinadores de bancadas") else "Acta"
+            extras = {
+                "Contenido": str(vote.pop("Contenido", "") or "").strip(),
+                "Comentario": str(vote.pop("Comentario", "") or "").strip(),
+                "Presentador": presenter,
+                "Presentador fuente": presenter_src,
+            }
+            if acta_id:
+                extras["Acta_id"] = str(acta_id)
+
             absences = self.get_absences(vote)
             
             # Generamos los folios específicos para ESTE registro
@@ -337,6 +372,7 @@ Arreglo de objetos en formato JSON, tu respuesta debe contener ÚNICA Y EXCLUSIV
             merged_record["Ausentes"] = absences
             merged_record["Folio legislatura"] = folio_leg
             merged_record["Folio periodo"] = folio_per
+            merged_record.update(extras)
             
             final_records.append(merged_record)
             
