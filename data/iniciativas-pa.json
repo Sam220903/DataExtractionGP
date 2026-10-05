@@ -1,0 +1,25 @@
+[
+    {
+        "Número" : 2,
+        "Tipo" : "Punto de Acuerdo",
+        "Descripción" : "Elección de la Primera Mesa Directiva del Primer Año de Ejercicio Constitucional de la Sexagésima Segunda Legislatura del Honorable Congreso del Estado Libre y Soberano de Puebla, que actuará durante el período comprendido del quince de septiembre de dos mil veinticuatro al quince de marzo de dos mil veinticinco.",
+        "FechaPres" : "10/09/24",
+        "Presentador" : "Fedrha Isabel Suriano Corrales",
+        "Partido" : "MC",
+        "Tema" : 19,
+        "C1" : "N/A",
+        "C2" : null,
+        "C3" : null,
+        "C5" : null,
+        "C6" : null,
+        "Estatus" : "Aprobada",
+        "Fecha de aprobación" : "10/09/24",
+        "Diferencia de días entre fecha de presentación y aprobación" : 0,
+        "Año" : "Primero",
+        "Contenido" : "",
+        "Comentario" : "",
+        "F" : 32,
+        "C" : 6,
+        "Schema" : 0
+    }
+]
