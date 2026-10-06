@@ -1,5 +1,563 @@
 {
   "54599": [],
+  "_meta": {
+    "54599": {
+      "fecha": "2024-09-15",
+      "tipo_sesion": "Solemne"
+    },
+    "54600": {
+      "fecha": "2024-09-19",
+      "tipo_sesion": "Ordinaria"
+    },
+    "54601": {
+      "fecha": "2024-09-10",
+      "tipo_sesion": "Previa"
+    },
+    "54628": {
+      "fecha": "2024-09-19",
+      "tipo_sesion": "Ordinaria"
+    },
+    "54872": {
+      "fecha": "2024-09-26",
+      "tipo_sesion": "Ordinaria"
+    },
+    "54890": {
+      "fecha": "2024-10-03",
+      "tipo_sesion": "Ordinaria"
+    },
+    "54938": {
+      "fecha": "2024-10-10",
+      "tipo_sesion": "Ordinaria"
+    },
+    "54987": {
+      "fecha": "2024-10-15",
+      "tipo_sesion": "Ordinaria"
+    },
+    "55089": {
+      "fecha": "2024-10-17",
+      "tipo_sesion": "Ordinaria"
+    },
+    "55157": {
+      "fecha": "2024-10-24",
+      "tipo_sesion": "Ordinaria"
+    },
+    "55465": {
+      "fecha": "2024-10-31",
+      "tipo_sesion": "Ordinaria"
+    },
+    "55572": {
+      "fecha": "2024-11-06",
+      "tipo_sesion": "Ordinaria"
+    },
+    "55605": {
+      "fecha": "2024-11-14",
+      "tipo_sesion": "Ordinaria"
+    },
+    "55669": {
+      "fecha": "2024-11-21",
+      "tipo_sesion": "Ordinaria"
+    },
+    "55670": {
+      "fecha": "2024-11-22",
+      "tipo_sesion": "Solemne"
+    },
+    "55716": {
+      "fecha": "2024-11-28",
+      "tipo_sesion": "Ordinaria"
+    },
+    "55899": {
+      "fecha": "2024-12-05",
+      "tipo_sesion": "Ordinaria"
+    },
+    "55951": {
+      "fecha": "2024-12-12",
+      "tipo_sesion": "Ordinaria"
+    },
+    "56120": {
+      "fecha": "2024-12-16",
+      "tipo_sesion": "Comisión Permanente"
+    },
+    "56121": {
+      "fecha": "2024-12-18",
+      "tipo_sesion": "Comisión Permanente"
+    },
+    "56242": {
+      "fecha": "2024-12-20",
+      "tipo_sesion": "Extraordinaria"
+    },
+    "56243": {
+      "fecha": "2024-12-20",
+      "tipo_sesion": "Extraordinaria"
+    },
+    "56252": {
+      "fecha": "2024-12-19",
+      "tipo_sesion": "Comisión Permanente"
+    },
+    "56253": {
+      "fecha": "2024-12-17",
+      "tipo_sesion": "Extraordinaria"
+    },
+    "56282": {
+      "fecha": "2024-12-14",
+      "tipo_sesion": "Solemne"
+    },
+    "56283": {
+      "fecha": "2024-12-15",
+      "tipo_sesion": "Ordinaria"
+    },
+    "56359": {
+      "fecha": "2025-01-15",
+      "tipo_sesion": "Ordinaria"
+    },
+    "56403": {
+      "fecha": "2025-01-23",
+      "tipo_sesion": "Ordinaria"
+    },
+    "56488": {
+      "fecha": "2025-01-30",
+      "tipo_sesion": "Ordinaria"
+    },
+    "56784": {
+      "fecha": "2025-02-06",
+      "tipo_sesion": "Ordinaria"
+    },
+    "56834": {
+      "fecha": "2025-02-13",
+      "tipo_sesion": "Ordinaria"
+    },
+    "56871": {
+      "fecha": "2025-02-20",
+      "tipo_sesion": "Ordinaria"
+    },
+    "57094": {
+      "fecha": "2025-02-27",
+      "tipo_sesion": "Ordinaria"
+    },
+    "57166": {
+      "fecha": "2025-03-06",
+      "tipo_sesion": "Ordinaria"
+    },
+    "57216": {
+      "fecha": "2025-03-11",
+      "tipo_sesion": "Ordinaria"
+    },
+    "57281": {
+      "fecha": "2025-01-09",
+      "tipo_sesion": "Comisión Permanente"
+    },
+    "57282": {
+      "fecha": "2025-03-15",
+      "tipo_sesion": "Comisión Permanente"
+    },
+    "57326": {
+      "fecha": "2025-03-20",
+      "tipo_sesion": "Comisión Permanente"
+    },
+    "57479": {
+      "fecha": "2025-03-25",
+      "tipo_sesion": "Extraordinaria"
+    },
+    "57503": {
+      "fecha": "2025-03-24",
+      "tipo_sesion": "Comisión Permanente"
+    },
+    "57519": {
+      "fecha": "2025-04-03",
+      "tipo_sesion": "Comisión Permanente"
+    },
+    "57555": {
+      "fecha": "2025-04-07",
+      "tipo_sesion": "Comisión Permanente"
+    },
+    "57556": {
+      "fecha": "2025-04-07",
+      "tipo_sesion": "Extraordinaria"
+    },
+    "57645": {
+      "fecha": "2025-04-10",
+      "tipo_sesion": "Comisión Permanente"
+    },
+    "57718": {
+      "fecha": "2025-04-24",
+      "tipo_sesion": "Comisión Permanente"
+    },
+    "57799": {
+      "fecha": "2025-04-30",
+      "tipo_sesion": "Comisión Permanente"
+    },
+    "57823": {
+      "fecha": "2025-03-15",
+      "tipo_sesion": "Ordinaria"
+    },
+    "57893": {
+      "fecha": "2025-05-15",
+      "tipo_sesion": "Ordinaria"
+    },
+    "57930": {
+      "fecha": "2025-05-20",
+      "tipo_sesion": "Ordinaria"
+    },
+    "58097": {
+      "fecha": "2025-05-22",
+      "tipo_sesion": "Ordinaria"
+    },
+    "58187": {
+      "fecha": "2025-05-29",
+      "tipo_sesion": "Ordinaria"
+    },
+    "58359": {
+      "fecha": "2025-06-05",
+      "tipo_sesion": "Ordinaria"
+    },
+    "58381": {
+      "fecha": "2025-06-12",
+      "tipo_sesion": "Ordinaria"
+    },
+    "58474": {
+      "fecha": "2025-06-18",
+      "tipo_sesion": "Ordinaria"
+    },
+    "58526": {
+      "fecha": "2025-06-23",
+      "tipo_sesion": "Ordinaria"
+    },
+    "58768": {
+      "fecha": "2025-07-03",
+      "tipo_sesion": "Ordinaria"
+    },
+    "58770": {
+      "fecha": "2025-06-26",
+      "tipo_sesion": "Ordinaria"
+    },
+    "58847": {
+      "fecha": "2025-07-10",
+      "tipo_sesion": "Ordinaria"
+    },
+    "58848": {
+      "fecha": "2025-05-08",
+      "tipo_sesion": "Comisión Permanente"
+    },
+    "59015": {
+      "fecha": "2025-07-16",
+      "tipo_sesion": "Comisión Permanente"
+    },
+    "59167": {
+      "fecha": "2025-07-25",
+      "tipo_sesion": "Comisión Permanente"
+    },
+    "59168": {
+      "fecha": "2025-08-15",
+      "tipo_sesion": "Comisión Permanente"
+    },
+    "59256": {
+      "fecha": "2025-08-21",
+      "tipo_sesion": "Comisión Permanente"
+    },
+    "59398": {
+      "fecha": "2025-08-28",
+      "tipo_sesion": "Comisión Permanente"
+    },
+    "59474": {
+      "fecha": "2025-09-04",
+      "tipo_sesion": "Comisión Permanente"
+    },
+    "59488": {
+      "fecha": "2025-09-11",
+      "tipo_sesion": "Extraordinaria"
+    },
+    "59495": {
+      "fecha": "2025-09-09",
+      "tipo_sesion": "Solemne"
+    },
+    "59496": {
+      "fecha": "2025-07-15",
+      "tipo_sesion": "Ordinaria"
+    },
+    "59561": {
+      "fecha": "2025-09-15",
+      "tipo_sesion": "Ordinaria"
+    },
+    "59683": {
+      "fecha": "2025-09-18",
+      "tipo_sesion": "Ordinaria"
+    },
+    "59851": {
+      "fecha": "2025-09-25",
+      "tipo_sesion": "Ordinaria"
+    },
+    "59961": {
+      "fecha": "2025-10-02",
+      "tipo_sesion": "Ordinaria"
+    },
+    "60112": {
+      "fecha": "2025-10-09",
+      "tipo_sesion": "Ordinaria"
+    },
+    "60238": {
+      "fecha": "2025-10-16",
+      "tipo_sesion": "Ordinaria"
+    },
+    "60239": {
+      "fecha": "2025-10-23",
+      "tipo_sesion": "Ordinaria"
+    },
+    "60431": {
+      "fecha": "2025-10-29",
+      "tipo_sesion": "Ordinaria"
+    },
+    "60566": {
+      "fecha": "2025-11-06",
+      "tipo_sesion": "Ordinaria"
+    },
+    "60650": {
+      "fecha": "2025-11-13",
+      "tipo_sesion": "Ordinaria"
+    },
+    "60736": {
+      "fecha": "2025-11-20",
+      "tipo_sesion": "Ordinaria"
+    },
+    "60950": {
+      "fecha": "2025-11-27",
+      "tipo_sesion": "Ordinaria"
+    },
+    "61024": {
+      "fecha": "2025-12-04",
+      "tipo_sesion": "Ordinaria"
+    },
+    "61147": {
+      "fecha": "2025-09-10",
+      "tipo_sesion": "Comisión Permanente"
+    },
+    "61196": {
+      "fecha": "2025-12-11",
+      "tipo_sesion": "Ordinaria"
+    },
+    "61209": {
+      "fecha": "2025-12-16",
+      "tipo_sesion": "Comisión Permanente"
+    },
+    "61263": {
+      "fecha": "2025-12-19",
+      "tipo_sesion": "Comisión Permanente"
+    },
+    "61277": {
+      "fecha": "2025-12-13",
+      "tipo_sesion": "Solemne"
+    },
+    "61278": {
+      "fecha": "2025-12-15",
+      "tipo_sesion": "Ordinaria"
+    },
+    "61299": {
+      "fecha": "2026-01-15",
+      "tipo_sesion": "Ordinaria"
+    },
+    "61302": {
+      "fecha": "2026-01-19",
+      "tipo_sesion": "Ordinaria"
+    },
+    "61304": {
+      "fecha": "2026-01-20",
+      "tipo_sesion": "Ordinaria"
+    },
+    "61395": {
+      "fecha": "2026-01-21",
+      "tipo_sesion": "Ordinaria"
+    },
+    "61527": {
+      "fecha": "2026-01-22",
+      "tipo_sesion": "Ordinaria"
+    },
+    "61733": {
+      "fecha": "2026-01-29",
+      "tipo_sesion": "Ordinaria"
+    },
+    "61734": {
+      "fecha": "2026-02-05",
+      "tipo_sesion": "Ordinaria"
+    },
+    "61993": {
+      "fecha": "2026-02-12",
+      "tipo_sesion": "Ordinaria"
+    },
+    "61994": {
+      "fecha": "2026-02-19",
+      "tipo_sesion": "Ordinaria"
+    },
+    "62108": {
+      "fecha": "2026-02-25",
+      "tipo_sesion": "Ordinaria"
+    },
+    "62347": {
+      "fecha": "2026-01-09",
+      "tipo_sesion": "Comisión Permanente"
+    },
+    "62348": {
+      "fecha": "2026-03-05",
+      "tipo_sesion": "Ordinaria"
+    },
+    "62488": {
+      "fecha": "2026-03-17",
+      "tipo_sesion": "Comisión Permanente"
+    },
+    "62489": {
+      "fecha": "2026-03-27",
+      "tipo_sesion": "Extraordinaria"
+    },
+    "62525": {
+      "fecha": "2026-04-09",
+      "tipo_sesion": "Extraordinaria"
+    },
+    "62576": {
+      "fecha": "2026-03-27",
+      "tipo_sesion": "Comisión Permanente"
+    },
+    "62652": {
+      "fecha": "2026-04-09",
+      "tipo_sesion": "Comisión Permanente"
+    },
+    "62672": {
+      "fecha": "2026-03-12",
+      "tipo_sesion": "Ordinaria"
+    },
+    "62680": {
+      "fecha": "2026-04-23",
+      "tipo_sesion": "Extraordinaria"
+    },
+    "62681": {
+      "fecha": "2026-04-16",
+      "tipo_sesion": "Comisión Permanente"
+    },
+    "62832": {
+      "fecha": "2026-04-23",
+      "tipo_sesion": "Comisión Permanente"
+    },
+    "62889": {
+      "fecha": "2026-04-30",
+      "tipo_sesion": "Comisión Permanente"
+    },
+    "63016": {
+      "fecha": "2026-03-15",
+      "tipo_sesion": "Ordinaria"
+    },
+    "63140": {
+      "fecha": "2026-05-15",
+      "tipo_sesion": "Ordinaria"
+    },
+    "63285": {
+      "fecha": "2026-05-21",
+      "tipo_sesion": "Ordinaria"
+    },
+    "63286": {
+      "fecha": "2026-05-28",
+      "tipo_sesion": "Ordinaria"
+    },
+    "63505": {
+      "fecha": "2026-05-29",
+      "tipo_sesion": "Ordinaria"
+    },
+    "63506": {
+      "fecha": "2026-06-04",
+      "tipo_sesion": "Ordinaria"
+    },
+    "63509": {
+      "fecha": "2026-06-04",
+      "tipo_sesion": "Ordinaria"
+    },
+    "63600": {
+      "fecha": "2026-06-11",
+      "tipo_sesion": "Ordinaria"
+    },
+    "63707": {
+      "fecha": "2026-06-18",
+      "tipo_sesion": "Ordinaria"
+    },
+    "63804": {
+      "fecha": "2026-06-25",
+      "tipo_sesion": "Ordinaria"
+    },
+    "63928": {
+      "fecha": "2026-07-02",
+      "tipo_sesion": "Ordinaria"
+    },
+    "63974": {
+      "fecha": "2026-05-07",
+      "tipo_sesion": "Comisión Permanente"
+    },
+    "63975": {
+      "fecha": "2026-07-09",
+      "tipo_sesion": "Ordinaria"
+    },
+    "64104": {
+      "fecha": "2026-07-16",
+      "tipo_sesion": "Comisión Permanente"
+    },
+    "64134": {
+      "fecha": "2026-07-21",
+      "tipo_sesion": "Comisión Permanente"
+    },
+    "64146": {
+      "fecha": "2026-07-22",
+      "tipo_sesion": "Comisión Permanente"
+    },
+    "64236": {
+      "fecha": "2026-07-23",
+      "tipo_sesion": "Comisión Permanente"
+    },
+    "64237": {
+      "fecha": "2026-07-24",
+      "tipo_sesion": "Extraordinaria"
+    },
+    "64313": {
+      "fecha": "2026-08-13",
+      "tipo_sesion": "Comisión Permanente"
+    },
+    "64397": {
+      "fecha": "2026-08-20",
+      "tipo_sesion": "Comisión Permanente"
+    },
+    "64518": {
+      "fecha": "2026-08-27",
+      "tipo_sesion": "Comisión Permanente"
+    },
+    "64622": {
+      "fecha": "2026-09-03",
+      "tipo_sesion": "Comisión Permanente"
+    },
+    "64626": {
+      "fecha": "2026-09-10",
+      "tipo_sesion": "Comisión Permanente"
+    },
+    "64675": {
+      "fecha": "2026-07-15",
+      "tipo_sesion": "Ordinaria"
+    },
+    "64676": {
+      "fecha": "2026-09-04",
+      "tipo_sesion": "Solemne"
+    },
+    "64716": {
+      "fecha": "2026-09-11",
+      "tipo_sesion": "Comisión Permanente"
+    },
+    "64732": {
+      "fecha": "2026-09-15",
+      "tipo_sesion": "Ordinaria"
+    },
+    "64879": {
+      "fecha": "2026-09-12",
+      "tipo_sesion": "Extraordinaria"
+    },
+    "64921": {
+      "fecha": "2026-09-24",
+      "tipo_sesion": "Ordinaria"
+    },
+    "64924": {
+      "fecha": "2026-09-30",
+      "tipo_sesion": "Ordinaria"
+    }
+  },
   "54600": [],
   "54601": [
     {
@@ -73769,5 +74327,5 @@
       "Artículos": "44"
     }
   ],
-  "_version": 1
+  "_version": 2
 }

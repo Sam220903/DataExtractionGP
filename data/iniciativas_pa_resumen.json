@@ -1,39 +1,134 @@
 {
   "votaciones_leidas": 425,
-  "votaciones_fila_nueva": 320,
-  "votaciones_vinculadas": 103,
-  "filas_actualizadas_con_voto": 1554,
+  "votaciones_fila_nueva": 365,
+  "votaciones_vinculadas": 58,
+  "filas_actualizadas_con_voto": 87,
   "votaciones_vinculadas_via_sesion": 2,
-  "filas_total": 3123,
-  "filas_aprobadas": 1874,
-  "filas_pendientes": 1249,
-  "filas_con_votos_FCA": 1874,
-  "filas_con_contenido": 1920,
-  "filas_con_comentario": 1914,
+  "votaciones_ambiguas": 5,
+  "filas_total": 3168,
+  "filas_aprobadas": 452,
+  "filas_pendientes": 2716,
+  "filas_con_votos_FCA": 452,
+  "filas_con_contenido": 469,
+  "filas_con_comentario": 463,
   "actas_leidas": 139,
   "presentaciones_detectadas": 3544,
   "actas_sin_presentaciones": [
-    "54599",
-    "54600",
-    "54628",
-    "54987",
-    "55670",
-    "56242",
-    "56282",
-    "57282",
-    "57555",
-    "59488",
-    "59495",
-    "61209",
-    "61277",
-    "61302",
-    "61304",
-    "61395",
-    "62489",
-    "62525",
-    "62680",
-    "63505",
-    "64676",
-    "64716"
-  ]
+    {
+      "id": "54599",
+      "fecha": "2024-09-15",
+      "tipo_sesion": "Solemne"
+    },
+    {
+      "id": "54600",
+      "fecha": "2024-09-19",
+      "tipo_sesion": "Ordinaria"
+    },
+    {
+      "id": "54628",
+      "fecha": "2024-09-19",
+      "tipo_sesion": "Ordinaria"
+    },
+    {
+      "id": "54987",
+      "fecha": "2024-10-15",
+      "tipo_sesion": "Ordinaria"
+    },
+    {
+      "id": "55670",
+      "fecha": "2024-11-22",
+      "tipo_sesion": "Solemne"
+    },
+    {
+      "id": "56242",
+      "fecha": "2024-12-20",
+      "tipo_sesion": "Extraordinaria"
+    },
+    {
+      "id": "56282",
+      "fecha": "2024-12-14",
+      "tipo_sesion": "Solemne"
+    },
+    {
+      "id": "57282",
+      "fecha": "2025-03-15",
+      "tipo_sesion": "Comisión Permanente"
+    },
+    {
+      "id": "57555",
+      "fecha": "2025-04-07",
+      "tipo_sesion": "Comisión Permanente"
+    },
+    {
+      "id": "59488",
+      "fecha": "2025-09-11",
+      "tipo_sesion": "Extraordinaria"
+    },
+    {
+      "id": "59495",
+      "fecha": "2025-09-09",
+      "tipo_sesion": "Solemne"
+    },
+    {
+      "id": "61209",
+      "fecha": "2025-12-16",
+      "tipo_sesion": "Comisión Permanente"
+    },
+    {
+      "id": "61277",
+      "fecha": "2025-12-13",
+      "tipo_sesion": "Solemne"
+    },
+    {
+      "id": "61302",
+      "fecha": "2026-01-19",
+      "tipo_sesion": "Ordinaria"
+    },
+    {
+      "id": "61304",
+      "fecha": "2026-01-20",
+      "tipo_sesion": "Ordinaria"
+    },
+    {
+      "id": "61395",
+      "fecha": "2026-01-21",
+      "tipo_sesion": "Ordinaria"
+    },
+    {
+      "id": "62489",
+      "fecha": "2026-03-27",
+      "tipo_sesion": "Extraordinaria"
+    },
+    {
+      "id": "62525",
+      "fecha": "2026-04-09",
+      "tipo_sesion": "Extraordinaria"
+    },
+    {
+      "id": "62680",
+      "fecha": "2026-04-23",
+      "tipo_sesion": "Extraordinaria"
+    },
+    {
+      "id": "63505",
+      "fecha": "2026-05-29",
+      "tipo_sesion": "Ordinaria"
+    },
+    {
+      "id": "64676",
+      "fecha": "2026-09-04",
+      "tipo_sesion": "Solemne"
+    },
+    {
+      "id": "64716",
+      "fecha": "2026-09-11",
+      "tipo_sesion": "Comisión Permanente"
+    }
+  ],
+  "actas_sin_presentaciones_por_tipo": {
+    "Solemne": 6,
+    "Ordinaria": 7,
+    "Extraordinaria": 5,
+    "Comisión Permanente": 4
+  }
 }

@@ -219,7 +219,7 @@ _FOOTERS = [
 
 
 class ActasProcessor:
-    VERSION = 1   # súbela si cambias el parser: script7 vuelve a leer los PDFs solo (no cuesta IA)
+    VERSION = 2   # súbela si cambias el parser: script7 vuelve a leer los PDFs solo (no cuesta IA)
     """Extrae presentaciones (iniciativas / puntos de acuerdo) de un acta ya convertida a texto."""
 
     def __init__(self, commission_names=None):
@@ -389,6 +389,7 @@ class ActasProcessor:
 # ============================================================================
 
 import json
+import math
 from collections import Counter, defaultdict
 from datetime import date, timedelta
 
@@ -400,6 +401,7 @@ C_SLOTS = ["C1", "C2", "C3", "C5", "C6"]   # la estructura solicitada no incluye
 
 _STOP = set("de la el los las del al por que se en y a para con un una lo su sus e o u cual como entre otros "
             "acuerdo punto iniciativa decreto dictamen minuta".split())
+_LAW_RX = re.compile(r'\b(?:LEY|C[ÓO]DIGO|CONSTITUCI[ÓO]N|REGLAMENTO)\b[A-ZÁÉÍÓÚÑ ]+?(?=[,;.]| Y (?:EL|LA|LOS|LAS|SE)\b|$)')
 _MESES = {"enero": 1, "febrero": 2, "marzo": 3, "abril": 4, "mayo": 5, "junio": 6, "julio": 7,
           "agosto": 8, "septiembre": 9, "octubre": 10, "noviembre": 11, "diciembre": 12}
 
@@ -440,10 +442,12 @@ INSTITUCIONALES = {"Junta de Gobierno y Coordinación Política", "Coordinadores
 
 
 class ActasMerger:
-    def __init__(self, perfiles=None, link_thr_pa=0.55, link_thr_ini=0.45):
+    def __init__(self, perfiles=None, link_thr_pa=0.60, link_thr_ini=0.55, max_iniciativas_por_voto=6):
         self.thr = {'Punto de Acuerdo': link_thr_pa, 'Iniciativa': link_thr_ini}
         self.items, self.review = [], []
         self.stats = Counter()
+        self.max_ini = max_iniciativas_por_voto
+        self.idf, self.max_idf = {}, 1.0
         self.tema_by_comm = {cnorm(k): v for k, v in COMISION_TEMA.items()}
         # partido por diputado, sembrado con perfiles.json
         self.party_by_name = {norm_key(r['Nombre']): PARTY_ALIAS.get(r['Partido'], r['Partido'])
@@ -488,16 +492,52 @@ class ActasMerger:
             "Estatus": "Pendiente", "Fecha de aprobación": None,
             "Diferencia de días entre fecha de presentación y aprobación": None,
             "Año": legislative_year(fp), "Contenido": None, "Comentario": None,
-            "F": None, "C": None, "A": None, "_fp": fp, "_fa": None,
+            "F": None, "C": None, "A": None, "_fp": fp, "_fa": None, "_norma": p.get('Norma'),
         }
+
+    # ---- similitud ponderada: las palabras genéricas ("reforman", "ley", "exhorta") pesan poco ----
+    def _build_idf(self, texts):
+        df = Counter()
+        texts = [t for t in texts if t]
+        for t in texts:
+            df.update(_stems(t))
+        n = len(texts)
+        self.idf = {k: math.log((n + 1) / (c + 0.5)) for k, c in df.items()}
+        self.max_idf = max(self.idf.values()) if self.idf else 1.0
+
+    def sim(self, a, b):
+        A, B = _stems(a), _stems(b)
+        if not A or not B:
+            return 0.0
+        w = lambda s: self.idf.get(s, self.max_idf)
+        return 2 * sum(w(x) for x in A & B) / (sum(w(x) for x in A) + sum(w(x) for x in B))
+
+    @staticmethod
+    def _law(text):
+        m = _LAW_RX.search((text or '').upper())
+        return norm_key(m.group()) if m else None
+
+    @staticmethod
+    def _law_compatible(vote_title, item):
+        lv = ActasMerger._law(vote_title)
+        li = norm_key(item.get('_norma') or '') or ActasMerger._law(item.get('Descripción'))
+        if lv and li:
+            return lv in li or li in lv
+        if lv and item['Tipo'] == 'Punto de Acuerdo':
+            return False
+        return True
 
     def _candidates(self, vote, fv):
         out = []
         for it in self.items:
             if it['Estatus'] != 'Pendiente' or not it['_fp'] or it['_fp'] > fv:
                 continue
-            s = dice(vote['Titulo'], it['Descripción'] or '')
-            out.append((s * (1.0 if it['Tipo'] == vote['Tipo'] else 0.9), it))
+            if not self._law_compatible(vote['Titulo'], it):
+                continue
+            s = self.sim(vote['Titulo'], it['Descripción'] or '')
+            if it['Tipo'] != vote['Tipo']:          # un tipo distinto solo se acepta con coincidencia casi total
+                s = s * 0.9 if s >= 0.85 else 0.0
+            out.append((s, it))
         return sorted(out, key=lambda x: -x[0])
 
     def _apply_vote(self, it, v, fv, score):
@@ -536,6 +576,7 @@ class ActasMerger:
             else:
                 self.items.append(self._row_from_presentation(p))
         sess = self._sessions(comisiones_json)
+        self._build_idf([it['Descripción'] for it in self.items] + [v['Titulo'] for v in votes] + [s['asunto'] for s in sess])
 
         for v in sorted(votes, key=lambda x: x['Fecha']):
             fv = date.fromisoformat(v['Fecha'])
@@ -543,26 +584,38 @@ class ActasMerger:
             self.stats['votaciones_leidas'] += 1
             cands = self._candidates(v, fv)
             good = [(s, it) for s, it in cands if s >= thr]
+            chosen, ambiguous = [], False
             if good:
-                if len(good) > 1 and good[0][0] - good[1][0] < 0.03 and v['Tipo'] == 'Punto de Acuerdo':
-                    self.review.append({"motivo": "Vinculación ambigua", "votacion": v['Titulo'][:120],
-                                        "fecha": v['Fecha'], "candidatos": [it['Descripción'][:80] for _, it in good[:3]]})
-                chosen = good if v['Tipo'] == 'Iniciativa' else \
-                    [x for x in good if x[0] >= max(thr, 0.85 * good[0][0])]
+                if v['Tipo'] == 'Iniciativa':
+                    # un dictamen puede concentrar varias iniciativas, pero no decenas: si hay demasiadas, es genérico
+                    chosen = [x for x in good if x[0] >= max(thr, 0.9 * good[0][0])]
+                    ambiguous = len(chosen) > self.max_ini
+                else:
+                    tied = [x for x in good if good[0][0] - x[0] < 0.05]
+                    if len(tied) > 1 and v.get('Presentador'):     # desempate por presentador
+                        byp = [x for x in tied if norm_key(v['Presentador']) in norm_key(x[1]['Presentador'] or '')]
+                        tied = byp or tied
+                    chosen, ambiguous = tied[:1], len(tied) > 1
+            if chosen and not ambiguous:
                 for s, it in chosen:
                     self._apply_vote(it, v, fv, s)
                 self.stats['votaciones_vinculadas'] += 1
                 self.stats['filas_actualizadas_con_voto'] += len(chosen)
                 continue
+            if ambiguous:
+                self.stats['votaciones_ambiguas'] += 1
+                self.review.append({"motivo": "Vinculación ambigua (no se vinculó)", "votacion": v['Titulo'][:120],
+                                    "fecha": v['Fecha'], "n_candidatos": len(good),
+                                    "candidatos": [it['Descripción'][:80] for _, it in good[:3]]})
             # segundo salto: votación -> sesión de comisión -> presentador -> asunto pendiente
-            sb = max(((dice(v['Titulo'], s['asunto']), s) for s in sess
+            sb = max(((self.sim(v['Titulo'], s['asunto']), s) for s in sess
                       if s['fecha'] <= fv and (fv - s['fecha']).days <= 150), key=lambda x: x[0], default=(0, None))
-            if sb[0] >= 0.40 and sb[1]['presentadores']:
+            if sb[0] >= 0.45 and sb[1]['presentadores']:
                 s = sb[1]
-                pc = [(dice(s['asunto'], it['Descripción'] or ''), it) for it in self.items
+                pc = [(self.sim(s['asunto'], it['Descripción'] or ''), it) for it in self.items
                       if it['Estatus'] == 'Pendiente' and it['_fp'] <= fv
                       and any(norm_key(n) in norm_key(it['Presentador'] or '') for n in s['presentadores'])]
-                pc = sorted([x for x in pc if x[0] >= 0.35], key=lambda x: -x[0])
+                pc = sorted([x for x in pc if x[0] >= 0.40 and self._law_compatible(v['Titulo'], x[1])], key=lambda x: -x[0])[:self.max_ini]
                 if pc:
                     for sc, it in pc:
                         self._apply_vote(it, v, fv, sc)
@@ -575,15 +628,15 @@ class ActasMerger:
             pres, partido, num = None, None, None
             ds = directas.get(v['Fecha'], [])
             if ds:
-                dsb = max(ds, key=lambda p: dice(v['Titulo'], p['Descripción']))
-                if dice(v['Titulo'], dsb['Descripción']) >= 0.25:
+                dsb = max(ds, key=lambda p: self.sim(v['Titulo'], p['Descripción']))
+                if self.sim(v['Titulo'], dsb['Descripción']) >= 0.35:
                     pres, num = dsb['Presentador'], dsb['Número']
                     partido = self._party_for(dsb['Presentadores'], dsb['Partido'])
             if not pres and v.get('Presentador'):
                 pres = v['Presentador']
                 partido = 'N/A' if (pres in INSTITUCIONALES or pres.startswith('Comisión')) \
                     else self._party_for([pres], None)
-            if not pres and sb[0] >= 0.40 and sb[1]['presentadores']:
+            if not pres and sb[0] >= 0.45 and sb[1]['presentadores']:
                 pres = _join(sb[1]['presentadores'])
                 partido = self._party_for(sb[1]['presentadores'], None)
             self.stats['votaciones_fila_nueva'] += 1
@@ -615,10 +668,10 @@ class ActasMerger:
                 continue
             comms = {cnorm(it[c]) for c in C_SLOTS if it[c] and it[c] != 'N/A'}
             lim = it['_fa'] or date.max
-            best = max(((dice(s['asunto'], it['Descripción'] or ''), s) for s in sess
+            best = max(((self.sim(s['asunto'], it['Descripción'] or ''), s) for s in sess
                         if cnorm(s['comision']) in comms and it['_fp'] <= s['fecha'] <= lim),
                        key=lambda x: x[0], default=(0, None))
-            if best[0] >= 0.35:
+            if best[0] >= 0.45:
                 it['Contenido'] = best[1]['asunto']
                 it['Comentario'] = (it['Comentario'] + ' | ' if it['Comentario'] else '') + \
                     f"Contenido tomado de la sesión de comisión del {best[1]['fecha']:%d/%m/%y}"

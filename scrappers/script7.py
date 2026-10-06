@@ -3,6 +3,7 @@ import os
 import re
 import json
 import glob
+from collections import Counter
 
 # Añadir la carpeta principal al directorio de búsqueda
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
@@ -63,11 +64,13 @@ def main():
         clean_text = pdf_processor.clean_text(pdf_processor.extract_text(path))
         if clean_text:
             cache[aid] = actas_processor.process_file(clean_text, acta_id=aid)
+            cache.setdefault('_meta', {})[aid] = {"fecha": actas_processor.get_date(clean_text),
+                                                  "tipo_sesion": actas_processor.get_session_type(clean_text)}
             print(f"  acta {aid}: {len(cache[aid])} presentaciones")
     cache['_version'] = ActasProcessor.VERSION
     os.makedirs(DATA_DIR, exist_ok=True)
     json.dump(cache, open(CACHE_JSON, 'w', encoding='utf-8'), ensure_ascii=False, indent=2)
-    presentations = [r for k, recs in cache.items() if k != '_version' for r in recs]
+    presentations = [r for k, recs in cache.items() if not k.startswith('_') for r in recs]
 
     # Votaciones (ya extraídas por script3) + fusión
     votes = json.load(open(UNIDAD_JSON, encoding='utf-8'))['registros'] if os.path.exists(UNIDAD_JSON) else []
@@ -78,7 +81,10 @@ def main():
     resumen = dict(merger.stats)
     resumen['actas_leidas'] = len(pdfs)
     resumen['presentaciones_detectadas'] = len(presentations)
-    resumen['actas_sin_presentaciones'] = sorted(k for k, recs in cache.items() if k != '_version' and not recs)
+    meta = cache.get('_meta', {})
+    resumen['actas_sin_presentaciones'] = [dict(id=k, **meta.get(k, {})) for k, recs in sorted(cache.items())
+                                           if not k.startswith('_') and not recs]
+    resumen['actas_sin_presentaciones_por_tipo'] = dict(Counter(a.get('tipo_sesion', '?') for a in resumen['actas_sin_presentaciones']))
     json.dump(resumen, open(SUMMARY_JSON, 'w', encoding='utf-8'), ensure_ascii=False, indent=2)
     print(f"\n✓ {len(rows)} registros -> {OUTPUT_JSON}")
     print(f"✓ {len(review)} casos para revisar -> {REVIEW_JSON}")
