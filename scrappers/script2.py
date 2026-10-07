@@ -7,8 +7,61 @@ from curl_cffi import requests
 from bs4 import BeautifulSoup
 import json
 import time # Añadido para la pausa ética
+import unicodedata
 from lib.DateFormatter import DateFormatter
 from lib.EventClassifier import EventClassifier
+
+
+def normalizeText(text):
+    # Quita acentos y pasa a minúsculas para comparar textos sin importar cómo los escriba la página
+    decomposed = unicodedata.normalize('NFD', text)
+    withoutAccents = ''.join(char for char in decomposed if unicodedata.category(char) != 'Mn')
+    return withoutAccents.strip().lower()
+
+
+def extractMemberData(attendance):
+    # Extrae los datos de la tarjeta de un diputado
+    diputado_card = attendance.find('div', class_="diputado-card")
+    voto_card_meta = attendance.find('div', class_="voto-card-meta")
+    voto_card_foot = attendance.find('div', class_="voto-card-foot")
+
+    return {
+        "name": diputado_card.find('span', class_='nombre-card').text.strip(),
+        "party": diputado_card.find('span', class_='partido-card').find('img', class_='foto-logo')['alt'],
+        "attendance": voto_card_meta.find('span', class_='badge-asistencia').text.strip().lower(),
+        "vote": voto_card_foot.find('span', class_="badge-voto-sentido").text.strip().lower()
+    }
+
+
+def tallyVotes(members):
+    # Cuenta cada diputado en una sola categoría: ausente o, si asistió, a favor / en contra / abstención
+    tally = {
+        "favor": 0,
+        "against": 0,
+        "abstentions": 0,
+        "absences": 0,
+        "unrecognized": 0
+    }
+
+    for member in members:
+        if normalizeText(member["attendance"]) != 'asistencia':
+            tally["absences"] += 1
+            continue
+
+        vote = normalizeText(member["vote"])
+
+        if 'favor' in vote:
+            tally["favor"] += 1
+        elif 'contra' in vote:
+            tally["against"] += 1
+        elif 'abstencion' in vote:
+            tally["abstentions"] += 1
+        else:
+            # Asistió pero su voto no coincide con ninguna categoría conocida
+            tally["unrecognized"] += 1
+
+    return tally
+
 
 # Establecer parámetros iniciales
 domain = 'https://www.congresopuebla.gob.mx'
@@ -153,6 +206,7 @@ if response.status_code == 200:
                                 total_votes = 0
 
                                 if vote_type.lower() == 'secreta':
+                                    # En votación secreta no hay lista de diputados, se usan los conteos de la página
                                     secret_votes = in_favor + against + abstentions
                                     total_votes = secret_votes
 
@@ -161,46 +215,40 @@ if response.status_code == 200:
                                     attendances_grid =  attendances_table.find('div', class_="votos-grid")
                                     attendances = attendances_grid.find_all('article', class_="voto-card")
 
-                                    # Iniciar contadores manuales de votos para compararlos con el conteo de la página
-                                    temp_in_favor = 0
-                                    temp_against = 0
-                                    temp_abstentions = 0
+                                    # Extraer los datos de cada diputado y armar la lista que se guarda en el JSON
+                                    members = []
 
                                     for attendance in attendances:
-                                        diputado_card = attendance.find('div', class_="diputado-card")
-                                        voto_card_meta = attendance.find('div', class_="voto-card-meta")
-                                        voto_card_foot = attendance.find('div', class_="voto-card-foot")
-
-                                        member_name = diputado_card.find('span', class_='nombre-card').text.strip()
-                                        member_political_party = diputado_card.find('span', class_='partido-card').find('img', class_='foto-logo')['alt']
-                                        member_attendance = voto_card_meta.find('span', class_='badge-asistencia').text.strip().lower()
-                                        member_vote = voto_card_foot.find('span', class_="badge-voto-sentido").text.strip().lower()
-
-                                        if member_attendance == 'asistencia':
-                                            if member_vote == 'favor':
-                                                temp_in_favor += 1
-                                            elif member_vote == 'contra':
-                                                temp_against += 1
-                                            elif member_vote == 'abstencion':
-                                                temp_abstentions += 1
-                                        else: 
-                                            abscences += 1
+                                        member = extractMemberData(attendance)
+                                        members.append(member)
 
                                         new_congress_member = {
-                                            "diputado" : member_name,
-                                            "partido" : member_political_party,
-                                            "voto" : member_vote
+                                            "diputado" : member["name"],
+                                            "partido" : member["party"],
+                                            "voto" : member["vote"]
                                         }
 
                                         vote_list.append(new_congress_member)
 
-                                    # Verificar que el conteo manual de votos sea el mismo que el mostrado en la página de la votación
-                                    # Si el conteo manual es mayor, priorizar siempre el manual
-                                    in_favor = in_favor if in_favor >= temp_in_favor else temp_in_favor
-                                    against = against if against >= temp_against else temp_against
-                                    abstentions = abstentions if abstentions >= temp_abstentions else temp_abstentions
+                                    # Contar los votos a partir de la lista de diputados (fuente de verdad),
+                                    # así los totales siempre coinciden con la lista guardada en "votaciones"
+                                    tally = tallyVotes(members)
 
-                                    total_votes = in_favor + against + abstentions + abscences
+                                    # Avisar si el conteo de la página no coincide con el conteo manual
+                                    if (in_favor != tally["favor"] or against != tally["against"] or abstentions != tally["abstentions"]):
+                                        print(f"  Aviso: la página indica {in_favor}/{against}/{abstentions} (favor/contra/abstención) "
+                                              f"y el conteo manual es {tally['favor']}/{tally['against']}/{tally['abstentions']}. Se usa el manual.")
+
+                                    if tally["unrecognized"] > 0:
+                                        print(f"  Aviso: {tally['unrecognized']} diputado(s) asistieron con un voto no reconocido.")
+
+                                    in_favor = tally["favor"]
+                                    against = tally["against"]
+                                    abstentions = tally["abstentions"]
+                                    abscences = tally["absences"]
+
+                                    # El total es la suma de todas las categorías, es decir, todos los diputados de la lista
+                                    total_votes = in_favor + against + abstentions + abscences + tally["unrecognized"]
 
 
 
@@ -250,4 +298,3 @@ if response.status_code == 200:
 
 else:
     print(f"Error accediendo a la página inicial: {response.status_code}")
-    
