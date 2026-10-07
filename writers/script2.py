@@ -7,6 +7,7 @@ from openpyxl.utils import get_column_letter
 
 # ── Configuración inicial ──────────────────────────────────────────────────
 VOTE_CODE = {"Favor": 1, "Contra": 2, "Abstencion": 3, "NA": 0, "Secreta": 4}
+VOTE_LOOKUP = {k.lower(): v for k, v in VOTE_CODE.items()}
 
 VOTE_COLORS = {
     1: "C6EFCE",   # Verde claro  – A favor
@@ -42,7 +43,7 @@ def parse_date(date_str):
 
 # ── Carga y procesamiento de datos ──────────────────────────────────────────
 # Ajuste de ruta dinámica para el archivo JSON
-input_path = os.path.join(os.path.dirname(__file__), '..', 'data', 'votaciones.json')
+input_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'data', 'votaciones.json')
 
 with open(input_path, "r", encoding="utf-8") as f:
     data = json.load(f)
@@ -173,12 +174,12 @@ for row_offset, deputy in enumerate(deputies_list):
     # Cols de votos
     for col_idx, r in enumerate(registros, start=VOTE_START_COL):
         tipo_vot = r.get("tipo_votacion", "")
-        votos_map = {v["diputado"].strip(): v["voto"].capitalize() for v in r.get("votaciones", [])}
+        votos_map = {v["diputado"].strip(): v["voto"].strip().lower() for v in r.get("votaciones", [])}
 
         if tipo_vot == "Secreta":
             val = VOTE_CODE["Secreta"]
         elif deputy in votos_map:
-            val = VOTE_CODE.get(votos_map[deputy], VOTE_CODE["NA"])
+            val = VOTE_LOOKUP.get(votos_map[deputy], VOTE_CODE["NA"])
         else:
             val = None
 
@@ -195,16 +196,23 @@ for row_offset, deputy in enumerate(deputies_list):
 # ── FILAS FOOTER: totales ────────────────────────────────────────────────────
 FOOTER_START = DEP_START_ROW + NUM_DEPS + 1   # una fila de separación
 
+# Cada fila del footer cuenta el código correspondiente en la columna de la
+# votación (COUNTIF sobre los votos de los diputados). Así los totales salen
+# de los votos individuales y no de los totales del JSON (que vienen inflados).
+# En votaciones SECRETAS las celdas de diputados llevan el código 4 para todos,
+# así que ahí se usan los totales del JSON (que son correctos).
 footer_labels = [
-    ("Votos a favor",    "a_favor"),
-    ("Votos en contra",  "en_contra"),
-    ("Votos en secreto", "en_secreto"),
-    ("Abstención",       "abstenciones"),
-    ("Ausencia",         "ausencias"),
-    ("Sumatoria total",  "total_votos"),
+    ("Votos a favor",    "a_favor",      VOTE_CODE["Favor"]),
+    ("Votos en contra",  "en_contra",    VOTE_CODE["Contra"]),
+    ("Votos en secreto", "en_secreto",   None),
+    ("Abstención",       "abstenciones", VOTE_CODE["Abstencion"]),
+    ("Ausencia",         "ausencias",    VOTE_CODE["NA"]),
+    ("Sumatoria total",  "total_votos",  None),
 ]
 
-for i, (label, key) in enumerate(footer_labels):
+DEP_END_ROW = DEP_START_ROW + NUM_DEPS - 1
+
+for i, (label, key, code) in enumerate(footer_labels):
     row = FOOTER_START + i
     label_cell = ws.cell(row=row, column=2, value=label)
     if label == "Sumatoria total":
@@ -213,9 +221,24 @@ for i, (label, key) in enumerate(footer_labels):
         label_cell.fill = _fill(GREY_EMPTY)
 
     for col_idx, r in enumerate(registros, start=VOTE_START_COL):
-        val = r.get(key, 0)
+        col = get_column_letter(col_idx)
+        es_secreta = r.get("tipo_votacion", "") == "Secreta"
+
+        if es_secreta:
+            val = r.get(key, 0)                       # valores del JSON
+        elif key == "en_secreto":
+            val = 0                                   # votación nominal: no hay voto secreto
+        elif key == "total_votos":
+            first = FOOTER_START
+            last = FOOTER_START + len(footer_labels) - 2
+            val = f"=SUM({col}{first}:{col}{last})"   # suma de las filas anteriores
+        else:
+            val = f'=COUNTIF({col}{DEP_START_ROW}:{col}{DEP_END_ROW},{code})'
+
         cell = ws.cell(row=row, column=col_idx, value=val)
         cell.alignment = ALIGN_CENTER
+        if key == "total_votos":
+            cell.font = Font(bold=True)
 
 # Leyenda debajo
 legend_row = FOOTER_START + len(footer_labels) + 2
