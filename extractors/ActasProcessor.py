@@ -92,10 +92,10 @@ COMISION_TEMA = {
     "Bienestar": 2, "Ciencia, Humanidades, Tecnología e Innovación": 8,
     "Comunicaciones e Infraestructura": 11,
     "Control, Vigilancia y Evaluación de la Auditoría Superior del Estado": 10, "Cultura": 8,
-    "Agenda 2030 y convenios o acuerdos que se determinen en el ámbito internacional para mejorar las necesidades de toda la población": 17,
-    "Familia y los Derechos de la Niñez": 2, "Derechos Humanos": 14, "Desarrollo Económico": 1,
+    "Agenda 2030 y convenios o acuerdos que se determinen en el ámbito internacional para mejorar las necesidades de toda la población": 5,
+    "Familia y los Derechos de la Niñez": 14, "Grupos Vulnerables": 2, "Ciencia y Tecnología": 8, "Derechos Humanos": 14, "Desarrollo Económico": 1,
     "Desarrollo Rural": 12, "Desarrollo Urbano": 11, "Educación": 8,
-    "Gobernación y Puntos Constitucionales": 17, "Hacienda y Patrimonio Municipal": 7,
+    "Gobernación y Puntos Constitucionales": 14, "Hacienda y Patrimonio Municipal": 7,
     "Igualdad de Género": 20, "Instructora": 14, "Juventud y Deporte": 8,
     "Medio Ambiente, Recursos Naturales y Cambio Climático": 5, "Migración y Asuntos Internacionales": 9,
     "Organizaciones No Gubernamentales": 17, "Participación Ciudadana y Combate a la Corrupción": 10,
@@ -392,6 +392,7 @@ import json
 import math
 from collections import Counter, defaultdict
 from datetime import date, timedelta
+from functools import lru_cache
 
 OUT_KEYS = ["Número", "Tipo", "Descripción", "FechaPres", "Presentador", "Partido", "Tema",
             "C1", "C2", "C3", "C5", "C6", "Estatus", "Fecha de aprobación",
@@ -410,8 +411,9 @@ def cnorm(s: str) -> str:
     return norm_key(re.sub(r'^\s*de (la |los |las )?', '', strip_acc(s or '').lower()))
 
 
-def _stems(s: str) -> set:
-    return {t[:6] for t in tokens(s) if t not in _STOP and (len(t) > 1 or t.isdigit())}
+@lru_cache(maxsize=None)
+def _stems(s: str) -> frozenset:
+    return frozenset(t[:6] for t in tokens(s) if t not in _STOP and (len(t) > 1 or t.isdigit()))
 
 
 def dice(a: str, b: str) -> float:
@@ -426,24 +428,25 @@ def _fmt(d):
 def legislative_year(d):
     if d is None:
         return None
-    if d < date(2024, 9, 15):
+    if d < date(2024, 9, 10):          # antes de la sesión previa de la LXII Legislatura
         return 'N/A'
-    if d < date(2025, 9, 15):
+    if d < date(2025, 9, 15):          # incluye la sesión previa (10/09/24) y la elección de la Mesa Directiva
         return 'Primero'
     if d < date(2026, 9, 15):
         return 'Segundo'
     return 'Tercero'
 
 
-_YEAR_MAP = {"Primer año": "Primero", "Segundo año": "Segundo", "Tercer año": "Tercero"}
-
-
 INSTITUCIONALES = {"Junta de Gobierno y Coordinación Política", "Coordinadores de bancadas"}
 
 
 class ActasMerger:
-    def __init__(self, perfiles=None, link_thr_pa=0.60, link_thr_ini=0.55, max_iniciativas_por_voto=6):
+    def __init__(self, perfiles=None, link_thr_pa=0.60, link_thr_ini=0.45, max_iniciativas_por_voto=8,
+                 comm_thr_pa=0.12, comm_thr_ini=0.30, comm_bonus=0.20):
         self.thr = {'Punto de Acuerdo': link_thr_pa, 'Iniciativa': link_thr_ini}
+        self.comm_thr = {'Punto de Acuerdo': comm_thr_pa, 'Iniciativa': comm_thr_ini}
+        self.comm_bonus = comm_bonus
+        self.known_comms = {}   # cnorm -> nombre canónico (se llena en merge())
         self.items, self.review = [], []
         self.stats = Counter()
         self.max_ini = max_iniciativas_por_voto
@@ -458,8 +461,11 @@ class ActasMerger:
         if 'codigo penal' in d:
             return 14
         for c in comisiones:
-            if c and cnorm(c) in self.tema_by_comm:
-                return self.tema_by_comm[cnorm(c)]
+            k = cnorm(c) if c else ''
+            if k in self.tema_by_comm:
+                return self.tema_by_comm[k]
+            if k.startswith('agenda 2030'):
+                return 5
         return None
 
     def _learn_parties(self, presentations):
@@ -527,8 +533,23 @@ class ActasMerger:
             return False
         return True
 
+    # ---- comisión dictaminadora: el "Presentador" de la votación es la comisión, no el autor ----
+    def _vote_comms(self, vote):
+        """Comisiones (claves normalizadas) que aparecen en el campo Presentador de la votación."""
+        pn = norm_key(vote.get('Presentador') or '')
+        if 'comision' not in pn:
+            return set()
+        found = {k for k in self.known_comms if k and re.search(rf'\b{re.escape(k)}\b', pn)}
+        # si una comisión contiene a otra (p. ej. "Desarrollo Urbano" dentro de otra), quédate con la más larga
+        return {k for k in found if not any(k != o and k in o for o in found)}
+
+    @staticmethod
+    def _item_comms(it):
+        return {cnorm(it[c]) for c in C_SLOTS if it.get(c) and it[c] != 'N/A'}
+
     def _candidates(self, vote, fv):
         out = []
+        vc = self._vote_comms(vote)
         for it in self.items:
             if it['Estatus'] != 'Pendiente' or not it['_fp'] or it['_fp'] > fv:
                 continue
@@ -537,20 +558,58 @@ class ActasMerger:
             s = self.sim(vote['Titulo'], it['Descripción'] or '')
             if it['Tipo'] != vote['Tipo']:          # un tipo distinto solo se acepta con coincidencia casi total
                 s = s * 0.9 if s >= 0.85 else 0.0
-            out.append((s, it))
+            ic = self._item_comms(it)
+            cm = bool(vc and ic and (vc & ic))
+            out.append((min(1.0, s + (self.comm_bonus if cm and s > 0 else 0.0)), it, s, cm))
         return sorted(out, key=lambda x: -x[0])
+
+    # ---- convenciones de la base (Excel de referencia) ----
+    @staticmethod
+    def _count(x):
+        """F/C/A: el Excel deja en blanco los ceros de Contra y Abstenciones."""
+        return None if x in (None, '', 0, 0.0) else int(x)
+
+    @staticmethod
+    def _clean_vote_presenter(p):
+        p = re.sub(r'^\s*que presentan?\s+', '', p or '', flags=re.I).strip()
+        return (p[:1].upper() + p[1:]) if p else None
+
+    @staticmethod
+    def _short_date(d):
+        return f"{d.day}.{d.month}.{d:%y}"
+
+    @staticmethod
+    def _short_name(pres):
+        pres = (pres or '').strip()
+        if re.search(r'(?i)titular|comisi|junta|c[aá]mara|presidente|ayuntamiento|congreso|municipal|coordinador|fiscal|tribunal|auditor|poder|secretar',
+                     pres) or not pres:
+            return pres
+        return pres.split()[0]
+
+    def _concentrada_note(self, items):
+        """Mismo formato que el Excel: 'Concentrada: 10.3.22 Mónica, 20.10.22 Karla y 10.4.25 Fedrha'."""
+        parts = [f"{self._short_date(it['_fp'])} {self._short_name(it['Presentador'])}"
+                 for it in sorted(items, key=lambda i: i['_fp'])]
+        return 'Concentrada: ' + _join(parts)
 
     def _apply_vote(self, it, v, fv, score):
         it['Estatus'], it['_fa'], it['Fecha de aprobación'] = 'Aprobada', fv, _fmt(fv)
         it['Diferencia de días entre fecha de presentación y aprobación'] = (fv - it['_fp']).days
-        it['F'], it['C'], it['A'] = v.get('A favor'), v.get('Contra'), v.get('Abstenciones')
+        it['F'], it['C'], it['A'] = self._count(v.get('A favor')), self._count(v.get('Contra')), self._count(v.get('Abstenciones'))
         it['Tema'] = v.get('Tema 1') or it['Tema']
-        it['Contenido'] = it['Contenido'] or v.get('Contenido') or None
-        if v.get('Comentario'):
-            it['Comentario'] = (it['Comentario'] + ' | ' if it['Comentario'] else '') + v['Comentario']
+        if it['Tipo'] == 'Iniciativa':           # el Excel no tiene "Contenido" para los puntos de acuerdo
+            it['Contenido'] = it['Contenido'] or v.get('Contenido') or None
         if score < 0.70:
             self.review.append({"motivo": "Vinculación de baja similitud", "similitud": round(score, 2),
                                 "votacion": v['Titulo'][:100], "asunto": (it['Descripción'] or '')[:100]})
+
+    def _apply_group(self, items, v, fv, scores):
+        for it, sc in zip(items, scores):
+            self._apply_vote(it, v, fv, sc)
+        if len(items) > 1:
+            note = self._concentrada_note(items)
+            for it in items:
+                it['Comentario'] = note
 
     @staticmethod
     def _sessions(comisiones):
@@ -565,9 +624,33 @@ class ActasMerger:
                                 "asunto": s['Asunto abordado'], "presentadores": names})
         return out
 
+    def _assign_pa_day(self, pas, fv):
+        """Puntos de acuerdo votados el mismo día: asignación 1 a 1 por mejor puntaje (evita que dos votaciones
+        parecidas queden 'ambiguas' y acaben duplicadas como filas nuevas)."""
+        cthr, thr = self.comm_thr['Punto de Acuerdo'], self.thr['Punto de Acuerdo']
+        pairs = []
+        for v in pas:
+            for sc, it, sm, cm in self._candidates(v, fv):
+                if (cm and sm >= cthr) or sc >= thr:
+                    pairs.append((sc, v, it))
+        pairs.sort(key=lambda x: -x[0])
+        used_i, out = set(), {}
+        for sc, v, it in pairs:
+            if id(v) in out or id(it) in used_i:
+                continue
+            out[id(v)] = (sc, it)
+            used_i.add(id(it))
+            rivals = [x for x in pairs if x[1] is v and x[2] is not it and sc - x[0] < 0.05]
+            if rivals:
+                self.review.append({"motivo": "Punto de acuerdo asignado entre candidatos casi iguales: revisar",
+                                    "votacion": v['Titulo'][:100], "fecha": v['Fecha'],
+                                    "asignado": (it['Descripción'] or '')[:90], "n_empates": len(rivals)})
+        return out
+
     def merge(self, presentations, votes, comisiones_json=None):
         for v in votes:   # el prompt emite "Título"; tu JSON histórico trae "Titulo"
             v.setdefault('Titulo', v.get('Título'))
+            v['Presentador'] = self._clean_vote_presenter(v.get('Presentador'))
         self._learn_parties(presentations)
         directas = defaultdict(list)
         for p in presentations:
@@ -576,95 +659,110 @@ class ActasMerger:
             else:
                 self.items.append(self._row_from_presentation(p))
         sess = self._sessions(comisiones_json)
+        self.known_comms = {cnorm(n): n for n in
+                            [c['Nombre'] for c in (comisiones_json or []) if c.get('Nombre')] + list(COMISION_TEMA)}
         self._build_idf([it['Descripción'] for it in self.items] + [v['Titulo'] for v in votes] + [s['asunto'] for s in sess])
 
-        for v in sorted(votes, key=lambda x: x['Fecha']):
-            fv = date.fromisoformat(v['Fecha'])
-            thr = self.thr.get(v['Tipo'], 0.5)
-            self.stats['votaciones_leidas'] += 1
-            cands = self._candidates(v, fv)
-            good = [(s, it) for s, it in cands if s >= thr]
-            chosen, ambiguous = [], False
-            if good:
-                if v['Tipo'] == 'Iniciativa':
-                    # un dictamen puede concentrar varias iniciativas, pero no decenas: si hay demasiadas, es genérico
-                    chosen = [x for x in good if x[0] >= max(thr, 0.9 * good[0][0])]
-                    ambiguous = len(chosen) > self.max_ini
-                else:
-                    tied = [x for x in good if good[0][0] - x[0] < 0.05]
-                    if len(tied) > 1 and v.get('Presentador'):     # desempate por presentador
-                        byp = [x for x in tied if norm_key(v['Presentador']) in norm_key(x[1]['Presentador'] or '')]
-                        tied = byp or tied
-                    chosen, ambiguous = tied[:1], len(tied) > 1
-            if chosen and not ambiguous:
-                for s, it in chosen:
-                    self._apply_vote(it, v, fv, s)
-                self.stats['votaciones_vinculadas'] += 1
-                self.stats['filas_actualizadas_con_voto'] += len(chosen)
-                continue
-            if ambiguous:
-                self.stats['votaciones_ambiguas'] += 1
-                self.review.append({"motivo": "Vinculación ambigua (no se vinculó)", "votacion": v['Titulo'][:120],
-                                    "fecha": v['Fecha'], "n_candidatos": len(good),
-                                    "candidatos": [it['Descripción'][:80] for _, it in good[:3]]})
-            # segundo salto: votación -> sesión de comisión -> presentador -> asunto pendiente
-            sb = max(((self.sim(v['Titulo'], s['asunto']), s) for s in sess
-                      if s['fecha'] <= fv and (fv - s['fecha']).days <= 150), key=lambda x: x[0], default=(0, None))
-            if sb[0] >= 0.45 and sb[1]['presentadores']:
-                s = sb[1]
-                pc = [(self.sim(s['asunto'], it['Descripción'] or ''), it) for it in self.items
-                      if it['Estatus'] == 'Pendiente' and it['_fp'] <= fv
-                      and any(norm_key(n) in norm_key(it['Presentador'] or '') for n in s['presentadores'])]
-                pc = sorted([x for x in pc if x[0] >= 0.40 and self._law_compatible(v['Titulo'], x[1])], key=lambda x: -x[0])[:self.max_ini]
-                if pc:
-                    for sc, it in pc:
-                        self._apply_vote(it, v, fv, sc)
-                        self.stats['filas_actualizadas_con_voto'] += 1
-                        self.review.append({"motivo": "Vinculación vía sesión de comisión", "votacion": v['Titulo'][:100],
-                                            "asunto": (it['Descripción'] or '')[:100], "sesion": f"{s['fecha']:%d/%m/%y}"})
-                    self.stats['votaciones_vinculadas_via_sesion'] += 1
-                    continue
-            # sin presentación previa: asunto votado el mismo día
-            pres, partido, num = None, None, None
-            ds = directas.get(v['Fecha'], [])
-            if ds:
-                dsb = max(ds, key=lambda p: self.sim(v['Titulo'], p['Descripción']))
-                if self.sim(v['Titulo'], dsb['Descripción']) >= 0.35:
-                    pres, num = dsb['Presentador'], dsb['Número']
-                    partido = self._party_for(dsb['Presentadores'], dsb['Partido'])
-            if not pres and v.get('Presentador'):
-                pres = v['Presentador']
-                partido = 'N/A' if (pres in INSTITUCIONALES or pres.startswith('Comisión')) \
-                    else self._party_for([pres], None)
-            if not pres and sb[0] >= 0.45 and sb[1]['presentadores']:
-                pres = _join(sb[1]['presentadores'])
-                partido = self._party_for(sb[1]['presentadores'], None)
-            self.stats['votaciones_fila_nueva'] += 1
-            best = cands[0] if cands else (0.0, None)
-            self.review.append({"motivo": "Votación sin vincular a ninguna presentación" +
-                                          ("" if pres else " y sin presentador"),
-                                "votacion": v['Titulo'][:120], "fecha": v['Fecha'], "tipo": v['Tipo'],
-                                "mejor_similitud": round(best[0], 2), "umbral": thr,
-                                "mejor_candidato": (best[1]['Descripción'][:120] if best[1] else None)})
-            self.items.append({
-                "Número": num, "Tipo": v['Tipo'], "Descripción": v['Titulo'], "FechaPres": _fmt(fv),
-                "Presentador": pres, "Partido": partido, "Tema": v.get('Tema 1') or None,
-                "C1": 'N/A', "C2": None, "C3": None, "C5": None, "C6": None,
-                "Estatus": "Aprobada", "Fecha de aprobación": _fmt(fv),
-                "Diferencia de días entre fecha de presentación y aprobación": 0,
-                "Año": _YEAR_MAP.get(v.get('Año Legislatura'), legislative_year(fv)),
-                "Contenido": v.get('Contenido') or None,
-                "Comentario": ' | '.join(x for x in (v.get('Comentario'),
-                                                      None if pres else 'Presentador no identificado en el acta: revisar') if x) or None,
-                "F": v.get('A favor'), "C": v.get('Contra'), "A": v.get('Abstenciones'), "_fp": fv, "_fa": fv,
-            })
+        by_day = defaultdict(list)
+        for v in votes:
+            by_day[v['Fecha']].append(v)
+        for day in sorted(by_day):
+            fv = date.fromisoformat(day)
+            pa_assign = self._assign_pa_day([v for v in by_day[day] if v['Tipo'] == 'Punto de Acuerdo'], fv)
+            # primero las iniciativas (pueden concentrar varias filas), luego los puntos de acuerdo
+            for v in sorted(by_day[day], key=lambda x: x['Tipo'] != 'Iniciativa'):
+                self._process_vote(v, fv, directas, sess, pa_assign.get(id(v)))
 
         self._fill_content(sess)
         return self.finish()
 
+    def _process_vote(self, v, fv, directas, sess, pre):
+        thr = self.thr.get(v['Tipo'], 0.5)
+        self.stats['votaciones_leidas'] += 1
+        cands = self._candidates(v, fv)
+        cthr = self.comm_thr.get(v['Tipo'], 0.3)
+        good = [(sc, it) for sc, it, sm, cm in cands if (cm and sm >= cthr) or sc >= thr]
+        chosen, ambiguous = [], False
+        if pre:
+            chosen = [pre]
+        elif good and v['Tipo'] == 'Iniciativa':
+            # un dictamen puede concentrar varias iniciativas, pero no decenas: si hay demasiadas, es genérico
+            chosen = [x for x in good if x[0] >= 0.9 * good[0][0]]
+            ambiguous = len(chosen) > self.max_ini
+        if chosen and not ambiguous:
+            self._apply_group([it for _, it in chosen], v, fv, [sc for sc, _ in chosen])
+            self.stats['votaciones_vinculadas'] += 1
+            self.stats['filas_actualizadas_con_voto'] += len(chosen)
+            return
+        if ambiguous:
+            self.stats['votaciones_ambiguas'] += 1
+            self.review.append({"motivo": "Vinculación ambigua (no se vinculó)", "votacion": v['Titulo'][:120],
+                                "fecha": v['Fecha'], "n_candidatos": len(good),
+                                "candidatos": [it['Descripción'][:80] for _, it in good[:3]]})
+        # segundo salto: votación -> sesión de comisión -> presentador -> asunto pendiente
+        sb = max(((self.sim(v['Titulo'], s['asunto']), s) for s in sess
+                  if s['fecha'] <= fv and (fv - s['fecha']).days <= 150), key=lambda x: x[0], default=(0, None))
+        if sb[0] >= 0.45 and sb[1]['presentadores']:
+            s = sb[1]
+            pc = [(self.sim(s['asunto'], it['Descripción'] or ''), it) for it in self.items
+                  if it['Estatus'] == 'Pendiente' and it['_fp'] <= fv and it['Tipo'] == v['Tipo']
+                  and any(norm_key(n) in norm_key(it['Presentador'] or '') for n in s['presentadores'])]
+            pc = sorted([x for x in pc if x[0] >= 0.40 and self._law_compatible(v['Titulo'], x[1])],
+                        key=lambda x: -x[0])[:self.max_ini]
+            if pc:
+                self._apply_group([it for _, it in pc], v, fv, [sc for sc, _ in pc])
+                for sc, it in pc:
+                    self.stats['filas_actualizadas_con_voto'] += 1
+                    self.review.append({"motivo": "Vinculación vía sesión de comisión", "votacion": v['Titulo'][:100],
+                                        "asunto": (it['Descripción'] or '')[:100], "sesion": f"{s['fecha']:%d/%m/%y}"})
+                self.stats['votaciones_vinculadas_via_sesion'] += 1
+                return
+        # sin presentación previa: asunto votado el mismo día
+        pres, partido, num = None, None, None
+        c1 = 'N/A'
+        ds = directas.get(v['Fecha'], [])
+        if ds:
+            dsb = max(ds, key=lambda p: self.sim(v['Titulo'], p['Descripción']))
+            if self.sim(v['Titulo'], dsb['Descripción']) >= 0.35:
+                pres, num = dsb['Presentador'], dsb['Número']
+                partido = self._party_for(dsb['Presentadores'], dsb['Partido'])
+        if not pres and v.get('Presentador'):
+            pres = v['Presentador']
+            institucional = pres in INSTITUCIONALES or pres.startswith('Comisi')
+            partido = 'N/A' if institucional else self._party_for([pres], None)
+            vc = sorted(self._vote_comms(v), key=lambda k: norm_key(v['Presentador']).find(k))
+            if vc:                                   # la comisión dictaminadora va como C1/C2
+                c1 = self.known_comms[vc[0]]
+        if not pres and sb[0] >= 0.45 and sb[1]['presentadores']:
+            pres = _join(sb[1]['presentadores'])
+            partido = self._party_for(sb[1]['presentadores'], None)
+        self.stats['votaciones_fila_nueva'] += 1
+        best = (cands[0][0], cands[0][1]) if cands else (0.0, None)
+        self.review.append({"motivo": "Votación sin vincular a ninguna presentación" +
+                                      ("" if pres else " y sin presentador"),
+                            "votacion": v['Titulo'][:120], "fecha": v['Fecha'], "tipo": v['Tipo'],
+                            "mejor_similitud": round(best[0], 2), "umbral": thr,
+                            "mejor_candidato": (best[1]['Descripción'][:120] if best[1] else None)})
+        vcs = sorted(self._vote_comms(v), key=lambda k: norm_key(v['Presentador'] or '').find(k))
+        slots = dict(zip(C_SLOTS, [self.known_comms[k] for k in vcs][:5])) if vcs else {}
+        self.items.append({
+            "Número": num, "Tipo": v['Tipo'], "Descripción": v['Titulo'], "FechaPres": _fmt(fv),
+            "Presentador": pres, "Partido": partido, "Tema": v.get('Tema 1') or None,
+            "C1": slots.get('C1', c1), "C2": slots.get('C2'), "C3": slots.get('C3'),
+            "C5": slots.get('C5'), "C6": slots.get('C6'),
+            "Estatus": "Aprobada", "Fecha de aprobación": _fmt(fv),
+            "Diferencia de días entre fecha de presentación y aprobación": 0,
+            "Año": legislative_year(fv),
+            "Contenido": (v.get('Contenido') or None) if v['Tipo'] == 'Iniciativa' else None,
+            "Comentario": None if pres else 'Presentador no identificado en el acta: revisar',
+            "F": self._count(v.get('A favor')), "C": self._count(v.get('Contra')), "A": self._count(v.get('Abstenciones')),
+            "_fp": fv, "_fa": fv,
+        })
+
     def _fill_content(self, sess):
+        """Contenido de iniciativas aún sin resumen: se toma el 'asunto abordado' de la sesión de su comisión."""
         for it in self.items:
-            if it['Contenido']:
+            if it['Contenido'] or it['Tipo'] != 'Iniciativa':
                 continue
             comms = {cnorm(it[c]) for c in C_SLOTS if it[c] and it[c] != 'N/A'}
             lim = it['_fa'] or date.max
@@ -673,8 +771,6 @@ class ActasMerger:
                        key=lambda x: x[0], default=(0, None))
             if best[0] >= 0.45:
                 it['Contenido'] = best[1]['asunto']
-                it['Comentario'] = (it['Comentario'] + ' | ' if it['Comentario'] else '') + \
-                    f"Contenido tomado de la sesión de comisión del {best[1]['fecha']:%d/%m/%y}"
 
     def finish(self):
         self.stats['filas_total'] = len(self.items)

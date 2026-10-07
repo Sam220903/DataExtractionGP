@@ -99,6 +99,52 @@ def read_clean(pdf_processor, path):
 # ==============================================================================
 REANALIZAR_PROMPT_ANTERIOR = False   # True = reanaliza con IA las actas analizadas con un prompt anterior (gasta tokens)
 FORZAR_ACTAS = []                    # ids de acta a reanalizar siempre, ej. ['54601', '55669']
+MAX_FALLAS_IA_CONSECUTIVAS = 3       # tras este número de fallas de IA seguidas se detiene el análisis (las pendientes quedan para la próxima ejecución)
+
+
+# ==============================================================================
+# AVISOS AL USUARIO SOBRE ERRORES DE IA
+# ==============================================================================
+def describeAiError(reason):
+    return GacetaProcessor.ERROR_MESSAGES.get(reason, reason)
+
+
+def countPending(remainingActas, registry, gaceta_processor):
+    """Cuenta las actas que todavía necesitan análisis y no se alcanzaron a intentar"""
+    pending = 0
+    for aid, link, path in remainingActas:
+        if registry.needs_analysis(aid, gaceta_processor.PROMPT_VERSION,
+                                   force=aid in FORZAR_ACTAS, reanalyze_old=REANALIZAR_PROMPT_ANTERIOR):
+            pending += 1
+    return pending
+
+
+def buildStopMessage(gaceta_processor, consecutiveFailures):
+    if gaceta_processor.isFatalError():
+        return describeAiError(gaceta_processor.last_error_type)
+    return f"Se acumularon {consecutiveFailures} fallas seguidas de la IA ({describeAiError(gaceta_processor.last_error_type)})"
+
+
+def printAiFailureReport(registry, stopMessage, notAttempted):
+    failures = registry.pending_failures()
+    if not failures and not stopMessage:
+        return
+
+    print("\n" + "=" * 70)
+    print("ACTAS NO PROCESADAS")
+    print("=" * 70)
+
+    if stopMessage:
+        print(f"El análisis con IA se detuvo: {stopMessage}")
+        print(f"Actas que ni siquiera se alcanzaron a intentar: {notAttempted}")
+
+    for aid, error in failures:
+        print(f"  - acta {aid}: {describeAiError(error.get('motivo'))} ({error.get('fecha')})")
+
+    print("\nLas actas ya analizadas quedaron guardadas en el registro.")
+    print("Vuelve a ejecutar el script cuando se resuelva el problema: solo se enviarán a la IA")
+    print("las actas pendientes, las que ya fueron analizadas no consumen tokens.")
+    print("=" * 70)
 
 
 # ==============================================================================
@@ -138,7 +184,11 @@ def main():
 
     # --- PHASE 1: analizar SOLO lo que no está analizado -------------------------------------------
     stats = {"nuevas": 0, "ya_analizadas": 0, "sin_votos(sin IA)": 0, "fallidas": 0}
-    for aid, link, path in actas:
+    consecutiveFailures = 0
+    stopMessage = None
+    notAttempted = 0
+
+    for index, (aid, link, path) in enumerate(actas):
         registry.mark_downloaded(aid, link or registry.get(aid).get('url'), path)
 
         if not registry.needs_analysis(aid, gaceta_processor.PROMPT_VERSION,
@@ -164,15 +214,28 @@ def main():
             continue
 
         new_records = gaceta_processor.process_file(clean_text, folio_manager=None, acta_id=aid)
-        if not gaceta_processor.last_extraction_ok:      # falló la IA: NO se marca como analizada; se reintenta la próxima vez
-            registry.mark_failed(aid, "error_ia"); stats["fallidas"] += 1
+
+        # Falló la IA: NO se marca como analizada, se guarda el motivo y se reintenta la próxima ejecución
+        if not gaceta_processor.last_extraction_ok:
+            registry.mark_failed(aid, gaceta_processor.last_error_type, gaceta_processor.last_error_detail)
+            stats["fallidas"] += 1
+            consecutiveFailures += 1
+            print(f"  acta {aid}: NO procesada -> {describeAiError(gaceta_processor.last_error_type)}")
+
+            if gaceta_processor.isFatalError() or consecutiveFailures >= MAX_FALLAS_IA_CONSECUTIVAS:
+                stopMessage = buildStopMessage(gaceta_processor, consecutiveFailures)
+                notAttempted = countPending(actas[index + 1:], registry, gaceta_processor)
+                break
             continue
+
+        consecutiveFailures = 0
         registry.mark_analyzed(aid, new_records, "ok", gaceta_processor.PROMPT_VERSION,
                                gaceta_processor.model_id, fecha)
         stats["nuevas"] += 1
         print(f"  acta {aid}: {len(new_records)} registros")
 
     print("\nResumen:", stats, "| Registro:", registry.summary())
+    printAiFailureReport(registry, stopMessage, notAttempted)
 
     # --- PHASE 2: SORTING & FOLIATION (sobre todo lo analizado, nuevo y previo) -----------------------
     data = {"registros": registry.all_records()}

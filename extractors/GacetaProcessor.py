@@ -5,10 +5,12 @@ import re
 import os
 import sys
 import json
+import time
 
 # Nuevas importaciones del SDK actualizado
 from google import genai
 from google.genai import types
+from google.genai import errors as genaiErrors
 from dotenv import load_dotenv
 
 # Añadir la carpeta principal al directorio de búsqueda
@@ -28,11 +30,111 @@ API_KEY = os.getenv("GEMINI_API_KEY")
 
 class GacetaProcessor:
 
+    # Versión del prompt: súbela cuando cambies el prompt para poder reanalizar actas antiguas
+    PROMPT_VERSION = 2
+
+    # Reintentos ante errores temporales (alta demanda, límite por minuto, red)
+    MAX_ATTEMPTS = 4
+    BASE_DELAY_SECONDS = 5
+
+    # Errores tras los cuales no tiene sentido seguir llamando a la IA en esta ejecución
+    FATAL_ERROR_TYPES = ("cuota_agotada", "credenciales_invalidas")
+
+    # Mensajes para el usuario según el motivo del fallo
+    ERROR_MESSAGES = {
+        "alta_demanda": "El modelo está saturado por alta demanda. Intenta de nuevo más tarde.",
+        "cuota_agotada": "Se agotó la cuota o los tokens de la API de Gemini.",
+        "credenciales_invalidas": "La API key es inválida o no tiene permisos. Revisa GEMINI_API_KEY en el archivo .env.",
+        "error_red": "Falló la conexión con la API de Gemini.",
+        "respuesta_invalida": "El modelo devolvió una respuesta que no es un JSON válido.",
+        "error_api": "La API de Gemini devolvió un error inesperado.",
+        "error_desconocido": "Ocurrió un error desconocido al llamar a la IA.",
+        "error_ia": "Falló el procesamiento con IA.",
+        "sin_fecha": "No se pudo extraer la fecha del acta.",
+        "sin_texto": "No se pudo extraer texto del PDF.",
+    }
+
     def __init__(self):
         # En el nuevo SDK, instanciamos un Cliente en lugar de configurar el módulo globalmente
         self.client = genai.Client(api_key=API_KEY)
         # Definimos el modelo actualizado que nos compartiste
         self.model_id = "gemini-3.1-flash-lite"
+
+        # Estado de la última extracción (el script principal lo consulta)
+        self.last_extraction_ok = True
+        self.last_error_type = None
+        self.last_error_detail = ""
+
+    # ==========================================
+    # ESTADO Y CLASIFICACIÓN DE ERRORES DE IA
+    # ==========================================
+
+    def _resetStatus(self):
+        self.last_extraction_ok = True
+        self.last_error_type = None
+        self.last_error_detail = ""
+
+    def _setFailure(self, errorType: str, detail: str):
+        self.last_extraction_ok = False
+        self.last_error_type = errorType
+        self.last_error_detail = detail
+        print(f"Error de IA ({errorType}): {detail}")
+
+    def isFatalError(self) -> bool:
+        """True si el último error obliga a detener las llamadas a la IA (cuota agotada, API key inválida)"""
+        return self.last_error_type in self.FATAL_ERROR_TYPES
+
+    def _classifyError(self, error: Exception) -> tuple:
+        """Devuelve (tipo_de_error, se_puede_reintentar)"""
+        message = str(error).lower()
+
+        if isinstance(error, genaiErrors.APIError):
+            code = error.code
+
+            if code == 429:
+                # Cuota diaria agotada: reintentar no sirve. Límite por minuto: sí puede servir esperar.
+                if "perday" in message or "per day" in message:
+                    return "cuota_agotada", False
+                return "cuota_agotada", True
+
+            if code in (500, 502, 503, 504):
+                return "alta_demanda", True
+
+            if code in (401, 403):
+                return "credenciales_invalidas", False
+
+            if code == 400 and "api key" in message:
+                return "credenciales_invalidas", False
+
+            return "error_api", False
+
+        errorClassName = type(error).__name__.lower()
+        if isinstance(error, (ConnectionError, TimeoutError)):
+            return "error_red", True
+        if "connect" in errorClassName or "timeout" in errorClassName:
+            return "error_red", True
+
+        return "error_desconocido", False
+
+    def _waitBeforeRetry(self, attempt: int, errorType: str):
+        delay = self.BASE_DELAY_SECONDS * (2 ** (attempt - 1))
+        print(f"  {errorType}: reintentando en {delay}s (intento {attempt} de {self.MAX_ATTEMPTS})...")
+        time.sleep(delay)
+
+    def _parseVotes(self, response) -> list:
+        """Convierte la respuesta del modelo en lista de votaciones. Lanza ValueError si no es válida."""
+        if not response.text:
+            raise ValueError("La respuesta del modelo llegó vacía")
+
+        data = json.loads(response.text)
+        if not isinstance(data, list):
+            raise ValueError("La respuesta del modelo no es un arreglo JSON")
+        return data
+
+    def has_vote_anchor(self, cleaned_text: str) -> bool:
+        """True si el texto menciona un conteo de votos o 'unanimidad de votos' (ancla de la regla A del prompt)"""
+        pattern = r"unanimidad\s+de\s+votos|votos?\s+a\s+favor"
+        return re.search(pattern, cleaned_text, re.IGNORECASE) is not None
     
     def _spanish_to_int(self, text: str) -> int:
         """Convierte números en español a enteros"""
@@ -258,24 +360,38 @@ Arreglo de objetos en formato JSON, tu respuesta debe contener ÚNICA Y EXCLUSIV
         """
 
         full_prompt = f"{prompt_instructions}\n\n=== TEXTO ===\n{cleaned_text}\n=== FIN DE TEXTO ==="
-        
-        try:
-            # Nuevo formato de llamada: client.models.generate_content
-            # Pasamos las configuraciones (como forzar el JSON) mediante types.GenerateContentConfig
-            response = self.client.models.generate_content(
-                model=self.model_id,
-                contents=full_prompt,
-                config=types.GenerateContentConfig(
-                    response_mime_type="application/json"
+
+        # Un fallo de IA ya NO se confunde con "acta sin votaciones": se registra el motivo
+        # en last_error_type / last_error_detail y el script principal decide qué hacer.
+        for attempt in range(1, self.MAX_ATTEMPTS + 1):
+            try:
+                # Nuevo formato de llamada: client.models.generate_content
+                # Pasamos las configuraciones (como forzar el JSON) mediante types.GenerateContentConfig
+                response = self.client.models.generate_content(
+                    model=self.model_id,
+                    contents=full_prompt,
+                    config=types.GenerateContentConfig(
+                        response_mime_type="application/json"
+                    )
                 )
-            )
-            
-            extracted_data = json.loads(response.text)
-            return extracted_data
-            
-        except Exception as e:
-            print(f"Error procesando con Gemini: {e}")
-            return []
+            except Exception as error:
+                errorType, canRetry = self._classifyError(error)
+                if canRetry and attempt < self.MAX_ATTEMPTS:
+                    self._waitBeforeRetry(attempt, errorType)
+                    continue
+                self._setFailure(errorType, str(error))
+                return []
+
+            try:
+                return self._parseVotes(response)
+            except ValueError as error:
+                if attempt < self.MAX_ATTEMPTS:
+                    self._waitBeforeRetry(attempt, "respuesta_invalida")
+                    continue
+                self._setFailure("respuesta_invalida", str(error))
+                return []
+
+        return []
         
     def get_absences(self, vote: dict) -> int:
         try:
@@ -292,6 +408,8 @@ Arreglo de objetos en formato JSON, tu respuesta debe contener ÚNICA Y EXCLUSIV
     def process_file(self, file_content: str, folio_manager=None, acta_id=None) -> list[dict]:
         """Procesa el archivo combinando reglas estáticas y la extracción de la IA"""
 
+        self._resetStatus()
+
         periods = { 1 : "Primer periodo", 2 : "Segundo periodo", 3 : "Tercer periodo" }
         years = { 1 : "Primer año", 2 : "Segundo año", 3 : "Tercer año" }
         
@@ -300,6 +418,7 @@ Arreglo de objetos en formato JSON, tu respuesta debe contener ÚNICA Y EXCLUSIV
         
         if not date:
             print("No se pudo extraer la fecha del documento")
+            self._setFailure("sin_fecha", "No se pudo extraer la fecha del documento")
             return []
         
         # Guardamos los valores enteros que nos da el clasificador, porque el FolioManager los necesita para calcular matemáticamente.
@@ -318,6 +437,10 @@ Arreglo de objetos en formato JSON, tu respuesta debe contener ÚNICA Y EXCLUSIV
         
         print("Enviando texto a Gemini 3.1 Flash Lite para extraer votaciones...")
         votes = self._extract_votes(file_content)
+
+        # Si la IA falló, no se continúa: el script principal revisa last_extraction_ok
+        if not self.last_extraction_ok:
+            return []
         
         final_records = []
         for vote in votes:
@@ -392,6 +515,11 @@ if __name__ == '__main__':
     cleaned_text = pdf_processor.clean_text(text)
 
     data = processor.process_file(cleaned_text)
+
+    if not processor.last_extraction_ok:
+        reasonMessage = processor.ERROR_MESSAGES.get(processor.last_error_type, processor.last_error_type)
+        print(f"El archivo NO fue procesado: {reasonMessage}")
+        sys.exit(1)
 
     output_filename = "temp_output.json"
     

@@ -1,0 +1,11 @@
+[
+    {
+        "Tipo": "Comisión",
+        "Comisión / Comité": "Transportes y Movilidad",
+        "Fecha": "12 de marzo 2026",
+        "Fuente": "SV",
+        "Enlace": "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=62873",
+        "Motivo": "Falló la extracción con Gemini: El modelo está saturado por alta demanda (error 5xx de la API).",
+        "Código de error": "alta_demanda"
+    }
+]

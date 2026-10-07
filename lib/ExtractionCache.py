@@ -17,7 +17,8 @@ class ExtractionCache:
         "<url_del_documento>": {
             "status": "success" | "failed",
             "source": "SV" | "PM",
-            "data": {...}   # el diccionario completo devuelto por process_file, o null si falló
+            "data": {...},   # el diccionario completo devuelto por process_file, o null si falló
+            "error_type": "alta_demanda" | "cuota_agotada" | ...   # solo en "failed", si se conoce la causa
         },
         ...
     }
@@ -59,7 +60,7 @@ class ExtractionCache:
         }
         self.save()
 
-    def set_failed(self, link: str, source: str):
+    def set_failed(self, link: str, source: str, errorType: str = None):
         # Si por alguna razón ya existía un éxito previo registrado para este
         # enlace, nunca lo degradamos a "failed": un éxito previo se conserva.
         existing = self._data.get(link)
@@ -69,6 +70,7 @@ class ExtractionCache:
         self._data[link] = {
             "status": "failed",
             "source": source,
-            "data": None
+            "data": None,
+            "error_type": errorType
         }
         self.save()

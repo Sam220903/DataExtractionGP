@@ -7,6 +7,7 @@ import json
 import re
 import time
 import unicodedata
+from collections import Counter
 from curl_cffi import requests
 from bs4 import BeautifulSoup
 
@@ -14,7 +15,7 @@ from lib.DateHandler import DateHandler
 from lib.EventClassifier import EventClassifier
 from lib.PDFProcessor import PDFProcessor
 from lib.ExtractionCache import ExtractionCache
-from lib.ExtractionErrors import ExtractionFailedError
+from lib.ExtractionErrors import ExtractionFailedError, isFatalErrorType, describeErrorType
 from extractors.SVProcessor import SVProcessor
 from extractors.PMProcessor import PMProcessor
 
@@ -25,6 +26,10 @@ comissions_url = f'{domain}/index.php?option=com_k2&view=itemlist&layout=categor
 commitees_url = f'{domain}/index.php?option=com_k2&view=itemlist&layout=category&task=category&id=409'
 browser = "edge"
 parser = "html.parser"
+
+# Tras este número de fallas de IA seguidas se deja de llamar a Gemini en esta ejecución
+# (los documentos restantes quedan pendientes para la siguiente ejecución).
+MAX_CONSECUTIVE_AI_FAILURES = 3
 
 dh = DateHandler()
 ec = EventClassifier()
@@ -48,6 +53,35 @@ cache = ExtractionCache(cache_path)
 # completarse (por fallas de la API tras agotar los reintentos, por no poder
 # descargar el PDF, o por no poder extraerle texto legible).
 pending_records = []
+
+# Estado de la IA durante esta ejecución
+aiStopReason = None
+consecutiveAiFailures = 0
+
+
+def registerAiSuccess():
+    """Una extracción con IA salió bien: se reinicia el contador de fallas seguidas"""
+    global consecutiveAiFailures
+    consecutiveAiFailures = 0
+
+
+def registerAiFailure(errorType):
+    """
+    Una extracción con IA falló: se cuenta la falla y, si el error es fatal
+    (cuota diaria agotada, API key inválida) o ya hubo demasiadas fallas
+    seguidas, se detiene el uso de la IA durante el resto de la ejecución.
+    """
+    global aiStopReason, consecutiveAiFailures
+    consecutiveAiFailures += 1
+
+    if isFatalErrorType(errorType):
+        aiStopReason = describeErrorType(errorType)
+    elif consecutiveAiFailures >= MAX_CONSECUTIVE_AI_FAILURES:
+        aiStopReason = (f"Se acumularon {consecutiveAiFailures} fallas seguidas de la IA "
+                        f"(última causa: {describeErrorType(errorType)})")
+
+    if aiStopReason:
+        print(f"  Se detiene el análisis con IA en esta ejecución: {aiStopReason}")
 
 
 def build_default_extracted_data():
@@ -106,6 +140,24 @@ def process_session_document(stenographic_link, acta_link, group_name, group_typ
 
         return extracted_data
 
+    # La IA se detuvo antes en esta ejecución (cuota agotada, API key inválida o
+    # demasiadas fallas seguidas): no se descarga ni se llama a Gemini. El documento
+    # no queda en la caché de éxitos, así que se procesará en la siguiente ejecución.
+    if aiStopReason is not None:
+        print(f"  Se omite (IA detenida en esta ejecución): {source_link}")
+        extracted_data["Observaciones"] = "No se intentó procesar el documento porque el análisis con IA se detuvo en esta ejecución; pendiente de reprocesar"
+        extracted_data["Estado de extracción"] = "Pendiente"
+        pending_records.append({
+            "Tipo": group_type,
+            "Comisión / Comité": group_name,
+            "Fecha": current_date,
+            "Fuente": source_type,
+            "Enlace": source_link,
+            "Motivo": f"No se intentó: {aiStopReason}",
+            "Código de error": "no_intentado"
+        })
+        return extracted_data
+
     # No hay caché exitosa: intentamos procesar el documento desde cero.
     processor = sv_processor if source_type == "SV" else pm_processor
     pdf_dir = sv_pdf_dir if source_type == "SV" else pm_pdf_dir
@@ -118,14 +170,15 @@ def process_session_document(stenographic_link, acta_link, group_name, group_typ
         print(f"  No se pudo descargar el archivo: {source_link}")
         extracted_data["Observaciones"] = f"No se pudo descargar el archivo de {label}; pendiente de reprocesar"
         extracted_data["Estado de extracción"] = "Pendiente"
-        cache.set_failed(source_link, source_type)
+        cache.set_failed(source_link, source_type, "sin_descarga")
         pending_records.append({
             "Tipo": group_type,
             "Comisión / Comité": group_name,
             "Fecha": current_date,
             "Fuente": source_type,
             "Enlace": source_link,
-            "Motivo": "No se pudo descargar el archivo"
+            "Motivo": "No se pudo descargar el archivo",
+            "Código de error": "sin_descarga"
         })
         return extracted_data
 
@@ -136,14 +189,15 @@ def process_session_document(stenographic_link, acta_link, group_name, group_typ
         print(f"  No se pudo extraer texto legible del archivo: {source_link}")
         extracted_data["Observaciones"] = f"No se pudo extraer texto legible del archivo de {label}; pendiente de reprocesar"
         extracted_data["Estado de extracción"] = "Pendiente"
-        cache.set_failed(source_link, source_type)
+        cache.set_failed(source_link, source_type, "sin_texto")
         pending_records.append({
             "Tipo": group_type,
             "Comisión / Comité": group_name,
             "Fecha": current_date,
             "Fuente": source_type,
             "Enlace": source_link,
-            "Motivo": "No se pudo extraer texto legible del PDF"
+            "Motivo": "No se pudo extraer texto legible del PDF",
+            "Código de error": "sin_texto"
         })
         return extracted_data
 
@@ -155,21 +209,26 @@ def process_session_document(stenographic_link, acta_link, group_name, group_typ
             extracted_data["Observaciones"] = "No hay versión estenográfica, datos obtenidos del acta anterior"
 
         cache.set_success(source_link, source_type, extracted_data)
+        registerAiSuccess()
 
     except ExtractionFailedError as e:
+        errorType = e.errorType
         print(f"  No se pudo completar la extracción tras varios intentos: {e}")
+        print(f"  Causa: {describeErrorType(errorType)}")
         extracted_data = build_default_extracted_data()
         extracted_data["Observaciones"] = "No se pudo completar la extracción de datos tras varios intentos; pendiente de reprocesar"
         extracted_data["Estado de extracción"] = "Pendiente"
-        cache.set_failed(source_link, source_type)
+        cache.set_failed(source_link, source_type, errorType)
         pending_records.append({
             "Tipo": group_type,
             "Comisión / Comité": group_name,
             "Fecha": current_date,
             "Fuente": source_type,
             "Enlace": source_link,
-            "Motivo": "Falló la extracción con Gemini tras agotar los reintentos"
+            "Motivo": f"Falló la extracción con Gemini: {describeErrorType(errorType)}",
+            "Código de error": errorType
         })
+        registerAiFailure(errorType)
 
     return extracted_data
 
@@ -430,6 +489,17 @@ with open(ruta_archivo, 'w', encoding='utf-8') as output_file:
 print(f"\n=== Resumen de extracción ===")
 if pending_records:
     print(f"Registros pendientes de completar: {len(pending_records)}")
+
+    # Resumen por causa, para ver de un vistazo si fue alta demanda, cuota agotada, etc.
+    errorCounts = Counter(record.get("Código de error", "error_desconocido") for record in pending_records)
+    print("Pendientes por causa:")
+    for errorCode, count in errorCounts.most_common():
+        print(f"  - {count} x {describeErrorType(errorCode)}")
+
+    if aiStopReason:
+        print(f"\nEl análisis con IA se detuvo en esta ejecución: {aiStopReason}")
+
+    print("")
     for record in pending_records:
         print(f"  - [{record['Tipo']}] {record['Comisión / Comité']} | Fecha: {record['Fecha']} | "
               f"Fuente: {record['Fuente']} | Motivo: {record['Motivo']}")
@@ -443,6 +513,8 @@ if pending_records:
     print(f"La lista también se guardó por separado en: {pending_path}")
     print(f"En la próxima ejecución, estos registros se reintentarán automáticamente")
     print(f"(los que ya se completaron con éxito no se vuelven a procesar, gracias a la caché en: {cache_path}).")
+    if aiStopReason:
+        print("Vuelve a ejecutar el script cuando se resuelva el problema de la IA: solo se enviarán a Gemini los documentos pendientes.")
 else:
     print("Todos los registros con documento disponible se extrajeron correctamente. No hay pendientes.")
 
