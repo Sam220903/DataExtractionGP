@@ -14,8 +14,8 @@ console = Console()
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # Diccionario con los nombres de las bases de datos
-BASES_DE_DATOS = {1: "Perfiles", 2: "Votaciones", 3: "Unidad y Participación", 4: "Asistencias", 5: "Base 5 (Pendiente)", 6: "Base 6 (Pendiente)",
-	7: "Base 7 (Pendiente)"}
+BASES_DE_DATOS = {1: "Perfiles", 2: "Votaciones", 3: "Unidad y Participación", 4: "Asistencias", 5: "Comisiones y comites", 6: "Sesiones",
+	7: "Iniciativas y Puntos de Acuerdo"}
 
 
 def mostrar_menu():
@@ -27,7 +27,7 @@ def mostrar_menu():
 
 	for key, name in BASES_DE_DATOS.items():
 		# Marcar visualmente las que ya sabemos que existen
-		if key in [1, 2, 3, 4]:
+		if key in [1, 2, 3, 4, 5, 6, 7]:
 			estado = "[bold green]✓ Disponible[/bold green]"
 		else:
 			estado = "[dim]No implementado[/dim]"
