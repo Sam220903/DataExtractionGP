@@ -14,8 +14,8 @@ console = Console()
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # Diccionario con los nombres de las bases de datos
-BASES_DE_DATOS = {1: "Perfiles", 2: "Votaciones", 3: "Unidad y Participación", 4: "Asistencias", 5: "Base 5 (Pendiente)", 6: "Base 6 (Pendiente)",
-	7: "Base 7 (Pendiente)"}
+BASES_DE_DATOS = {1: "Perfiles", 2: "Votaciones", 3: "Unidad y Participación", 4: "Asistencias", 5: "Comisiones y comites", 6: "Sesiones",
+	7: "Iniciativas y Puntos de Acuerdo"}
 
 
 def mostrar_menu():
@@ -27,7 +27,7 @@ def mostrar_menu():
 
 	for key, name in BASES_DE_DATOS.items():
 		# Marcar visualmente las que ya sabemos que existen
-		if key in [1, 2, 3, 4]:
+		if key in [1, 2, 3, 4, 5, 6, 7]:
 			estado = "[bold green]✓ Disponible[/bold green]"
 		else:
 			estado = "[dim]No implementado[/dim]"
@@ -43,6 +43,7 @@ def ejecutar_scripts(db_number):
 	"""Ejecuta secuencialmente el scrapper y luego el writer correspondientes."""
 	scrapper_path = os.path.join(BASE_DIR, "scrappers", f"script{db_number}.py")
 	writer_path = os.path.join(BASE_DIR, "writers", f"script{db_number}.py")
+	verifier_path = os.path.join(BASE_DIR, "verification", f"script{db_number}.py")
 
 	# 1. Validar que ambos archivos existan antes de ejecutar nada
 	if not os.path.exists(scrapper_path):
@@ -73,8 +74,20 @@ def ejecutar_scripts(db_number):
 		console.print(f"[bold red]✗ Error fatal durante la ejecución del Writer.[/bold red]\nDetalles: {e}")
 		return
 
-	console.print(f"\n[bold green]¡Proceso completo para la base de datos {db_number} finalizado con éxito! 🎉[/bold green]\n")
+	# 4. Ejecutar Verificador (opcional: solo si existe)
+	if os.path.exists(verifier_path):
+		try:
+			# Sin status/spinner por si el verificador imprime resultados en pantalla
+			console.print(f"[bold yellow]Ejecutando verification/script{db_number}.py...[/bold yellow]")
+			subprocess.run([sys.executable, verifier_path], check=True)
+			console.print(f"[bold green]✓ Verificador (script{db_number}.py) finalizado correctamente.[/bold green]")
+		except subprocess.CalledProcessError as e:
+			console.print(f"[bold red]✗ Error durante la ejecución del Verificador.[/bold red]\nDetalles: {e}")
+			return
+	else:
+		console.print(f"[dim]No hay verificador para la base de datos {db_number}; se omite este paso.[/dim]")
 
+	console.print(f"\n[bold green]¡Proceso completo para la base de datos {db_number} finalizado con éxito! 🎉[/bold green]\n")
 
 def main():
 	subprocess.run('cls' if os.name == 'nt' else 'clear', shell=True)
