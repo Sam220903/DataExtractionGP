@@ -1,3 +1,5 @@
+# scrappers/script3.py
+
 import sys
 import os
 import re
@@ -125,6 +127,21 @@ def buildStopMessage(gaceta_processor, consecutiveFailures):
     return f"Se acumularon {consecutiveFailures} fallas seguidas de la IA ({describeAiError(gaceta_processor.last_error_type)})"
 
 
+def printQuotaAlert(errorType, notAttempted):
+    """Alerta destacada cuando se agota el margen de uso (gratuito) de la IA. Se imprime en cuanto ocurre."""
+    print("\n" + "!" * 70)
+    print("ALERTA: SE AGOTÓ EL MARGEN DE USO DE LA IA")
+    print("!" * 70)
+    print(describeAiError(errorType))
+    print("Se detuvo el envío de actas a la IA para no consumir más tokens de lo debido.")
+    print(f"Actas pendientes que no se alcanzaron a intentar: {notAttempted}")
+    print("\nQué puedes hacer:")
+    print("  - Esperar a que se restablezca la cuota (la diaria normalmente se renueva al día siguiente).")
+    print("  - O usar una API key con facturación activa en GEMINI_API_KEY (archivo .env).")
+    print("\nLas actas ya analizadas quedaron guardadas: al volver a ejecutar solo se enviarán las pendientes.")
+    print("!" * 70)
+
+
 def printAiFailureReport(registry, stopMessage, notAttempted):
     failures = registry.pending_failures()
     if not failures and not stopMessage:
@@ -225,6 +242,8 @@ def main():
             if gaceta_processor.isFatalError() or consecutiveFailures >= MAX_FALLAS_IA_CONSECUTIVAS:
                 stopMessage = buildStopMessage(gaceta_processor, consecutiveFailures)
                 notAttempted = countPending(actas[index + 1:], registry, gaceta_processor)
+                if gaceta_processor.isQuotaError():
+                    printQuotaAlert(gaceta_processor.last_error_type, notAttempted)
                 break
             continue
 

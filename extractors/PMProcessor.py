@@ -48,6 +48,12 @@ class PMProcessor:
         # Definimos el modelo actualizado que nos compartiste
         self.model_id = "gemini-3.1-flash-lite"
 
+        # Si la cuota diaria se agota, se guarda aquí el tipo ("cuota_gratuita_agotada" o
+        # "cuota_agotada") y el texto del error. Mientras tenga valor, ya NO se envía
+        # ninguna solicitud más a la IA desde este objeto.
+        self.quotaExhaustedType = None
+        self.quotaErrorText = ""
+
     def _calculate_duration_minutes(self, start_str: str, end_str: str):
         """Calcula la diferencia en minutos entre el inicio y el fin de la sesión"""
         try:
@@ -79,6 +85,26 @@ class PMProcessor:
 
         return None
 
+    def _detectQuotaExhaustion(self, error_text: str):
+        """
+        Detecta si el error indica que se agotó la cuota DIARIA de la API (un 429 que
+        menciona "per day"). Regresa "cuota_gratuita_agotada" si es del nivel gratuito,
+        "cuota_agotada" si es otra cuota diaria, o None si no es un error de cuota diaria
+        (por ejemplo, el límite por minuto, que sí puede resolverse esperando).
+        """
+        lowered = error_text.lower()
+
+        if "429" not in lowered and "resource_exhausted" not in lowered:
+            return None
+
+        if "perday" not in lowered and "per day" not in lowered:
+            return None
+
+        if "freetier" in lowered or "free_tier" in lowered or "free tier" in lowered:
+            return "cuota_gratuita_agotada"
+
+        return "cuota_agotada"
+
     def _call_gemini_with_retry(self, full_prompt: str) -> dict:
         """
         Llama a la API de Gemini y parsea el JSON de respuesta, reintentando
@@ -86,9 +112,18 @@ class PMProcessor:
         cortes de red, errores 5xx, respuesta con JSON mal formado, etc.).
 
         - Si el error trae un retryDelay explícito (típico del 429), se respeta ese tiempo.
-        - Si no, se aplica backoff exponencial (2, 4, 8... segundos) con un tope máximo.
+        - Si no, se aplica una espera corta y fija.
+        - Si el error indica que se agotó la cuota diaria, NO se reintenta y se bloquean
+          todas las solicitudes posteriores de este objeto (quotaExhaustedType).
         - Si se agotan los MAX_ATTEMPTS intentos, se lanza ExtractionFailedError.
         """
+        # La cuota ya se agotó antes en esta ejecución: no se envía nada más a la IA
+        if self.quotaExhaustedType:
+            raise ExtractionFailedError(
+                f"La cuota de la API ya se agotó en esta ejecución; no se envían más solicitudes. "
+                f"Último error: {self.quotaErrorText}"
+            )
+
         last_error = None
 
         for attempt in range(1, MAX_ATTEMPTS + 1):
@@ -106,6 +141,14 @@ class PMProcessor:
                 last_error = e
                 error_text = str(e)
                 print(f"Error procesando con Gemini (intento {attempt}/{MAX_ATTEMPTS}): {error_text}")
+
+                # Cuota diaria agotada: reintentar no sirve y solo gastaría solicitudes
+                quotaType = self._detectQuotaExhaustion(error_text)
+                if quotaType:
+                    self.quotaExhaustedType = quotaType
+                    self.quotaErrorText = error_text
+                    print("Se agotó la cuota diaria de la API: no se harán más solicitudes a la IA.")
+                    break
 
                 if attempt == MAX_ATTEMPTS:
                     break

@@ -1,8 +1,12 @@
 """
 json_a_excel_asistencias.py
 ----------------------------
-Convierte asistencias.json (estructura: {"registros": [ {sesion...} ]})
+Convierte asistencias_gacetas.json (estructura: {"registros": [ {sesion...} ]})
 en un archivo Excel casi idéntico a Copia_de_Asistencia_2024-2025.xlsx.
+
+IMPORTANTE: los datos del Excel provienen de las GACETAS MENSUALES (PDF).
+Los datos de la página web (asistencias.json) se usan después, en
+comparar_gacetas.py, solo para detectar discrepancias contra este Excel.
 
 Estructura del JSON de entrada:
     Cada "registro" es UNA SESIÓN, con:
@@ -23,17 +27,16 @@ Cada bloque tiene 4 filas de encabezado (num, fecha, Sesión, Periodo) + una fil
 
 Valores de asistencia: se escriben como el NÚMERO tal cual viene en el JSON
 (1, 2, 3, 4... o "No aplica" / "-" si el diputado no participó en esa sesión).
-La hoja "Claves" se agrega/actualiza como referencia de esos números.
+Cada celda se colorea según su código (ver COLORES_ASISTENCIA).
+La hoja "Claves" se agrega como referencia de esos números, con su color.
 
 Pensado para volver a correrse cada vez que el JSON se actualice: no asume una
 cantidad fija de sesiones ni de diputados.
 
-Uso:
-    python json_a_excel_asistencias.py [ruta_json] [ruta_salida_xlsx]
+Orden de ejecución: scraper -> writer (este script) -> verificador.
 
-Si no se pasan argumentos, usa:
-    entrada:  asistencias.json
-    salida:   Asistencia_Actualizada.xlsx
+Uso:
+    python json_a_excel_asistencias.py
 """
 
 import json
@@ -89,8 +92,43 @@ CLAVES = [
     ("-", "ya no es diputado"),
 ]
 
+# Colores por código de asistencia (la clave "-" cubre también "No aplica")
+COLORES_ASISTENCIA = {
+    1:   "C6EFCE",   # Verde claro     – Asistencia
+    2:   "FFF2CC",   # Amarillo claro  – Retardo Justificado
+    3:   "F8CBAD",   # Naranja         – Retardo Injustificado
+    4:   "BDD7EE",   # Azul claro      – Inasistencia Justificada
+    5:   "FFC7CE",   # Rojo claro      – Inasistencia Injustificada
+    6:   "D9D2E9",   # Lila            – Con Licencia
+    7:   "BFBFBF",   # Gris medio      – Sin información
+    8:   "7F7F7F",   # Gris oscuro     – Fallecimiento
+    "-": "CCCCCC",   # Gris            – Ya no es diputado
+}
+COLORES_CON_TEXTO_BLANCO = {"7F7F7F"}   # fondos oscuros que necesitan letra blanca
+
+_LADO = Side(style="thin", color="DDDDDD")
+BORDE = Border(left=_LADO, right=_LADO, top=_LADO, bottom=_LADO)
+ALINEACION_CENTRO = Alignment(horizontal="center", vertical="center")
+
 ANCHO_MINIMO = 8
 ANCHO_MAXIMO = 45
+
+
+# ---------------------------------------------------------------------------
+# Utilidades de color
+# ---------------------------------------------------------------------------
+def _relleno(hex_color: str) -> PatternFill:
+    return PatternFill(start_color=hex_color, end_color=hex_color, fill_type="solid")
+
+
+def color_para_valor(valor):
+    """Devuelve el hex del color que corresponde a un valor de asistencia (o None)."""
+    try:
+        clave = int(valor)
+    except (ValueError, TypeError):
+        texto = str(valor).strip().lower() if valor is not None else ""
+        clave = "-" if texto in ("-", "no aplica") else None
+    return COLORES_ASISTENCIA.get(clave)
 
 
 # ---------------------------------------------------------------------------
@@ -173,7 +211,6 @@ def escribir_bloque(ws, fila_inicio: int, titulo: str, relleno_titulo,
     después del bloque (dejando una fila en blanco de separación).
     """
     diputados = construir_orden_diputados(sesiones)
-    n_sesiones = len(sesiones)
 
     fila_titulo = fila_inicio
     fila_num = fila_inicio + 1
@@ -225,7 +262,7 @@ def escribir_bloque(ws, fila_inicio: int, titulo: str, relleno_titulo,
     # --- Filas de diputados ---
     mapas = [mapa_asistencias_por_sesion(s) for s in sesiones]
     fila_actual = fila_primer_diputado
-    for i, nombre in enumerate(diputados):
+    for nombre in diputados:
         c_nombre = ws.cell(row=fila_actual, column=2, value=nombre)
         c_nombre.font = FUENTE_NORMAL
 
@@ -233,11 +270,18 @@ def escribir_bloque(ws, fila_inicio: int, titulo: str, relleno_titulo,
             col = 3 + idx
             valor = mapa.get(nombre, "-")  # '-' = no participaba / ya no era diputado
             c_valor = ws.cell(row=fila_actual, column=col, value=valor)
-            c_valor.font = FUENTE_NORMAL
+            c_valor.alignment = ALINEACION_CENTRO
+
+            color = color_para_valor(valor)
+            if color:
+                c_valor.fill = _relleno(color)
+            c_valor.font = (
+                Font(name="Arial", color="FFFFFFFF")
+                if color in COLORES_CON_TEXTO_BLANCO
+                else FUENTE_NORMAL
+            )
 
         fila_actual += 1
-
-    fila_ultimo_diputado = fila_actual - 1
 
     # --- Fila(s) de TOTALES por sesión (una fila por categoría, con etiqueta gris) ---
     fila_totales_inicio = fila_actual + 1  # una fila en blanco antes de los totales
@@ -265,13 +309,37 @@ def escribir_bloque(ws, fila_inicio: int, titulo: str, relleno_titulo,
 # ---------------------------------------------------------------------------
 def escribir_hoja_claves(wb):
     ws = wb.create_sheet("Claves")
-    ws.column_dimensions["A"].width = 13
-    ws.column_dimensions["B"].width = 30
-    for i, (clave, descripcion) in enumerate(CLAVES, start=1):
+
+    # Encabezados
+    for col_idx, texto in enumerate(["Número", "Significado"], start=1):
+        c = ws.cell(row=1, column=col_idx, value=texto)
+        c.font = FUENTE_ENCABEZADO
+        c.fill = _relleno("E6B8AF")
+        c.alignment = ALINEACION_CENTRO
+        c.border = BORDE
+
+    # Una fila por clave, con la celda del número pintada de su color
+    for i, (clave, descripcion) in enumerate(CLAVES, start=2):
+        color = color_para_valor(clave)
+
         c_a = ws.cell(row=i, column=1, value=clave)
+        c_a.alignment = ALINEACION_CENTRO
+        c_a.border = BORDE
+        if color:
+            c_a.fill = _relleno(color)
+        c_a.font = (
+            Font(name="Arial", bold=True, color="FFFFFFFF")
+            if color in COLORES_CON_TEXTO_BLANCO
+            else Font(name="Arial", bold=True)
+        )
+
         c_b = ws.cell(row=i, column=2, value=descripcion)
-        c_a.font = FUENTE_NORMAL
         c_b.font = FUENTE_NORMAL
+        c_b.alignment = Alignment(vertical="center")
+        c_b.border = BORDE
+
+    ws.column_dimensions["A"].width = 12
+    ws.column_dimensions["B"].width = 30
 
 
 # ---------------------------------------------------------------------------
@@ -329,7 +397,8 @@ def generar_excel(registros: list[dict], ruta_salida: str) -> None:
 
 
 def main():
-    ruta_json = os.path.join(BASE_DIR, "..", "data", "asistencias.json")
+    # El Excel se construye con los datos de las gacetas
+    ruta_json = os.path.join(BASE_DIR, "..", "data", "asistencias_gacetas.json")
     ruta_salida = os.path.join(BASE_DIR, "..", "outputs", "Asistencias.xlsx")
 
     if not os.path.exists(ruta_json):

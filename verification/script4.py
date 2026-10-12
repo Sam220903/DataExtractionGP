@@ -1,14 +1,15 @@
 """
-Compara Asistencias.xlsx (generado con script2) contra asistencias_gacetas.json.
+Compara Asistencias.xlsx (generado con los datos de las GACETAS) contra
+asistencias.json (datos de la PÁGINA del Congreso).
 
-- Lee asistencias_gacetas.json y pinta las discrepancias directamente en
-  Asistencias.xlsx (color + comentario con tipo y valor de la gaceta).
+- Lee asistencias.json y pinta las discrepancias directamente en
+  Asistencias.xlsx (color + comentario con tipo y valor de la página).
 - Para no sobrescribir, usar --salida con otro nombre.
 - Solo se comparan las sesiones que existen en ambos lados.
 
 Uso:
     python comparar_gacetas.py
-    python comparar_gacetas.py --excel ruta/Asistencias.xlsx --json ruta/asistencias_gacetas.json
+    python comparar_gacetas.py --excel ruta/Asistencias.xlsx --json ruta/asistencias.json
 """
 import argparse
 import difflib
@@ -24,8 +25,8 @@ from openpyxl.styles import PatternFill
 
 # ── Colores ──────────────────────────────────────────────────────────────────
 COLOR_DISTINTO   = "FF6B35"   # Naranja/rojo: ambos tienen dato pero es DIFERENTE
-COLOR_SOLO_EXCEL = "FFE066"   # Amarillo: el Excel tiene dato y la gaceta no lista al diputado
-COLOR_SOLO_GACETA = "9DC3E6"  # Azul claro: la gaceta tiene dato y el Excel está vacío / "-"
+COLOR_SOLO_EXCEL = "FFE066"   # Amarillo: el Excel (gaceta) tiene dato y la página no lista al diputado
+COLOR_SOLO_PAGINA = "9DC3E6"  # Azul claro: la página tiene dato y el Excel está vacío / "-"
 
 LABELS = {
     1: "Asistencia", 2: "Retardo Justificado", 3: "Retardo Injustificado",
@@ -107,10 +108,10 @@ def columnas_por_sesion(ws, bloque):
 
 
 # ── Emparejar nombres (tolera pequeñas erratas) ──────────────────────────────
-def mapear_nombres(nombres_gaceta, nombres_excel):
-    """nombre_gaceta_normalizado -> nombre_excel_normalizado (o None)."""
+def mapear_nombres(nombres_pagina, nombres_excel):
+    """nombre_pagina_normalizado -> nombre_excel_normalizado (o None)."""
     mapa = {}
-    for n in nombres_gaceta:
+    for n in nombres_pagina:
         if n in nombres_excel:
             mapa[n] = n
             continue
@@ -123,14 +124,14 @@ def main():
     base = os.path.dirname(os.path.abspath(__file__))
     ap = argparse.ArgumentParser()
     ap.add_argument("--excel", default=os.path.join(base, "..", "outputs", "Asistencias.xlsx"))
-    ap.add_argument("--json", default=os.path.join(base, "..", "data", "asistencias_gacetas.json"))
+    ap.add_argument("--json", default=os.path.join(base, "..", "data", "asistencias.json"))
     ap.add_argument("--salida", default=None, help="Por defecto sobrescribe el mismo Asistencias.xlsx")
     args = ap.parse_args()
     if args.salida is None:
         args.salida = args.excel
 
     with open(args.json, "r", encoding="utf-8") as f:
-        gacetas = {r["Clave sesión"]: r for r in json.load(f)["registros"]}
+        pagina = {r["Clave sesión"]: r for r in json.load(f)["registros"]}
 
     wb = load_workbook(args.excel)
     ws = wb["Hoja 1"] if "Hoja 1" in wb.sheetnames else wb.worksheets[0]
@@ -152,41 +153,41 @@ def main():
             v = ws.cell(r, 2).value
             if v:
                 nombres_excel[norm(v)] = v
-    nombres_gaceta = {norm(x["Diputado"]) for rec in gacetas.values() for x in rec["Asistencias"]}
-    mapa = mapear_nombres(nombres_gaceta, list(nombres_excel))
+    nombres_pagina = {norm(x["Diputado"]) for rec in pagina.values() for x in rec["Asistencias"]}
+    mapa = mapear_nombres(nombres_pagina, list(nombres_excel))
 
-    sin_columna = [k for k in gacetas if k not in sesiones_excel]
+    sin_columna = [k for k in pagina if k not in sesiones_excel]
     sin_match_nombre = sorted(n for n, m in mapa.items() if m is None)
 
     discrepancias = []   # filas para la hoja "Discrepancias"
     conteo = Counter()
 
-    for clave, rec in gacetas.items():
+    for clave, rec in pagina.items():
         if clave not in sesiones_excel:
             continue
         bloque, col = sesiones_excel[clave]
 
-        # valores de la gaceta, ya traducidos al nombre del Excel
-        gac = {}
+        # valores de la página, ya traducidos al nombre del Excel
+        pag = {}
         for x in rec["Asistencias"]:
             destino = mapa.get(norm(x["Diputado"]))
             if destino:
-                gac[destino] = x["Asistencia"]
+                pag[destino] = x["Asistencia"]
 
         for r in range(bloque["first"], bloque["last"] + 1):
             nombre_x = ws.cell(r, 2).value
             val_x = ws.cell(r, col).value
-            val_g = gac.get(norm(nombre_x))
+            val_p = pag.get(norm(nombre_x))
             celda = ws.cell(r, col)
 
-            if vacio(val_x) and val_g is None:
+            if vacio(val_x) and val_p is None:
                 continue   # nada que comparar
 
-            if val_g is None:
-                tipo, color = "Solo en Excel (la gaceta no lista al diputado)", COLOR_SOLO_EXCEL
+            if val_p is None:
+                tipo, color = "Solo en Excel/gaceta (la página no lista al diputado)", COLOR_SOLO_EXCEL
             elif vacio(val_x):
-                tipo, color = "Solo en gaceta (Excel vacío o '-')", COLOR_SOLO_GACETA
-            elif str(val_x).strip() != str(val_g).strip():
+                tipo, color = "Solo en página (Excel vacío o '-')", COLOR_SOLO_PAGINA
+            elif str(val_x).strip() != str(val_p).strip():
                 tipo, color = "Valor distinto", COLOR_DISTINTO
             else:
                 continue   # coinciden
@@ -194,7 +195,7 @@ def main():
             conteo[tipo] += 1
             celda.fill = fill(color)
             celda.comment = Comment(
-                f"{tipo}\nGaceta: {describe(val_g) if val_g is not None else '(no aparece)'}",
+                f"{tipo}\nPágina: {describe(val_p) if val_p is not None else '(no aparece)'}",
                 "comparar_gacetas",
             )
             celda.comment.width = 260
@@ -204,7 +205,7 @@ def main():
                 clave, fecha.strftime("%d/%m/%Y"), ws.cell(bloque["tipo_row"], col).value,
                 nombre_x, celda.coordinate,
                 describe(val_x) if val_x is not None else "(vacío)",
-                describe(val_g) if val_g is not None else "(no aparece)",
+                describe(val_p) if val_p is not None else "(no aparece)",
                 tipo,
             ])
 
@@ -212,16 +213,16 @@ def main():
     wb.save(args.salida)
 
     # ── Reporte en consola ───────────────────────────────────────────────────
-    print(f"Sesiones comparadas: {sum(1 for k in gacetas if k in sesiones_excel)} de {len(gacetas)} en gacetas")
+    print(f"Sesiones comparadas: {sum(1 for k in pagina if k in sesiones_excel)} de {len(pagina)} en la página")
     print(f"Discrepancias totales: {len(discrepancias)}")
     for t, n in conteo.most_common():
         print(f"  - {t}: {n}")
     if sin_columna:
-        print("Sesiones de gacetas que no existen en el Excel (no se compararon):")
+        print("Sesiones de la página que no existen en el Excel (no se compararon):")
         for k in sin_columna:
             print("   ", k)
     if sin_match_nombre:
-        print("Nombres de gacetas sin equivalente en el Excel:")
+        print("Nombres de la página sin equivalente en el Excel:")
         for n in sin_match_nombre:
             print("   ", n)
     print(f"Archivo generado: {os.path.abspath(args.salida)}")

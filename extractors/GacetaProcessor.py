@@ -1,11 +1,13 @@
 # GacetaProcessor.py
 
 from datetime import datetime
+import difflib
 import re
 import os
 import sys
 import json
 import time
+import unicodedata
 
 # Nuevas importaciones del SDK actualizado
 from google import genai
@@ -31,19 +33,23 @@ API_KEY = os.getenv("GEMINI_API_KEY")
 class GacetaProcessor:
 
     # Versión del prompt: súbela cuando cambies el prompt para poder reanalizar actas antiguas
-    PROMPT_VERSION = 2
+    PROMPT_VERSION = 3
 
     # Reintentos ante errores temporales (alta demanda, límite por minuto, red)
     MAX_ATTEMPTS = 4
     BASE_DELAY_SECONDS = 5
 
     # Errores tras los cuales no tiene sentido seguir llamando a la IA en esta ejecución
-    FATAL_ERROR_TYPES = ("cuota_agotada", "credenciales_invalidas")
+    FATAL_ERROR_TYPES = ("cuota_agotada", "cuota_gratuita_agotada", "credenciales_invalidas")
+
+    # Errores que indican que se terminó el margen de uso de la IA (gratuito o de pago)
+    QUOTA_ERROR_TYPES = ("cuota_agotada", "cuota_gratuita_agotada")
 
     # Mensajes para el usuario según el motivo del fallo
     ERROR_MESSAGES = {
         "alta_demanda": "El modelo está saturado por alta demanda. Intenta de nuevo más tarde.",
         "cuota_agotada": "Se agotó la cuota o los tokens de la API de Gemini.",
+        "cuota_gratuita_agotada": "Se agotó el margen gratuito diario de la API de Gemini.",
         "credenciales_invalidas": "La API key es inválida o no tiene permisos. Revisa GEMINI_API_KEY en el archivo .env.",
         "error_red": "Falló la conexión con la API de Gemini.",
         "respuesta_invalida": "El modelo devolvió una respuesta que no es un JSON válido.",
@@ -53,6 +59,51 @@ class GacetaProcessor:
         "sin_fecha": "No se pudo extraer la fecha del acta.",
         "sin_texto": "No se pudo extraer texto del PDF.",
     }
+
+    # ==========================================
+    # CONFIGURACIÓN DE LA NORMALIZACIÓN DEL PRESENTADOR
+    # ==========================================
+
+    # perfiles.json (lo genera el Script 1). Si no existe, solo se omite el ajuste de nombres de diputados.
+    PROFILES_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'data', 'perfiles.json')
+
+    # Presentadores institucionales con nombre único
+    JGCP_NAME = "Junta de Gobierno y Coordinación Política"
+    COORDINATORS_NAME = "Coordinadores de bancadas"
+
+    # Valores que el modelo a veces escribe en lugar de null
+    NULL_PRESENTER_VALUES = ("null", "none", "n/a", "ninguno", "ninguna", "no aplica", "sin presentador")
+
+    # Quienes NUNCA cuentan como presentador (texto sin acentos ni puntuación). Para editarlo, agrega o quita patrones aquí.
+    NON_PRESENTER_REGEX = re.compile(
+        r"mesa directiva|ejecutivo federal|presidenta? de la republica|"
+        r"direccion general de asuntos juridicos|secretaria general"
+    )
+
+    # "que presenta la ...", "presentada por el ...", "a propuesta del ..." al inicio del valor
+    LEADING_PHRASE_REGEX = re.compile(
+        r"^(?:(?:el|la|los|las)\s+)?(?:(?:propuesta|iniciativa|acuerdo|dictamen)s?\s+)?"
+        r"(?:que\s+presentan?|presentad[oa]s?\s+por|a\s+propuesta\s+de(?:l)?)\s+(?:(?:el|la|los|las)\s+)?",
+        re.IGNORECASE
+    )
+
+    # "... de la Sexagésima Segunda Legislatura del Honorable Congreso del Estado" al final del valor
+    TRAILING_LEGISLATURE_REGEX = re.compile(
+        r"\s+de\s+la\s+(?:sexag[eé]sima\s+segunda|lxii)\s+legislatura.*$", re.IGNORECASE
+    )
+
+    # "Diputado", "Diputada", "Dip." antes de un nombre
+    HONORIFIC_REGEX = re.compile(r"^(?:(?:los|las|el|la)\s+)?(?:diputad[oa]s?|dips?\.?)\s+", re.IGNORECASE)
+
+    # Una comisión o comité y todo lo que sigue (descarta "diputado presidente de la ...")
+    COMMISSION_REGEX = re.compile(r"(comisi[oó]n(?:es)?|comit[eé]s?)\s+.*$", re.IGNORECASE)
+
+    COORDINATORS_REGEX = re.compile(
+        r"coordinadores? de (?:las |los )?(?:bancadas|grupos|representaciones)|^coordinadores"
+    )
+
+    # Similitud mínima para corregir una variante de escritura de un diputado ("Ariana" -> "Arianna")
+    FUZZY_NAME_RATIO = 0.9
 
     def __init__(self):
         # En el nuevo SDK, instanciamos un Cliente en lugar de configurar el módulo globalmente
@@ -64,6 +115,13 @@ class GacetaProcessor:
         self.last_extraction_ok = True
         self.last_error_type = None
         self.last_error_detail = ""
+
+        # Si la cuota se agota, se guarda el tipo y ya no se envía NINGUNA solicitud más a la IA
+        # mientras viva este objeto (no se reinicia con _resetStatus)
+        self.quota_exhausted_type = None
+
+        # Nombres oficiales de los diputados (perfiles.json), para escribirlos siempre igual
+        self.deputyIndex = self._loadDeputyIndex()
 
     # ==========================================
     # ESTADO Y CLASIFICACIÓN DE ERRORES DE IA
@@ -78,11 +136,20 @@ class GacetaProcessor:
         self.last_extraction_ok = False
         self.last_error_type = errorType
         self.last_error_detail = detail
+        if errorType in self.QUOTA_ERROR_TYPES:
+            self.quota_exhausted_type = errorType
         print(f"Error de IA ({errorType}): {detail}")
 
     def isFatalError(self) -> bool:
         """True si el último error obliga a detener las llamadas a la IA (cuota agotada, API key inválida)"""
         return self.last_error_type in self.FATAL_ERROR_TYPES
+
+    def isQuotaError(self) -> bool:
+        """True si el último error fue porque se agotó el margen de uso de la IA (gratuito o de pago)"""
+        return self.last_error_type in self.QUOTA_ERROR_TYPES
+
+    def _isFreeTierMessage(self, message: str) -> bool:
+        return "freetier" in message or "free_tier" in message or "free tier" in message
 
     def _classifyError(self, error: Exception) -> tuple:
         """Devuelve (tipo_de_error, se_puede_reintentar)"""
@@ -94,6 +161,8 @@ class GacetaProcessor:
             if code == 429:
                 # Cuota diaria agotada: reintentar no sirve. Límite por minuto: sí puede servir esperar.
                 if "perday" in message or "per day" in message:
+                    if self._isFreeTierMessage(message):
+                        return "cuota_gratuita_agotada", False
                     return "cuota_agotada", False
                 return "cuota_agotada", True
 
@@ -195,8 +264,155 @@ class GacetaProcessor:
         date = datetime(year, month, day).strftime("%Y-%m-%d")
         return date
 
+    # ==========================================
+    # NORMALIZACIÓN DEL PRESENTADOR
+    # Deja el valor que devolvió el modelo siempre en el mismo formato, sin inventar datos.
+    # ==========================================
+
+    def _plainText(self, text: str) -> str:
+        """Minúsculas, sin acentos ni puntuación, con espacios simples."""
+        decomposed = unicodedata.normalize("NFD", (text or "").lower())
+        withoutAccents = "".join(ch for ch in decomposed if unicodedata.category(ch) != "Mn")
+        return re.sub(r"[^a-z0-9]+", " ", withoutAccents).strip()
+
+    def _loadDeputyIndex(self) -> list:
+        """Lista de (nombre oficial, palabras normalizadas) de perfiles.json. Vacía si no se puede leer."""
+        try:
+            with open(self.PROFILES_PATH, encoding="utf-8-sig") as f:
+                data = json.load(f)
+        except (OSError, ValueError):
+            return []
+
+        if isinstance(data, dict):
+            data = data.get("registros", [])
+        if not isinstance(data, list):
+            return []
+
+        index = []
+        for profile in data:
+            if not isinstance(profile, dict) or not profile.get("Nombre"):
+                continue
+            officialName = re.sub(r"\s+", " ", str(profile["Nombre"])).strip()
+            index.append((officialName, self._plainText(officialName).split()))
+        return index
+
+    def _joinNatural(self, items: list) -> str:
+        """['A', 'B', 'C'] -> 'A, B y C'"""
+        if len(items) <= 1:
+            return "".join(items)
+        return ", ".join(items[:-1]) + " y " + items[-1]
+
+    def _canonicalDeputyName(self, name: str) -> str:
+        """Nombre oficial de perfiles.json si el texto es ese diputado (completo, truncado o con una errata).
+        Si no se reconoce, se devuelve tal cual: nunca se inventa ni se descarta un nombre."""
+        words = self._plainText(name).split()
+        if len(words) < 2 or not self.deputyIndex:
+            return name
+
+        prefixMatches = []
+        for officialName, officialWords in self.deputyIndex:
+            if words == officialWords:
+                return officialName
+            isShorter = len(words) < len(officialWords)
+            isLongEnough = len(words) >= 3 or len(officialWords) == 3
+            if isShorter and isLongEnough and officialWords[:len(words)] == words:
+                prefixMatches.append(officialName)
+        if len(prefixMatches) == 1:
+            return prefixMatches[0]
+
+        joinedWords = " ".join(words)
+        bestName, bestRatio = name, 0.0
+        for officialName, officialWords in self.deputyIndex:
+            ratio = difflib.SequenceMatcher(None, joinedWords, " ".join(officialWords)).ratio()
+            if ratio > bestRatio:
+                bestName, bestRatio = officialName, ratio
+        if bestRatio >= self.FUZZY_NAME_RATIO:
+            return bestName
+        return name
+
+    def _cleanPresenterText(self, raw) -> str:
+        """Quita espacios, comillas, 'que presenta la ...' al inicio y 'de la Sexagésima Segunda Legislatura...' al final."""
+        text = re.sub(r"\s+", " ", str(raw)).strip(" .;:\"'")
+        for _ in range(3):
+            withoutLead = self.LEADING_PHRASE_REGEX.sub("", text)
+            if withoutLead == text:
+                break
+            text = withoutLead
+        return self.TRAILING_LEGISLATURE_REGEX.sub("", text).strip(" .;:,")
+
+    def _normalizeInstitution(self, plain: str):
+        """Nombre fijo si el texto habla de la Junta de Gobierno o de los coordinadores de bancadas; si no, None."""
+        if "comision" in plain or "comite" in plain:
+            return None
+        if "junta de gobierno" in plain:
+            return self.JGCP_NAME
+        if self.COORDINATORS_REGEX.search(plain):
+            return self.COORDINATORS_NAME
+        return None
+
+    def _normalizeCommission(self, text: str):
+        """'Comisión de X' sin 'que presenta', sin artículo y sin 'diputado presidente de la ...'; si no hay comisión, None."""
+        match = self.COMMISSION_REGEX.search(text)
+        if not match:
+            return None
+        commission = self.TRAILING_LEGISLATURE_REGEX.sub("", match.group(0)).strip(" .;:,")
+        return commission[0].upper() + commission[1:]
+
+    def _normalizeNames(self, text: str) -> str:
+        """Quita 'Diputado/Diputada/Dip.' y unifica cada nombre con perfiles.json. Une con comas y ' y '."""
+        chunks = [c.strip() for c in re.split(r"\s*,\s*|\s+y\s+", text) if c.strip()]
+        names = []
+        for chunk in chunks:
+            chunk = self.HONORIFIC_REGEX.sub("", chunk).strip()
+            looksLikeName = len(chunk.split()) <= 7 and not re.search(r"\d", chunk)
+            if looksLikeName:
+                chunk = self._canonicalDeputyName(chunk)
+            names.append(chunk)
+        return self._joinNatural(names)
+
+    def _normalizePresenter(self, raw):
+        """Valor de 'Presentador' ya limpio, o None si no hay un presentador válido.
+        Es idempotente: normalizar dos veces da lo mismo que normalizar una."""
+        if raw is None:
+            return None
+        text = self._cleanPresenterText(raw)
+        if not text or text.lower() in self.NULL_PRESENTER_VALUES:
+            return None
+
+        plain = self._plainText(text)
+        if self.NON_PRESENTER_REGEX.search(plain):
+            return None
+
+        institution = self._normalizeInstitution(plain)
+        if institution:
+            return institution
+
+        commission = self._normalizeCommission(text)
+        if commission:
+            return commission
+
+        return self._normalizeNames(text)
+
+    def _resolvePresenterSource(self, presenter, rawSource: str) -> str:
+        """'Presentador fuente' coherente con el presentador final."""
+        if not presenter:
+            return "Ninguno"
+        if rawSource in ("Acta", "Inferido"):
+            return rawSource
+        if presenter in (self.JGCP_NAME, self.COORDINATORS_NAME):
+            return "Inferido"
+        return "Acta"
+
     def _extract_votes(self, cleaned_text: str) -> list[dict]:
         """Envía el texto a Gemini utilizando el prompt estructurado"""
+
+        # Si en esta ejecución ya se agotó la cuota, NO se envía nada más a la IA
+        if self.quota_exhausted_type:
+            self._setFailure(
+                self.quota_exhausted_type,
+                "La cuota ya se agotó en esta ejecución: no se envían más solicitudes a la IA"
+            )
+            return []
         
         prompt_instructions = """
 === CONTEXTO ===
@@ -310,6 +526,7 @@ de los siguientes temas:
     | 12 | Agricultura, Ganadería y Pesca |
     | 13 | Medios de Comunicación |
     | 14 | Justicia y Estado de Derecho |
+    | 15 | Telecomunicaciones |
     | 16 | Trabajo y Previsión Social |
     | 18 | Administración Pública |
     | 19 | Internos del Congreso |
@@ -319,12 +536,21 @@ Resultado: El número de tema de la votación como <Tema 1> y el tema de la vota
 7. Para cada votación extrae además 4 datos complementarios, usando ÚNICAMENTE lo que dice el texto (no inventes información):
     A. Contenido: resumen de 1 a 3 oraciones, en español neutro, de lo que propone o resuelve el asunto votado (qué ley, código o decreto se reforma, adiciona o expide y en qué consiste el cambio; a qué autoridad se exhorta y con qué fin; qué cargo, comisión o comité se elige o integra, etc.). Si el texto solo da el título del asunto, parafrasea ese título sin agregar detalles que no estén en el texto. | <Contenido>
     B. Comentario: observaciones relevantes que el acta consigna sobre ESTA votación, en una o dos oraciones: tipo de votación (nominal, secreta o económica), si hubo discusión y quién intervino, si el dictamen concentra varias iniciativas, ausencias o retardos justificados, instrucciones de publicación o envío. Si no hay nada relevante, usa "" (cadena vacía). | <Comentario>
-    C. Presentador: persona, comisión u órgano que presenta o propone el asunto votado, tal como lo nombra el texto (por ejemplo "que presenta la Comisión de ...", "propuesta presentada por la diputada ..."). Si el texto no lo nombra, evalúa si se puede inferir con estas reglas:
-        - Asuntos internos del Congreso (integración o elección de comisiones y comités, designaciones internas, habilitación de recintos, convocatorias a sesiones) cuyo origen no se atribuye a nadie en el texto: "Junta de Gobierno y Coordinación Política".
-        - Asuntos que el texto atribuye a las coordinaciones de los grupos y representaciones legislativas o a una propuesta de las bancadas: "Coordinadores de bancadas".
-        - Si el texto NO hace ninguna referencia al presentador y no aplica ninguna de las reglas anteriores, usa null. Nunca inventes nombres de personas.
+    C. Presentador: quién presenta o propone el asunto votado ante el Pleno, tal como lo nombra el texto del acta. Decide siguiendo este orden:
+        1. Dictámenes: si el asunto es un dictamen (por ejemplo "dictamen que presenta la Comisión de ...", "a nombre de la Comisión ..."), el presentador es la COMISIÓN dictaminadora, aunque el texto mencione también a quien preside la comisión, a quien lee el dictamen en tribuna o a los autores de las iniciativas que el dictamen concentra. Si son varias comisiones, escribe "Comisiones Unidas de X y Y".
+        2. Asuntos presentados por legisladores: si el texto nombra a la diputada o al diputado que presenta el asunto (o a varios), ellos son el presentador.
+        3. Órganos: si el texto atribuye el asunto a un órgano o a una autoridad que puede presentarlo (por ejemplo "Junta de Gobierno y Coordinación Política", un grupo legislativo, "Titular del Poder Ejecutivo del Estado", "Cámara de Senadoras y Senadores"), usa ese nombre.
+        4. Inferencia: si el texto NO nombra al presentador, evalúa si se puede inferir con estas reglas:
+            - Asuntos internos del Congreso (integración o elección de comisiones y comités, designaciones internas, habilitación de recintos, convocatorias a sesiones) cuyo origen no se atribuye a nadie en el texto: "Junta de Gobierno y Coordinación Política".
+            - Asuntos que el texto atribuye a las coordinaciones de los grupos y representaciones legislativas o a una propuesta de las bancadas: "Coordinadores de bancadas".
+        5. Si el texto NO hace ninguna referencia al presentador y no aplica ninguna de las reglas anteriores, usa null. Nunca inventes nombres de personas.
+      NO son presentadores: las personas que solo intervienen o hacen uso de la voz en la discusión; la Presidencia o las Secretarías de la Mesa Directiva cuando solo anuncian, someten a consideración o leen el resultado; la Presidenta de la República o el Ejecutivo Federal. Los trámites de la Mesa Directiva (dispensa de lectura, aprobación de actas, prórroga de la sesión, orden del día) no tienen presentador: usa null, salvo que el texto atribuya la solicitud a una diputada o a un diputado concreto, en cuyo caso esa persona es el presentador.
+      FORMATO del valor (obligatorio): un solo texto, nunca una lista.
+        - Comisión: "Comisión de <nombre>", sin "que presenta", sin la palabra "la" al inicio y sin "de la Sexagésima Segunda Legislatura del Honorable Congreso del Estado".
+        - Diputadas y diputados: nombre y apellidos completos tal como aparecen en el acta, SIN "Diputado", "Diputada" ni "Dip."; si son varios, separados por coma y con " y " antes del último. Si quien aparece no es diputado (por ejemplo, una persona ciudadana que solicita licencia), no lo uses como presentador.
+        - Órganos: su nombre completo y oficial, por ejemplo "Junta de Gobierno y Coordinación Política" o "Coordinadores de bancadas".
       | <Presentador>
-    D. Presentador fuente: "Acta" si el texto nombra al presentador; "Inferido" si lo asignaste con las reglas anteriores; "Ninguno" si el presentador es null. | <Presentador fuente>
+    D. Presentador fuente: "Acta" si el texto nombra al presentador (persona, comisión u órgano); "Inferido" ÚNICAMENTE si lo asignaste con las reglas de inferencia del punto 4 de la sección C; "Ninguno" si el presentador es null. | <Presentador fuente>
 
 8. Retorna un JSON que cumpla estrictamente con la estructura especificada en la sección de "SALIDA REQUERIDA", donde TODO DATO DEBE TENER UN VALOR ASIGNADO, con dos excepciones: "Presentador" puede ser null (solo si no hay ninguna referencia a quién lo presenta) y "Comentario" puede ser "".
 
@@ -464,16 +690,10 @@ Arreglo de objetos en formato JSON, tu respuesta debe contener ÚNICA Y EXCLUSIV
 
             # Datos complementarios (solo los consume script7 / ActasProcessor; el writer de Excel los ignora).
             # Se sacan de 'vote' para añadirlos AL FINAL del registro y no alterar el orden de las llaves existentes.
-            presenter = vote.pop("Presentador", None)
-            presenter = str(presenter).strip() if presenter else None
-            if presenter and presenter.lower() in ("null", "none", "n/a", "ninguno"):
-                presenter = None
-            presenter_src = str(vote.pop("Presentador fuente", "") or "").strip().capitalize()
-            if not presenter:
-                presenter_src = "Ninguno"
-            elif presenter_src not in ("Acta", "Inferido"):
-                presenter_src = "Inferido" if presenter in ("Junta de Gobierno y Coordinación Política",
-                                                            "Coordinadores de bancadas") else "Acta"
+            # El presentador se normaliza (formato único, sin honoríficos, nombres de diputados como en perfiles.json)
+            presenter = self._normalizePresenter(vote.pop("Presentador", None))
+            rawPresenterSource = str(vote.pop("Presentador fuente", "") or "").strip().capitalize()
+            presenter_src = self._resolvePresenterSource(presenter, rawPresenterSource)
             extras = {
                 "Contenido": str(vote.pop("Contenido", "") or "").strip(),
                 "Comentario": str(vote.pop("Comentario", "") or "").strip(),

@@ -111,6 +111,7 @@ de los siguientes temas:
     | 12 | Agricultura, Ganadería y Pesca |
     | 13 | Medios de Comunicación |
     | 14 | Justicia y Estado de Derecho |
+    | 15 | Telecomunicaciones |
     | 16 | Trabajo y Previsión Social |
     | 18 | Administración Pública |
     | 19 | Internos del Congreso |

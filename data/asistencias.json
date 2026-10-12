@@ -19523,9 +19523,66 @@
                }
           },
           {
-               "Clave sesión": "2026-09-12|extraordinaria|1",
+               "Clave sesión": "2026-09-12|comision-permanente|1",
                "Folio legislatura": 135,
                "Folio periodo": 24,
+               "Año Legislatura": 2,
+               "Periodo": 3,
+               "Fecha": "12/09/2026",
+               "Sesión": "Comisión Permanente",
+               "Asistencias": [
+                    {
+                         "Diputado": "Roberto Zataráin Leal",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "María Soledad Amieva Zamora",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "Ana Laura Gómez Ramírez",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "Elisa Limon Balderrabano",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "Kathya Sánchez Rodríguez",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "Xel Arianna Hernández García",
+                         "Asistencia": 4
+                    },
+                    {
+                         "Diputado": "Marcos Castro Martínez",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "Elpidio Díaz Escobar",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "Leonela Jazmín Martínez Ayala",
+                         "Asistencia": 1
+                    }
+               ],
+               "Totales": {
+                    "Asistencia": 8,
+                    "Retardo Justificado": 0,
+                    "Retardo Injustificado": 0,
+                    "Inasistencia Justificada": 1,
+                    "Inasistencia Injustificada": 0,
+                    "Con Licencia": 0,
+                    "Sin información": 0,
+                    "Fallecimiento": 0
+               }
+          },
+          {
+               "Clave sesión": "2026-09-12|extraordinaria|1",
+               "Folio legislatura": 136,
+               "Folio periodo": 25,
                "Año Legislatura": 2,
                "Periodo": 3,
                "Fecha": "12/09/2026",
@@ -19693,71 +19750,14 @@
                     },
                     {
                          "Diputado": "Fedrha Isabel Suriano Corrales",
-                         "Asistencia": 1
-                    }
-               ],
-               "Totales": {
-                    "Asistencia": 39,
-                    "Retardo Justificado": 0,
-                    "Retardo Injustificado": 0,
-                    "Inasistencia Justificada": 2,
-                    "Inasistencia Injustificada": 0,
-                    "Con Licencia": 0,
-                    "Sin información": 0,
-                    "Fallecimiento": 0
-               }
-          },
-          {
-               "Clave sesión": "2026-09-12|comision-permanente|1",
-               "Folio legislatura": 136,
-               "Folio periodo": 25,
-               "Año Legislatura": 2,
-               "Periodo": 3,
-               "Fecha": "12/09/2026",
-               "Sesión": "Comisión Permanente",
-               "Asistencias": [
-                    {
-                         "Diputado": "Roberto Zataráin Leal",
-                         "Asistencia": 1
-                    },
-                    {
-                         "Diputado": "María Soledad Amieva Zamora",
-                         "Asistencia": 1
-                    },
-                    {
-                         "Diputado": "Ana Laura Gómez Ramírez",
-                         "Asistencia": 1
-                    },
-                    {
-                         "Diputado": "Elisa Limon Balderrabano",
-                         "Asistencia": 1
-                    },
-                    {
-                         "Diputado": "Kathya Sánchez Rodríguez",
-                         "Asistencia": 1
-                    },
-                    {
-                         "Diputado": "Xel Arianna Hernández García",
                          "Asistencia": 4
-                    },
-                    {
-                         "Diputado": "Marcos Castro Martínez",
-                         "Asistencia": 1
-                    },
-                    {
-                         "Diputado": "Elpidio Díaz Escobar",
-                         "Asistencia": 1
-                    },
-                    {
-                         "Diputado": "Leonela Jazmín Martínez Ayala",
-                         "Asistencia": 1
                     }
                ],
                "Totales": {
-                    "Asistencia": 8,
+                    "Asistencia": 38,
                     "Retardo Justificado": 0,
                     "Retardo Injustificado": 0,
-                    "Inasistencia Justificada": 1,
+                    "Inasistencia Justificada": 3,
                     "Inasistencia Injustificada": 0,
                     "Con Licencia": 0,
                     "Sin información": 0,
@@ -20142,10 +20142,541 @@
                "Periodo": 1,
                "Fecha": "30/09/2026",
                "Sesión": "Pública Ordinaria",
-               "Asistencias": [],
+               "Asistencias": [
+                    {
+                         "Diputado": "Floricel González Méndez",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "Guadalupe Yamak Taja",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "José Miguel Trujillo  de Ita",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "Andrés Iván Villegas Mendoza",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "Elvia Graciela Palomares Ramírez",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "Nayeli Salvatori Bojalil",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "Roberto Zataráin Leal",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "Azucena Rosas Tapia",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "Pável Gaspar Ramírez",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "Rosalío Zanatta Vidaurri",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "María Soledad Amieva Zamora",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "Jaime Alejandro Aurioles Barroeta",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "Ana Laura Gómez Ramírez",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "Julio Miguel Huerta Gómez",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "Ana Lilia Tepole Armenta",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "Cinthya Gabriela Chumacero Rodríguez",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "Elisa Limon Balderrabano",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "Laura Guadalupe Vargas Vargas",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "Miguel Márquez Ríos",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "Kathya Sánchez Rodríguez",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "Norma Estela Pimentel Méndez",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "Jaime Natale Uranga",
+                         "Asistencia": 4
+                    },
+                    {
+                         "Diputado": "María Fernanda De la Barreda Angon",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "Beatriz Manrique Guevara",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "Esther Martínez Romano",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "Angélica Patricia Alvarado Juárez",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "Xel Arianna Hernández García",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "Óscar Mauricio Céspedes Peregrina",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "José Luis Figueroa Cortés",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "Araceli Celestino Rosas",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "Luana Armida Amador Vallejo",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "Celia Bonaga Ruíz",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "Marcos Castro Martínez",
+                         "Asistencia": 4
+                    },
+                    {
+                         "Diputado": "Rafael Alejandro Micalco Méndez",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "Susana del Carmen Riestra Piña",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "Elpidio Díaz Escobar",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "Modesta Delgado Juárez",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "Elías Lozada Ortega",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "Leonela Jazmín Martínez Ayala",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "Delfina Pozos Vergara",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "Fedrha Isabel Suriano Corrales",
+                         "Asistencia": 1
+                    }
+               ],
                "Totales": {
-                    "Asistencia": 0,
+                    "Asistencia": 39,
                     "Retardo Justificado": 0,
+                    "Retardo Injustificado": 0,
+                    "Inasistencia Justificada": 2,
+                    "Inasistencia Injustificada": 0,
+                    "Con Licencia": 0,
+                    "Sin información": 0,
+                    "Fallecimiento": 0
+               }
+          },
+          {
+               "Clave sesión": "2026-10-01|ordinaria|1",
+               "Folio legislatura": 140,
+               "Folio periodo": 4,
+               "Año Legislatura": 3,
+               "Periodo": 1,
+               "Fecha": "01/10/2026",
+               "Sesión": "Pública Ordinaria",
+               "Asistencias": [
+                    {
+                         "Diputado": "Floricel González Méndez",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "Guadalupe Yamak Taja",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "José Miguel Trujillo  de Ita",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "Andrés Iván Villegas Mendoza",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "Elvia Graciela Palomares Ramírez",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "Nayeli Salvatori Bojalil",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "Roberto Zataráin Leal",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "Azucena Rosas Tapia",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "Pável Gaspar Ramírez",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "Rosalío Zanatta Vidaurri",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "María Soledad Amieva Zamora",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "Jaime Alejandro Aurioles Barroeta",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "Ana Laura Gómez Ramírez",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "Julio Miguel Huerta Gómez",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "Ana Lilia Tepole Armenta",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "Cinthya Gabriela Chumacero Rodríguez",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "Elisa Limon Balderrabano",
+                         "Asistencia": 2
+                    },
+                    {
+                         "Diputado": "Laura Guadalupe Vargas Vargas",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "Miguel Márquez Ríos",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "Kathya Sánchez Rodríguez",
+                         "Asistencia": 2
+                    },
+                    {
+                         "Diputado": "Norma Estela Pimentel Méndez",
+                         "Asistencia": 2
+                    },
+                    {
+                         "Diputado": "María Fernanda De la Barreda Angon",
+                         "Asistencia": 2
+                    },
+                    {
+                         "Diputado": "Beatriz Manrique Guevara",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "Esther Martínez Romano",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "Angélica Patricia Alvarado Juárez",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "Xel Arianna Hernández García",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "Óscar Mauricio Céspedes Peregrina",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "José Luis Figueroa Cortés",
+                         "Asistencia": 2
+                    },
+                    {
+                         "Diputado": "Araceli Celestino Rosas",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "Luana Armida Amador Vallejo",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "Celia Bonaga Ruíz",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "Marcos Castro Martínez",
+                         "Asistencia": 4
+                    },
+                    {
+                         "Diputado": "Rafael Alejandro Micalco Méndez",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "Susana del Carmen Riestra Piña",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "Elpidio Díaz Escobar",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "Modesta Delgado Juárez",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "Elías Lozada Ortega",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "Leonela Jazmín Martínez Ayala",
+                         "Asistencia": 2
+                    },
+                    {
+                         "Diputado": "Delfina Pozos Vergara",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "Fedrha Isabel Suriano Corrales",
+                         "Asistencia": 2
+                    }
+               ],
+               "Totales": {
+                    "Asistencia": 32,
+                    "Retardo Justificado": 7,
+                    "Retardo Injustificado": 0,
+                    "Inasistencia Justificada": 1,
+                    "Inasistencia Injustificada": 0,
+                    "Con Licencia": 0,
+                    "Sin información": 0,
+                    "Fallecimiento": 0
+               }
+          },
+          {
+               "Clave sesión": "2026-10-08|ordinaria|1",
+               "Folio legislatura": 141,
+               "Folio periodo": 5,
+               "Año Legislatura": 3,
+               "Periodo": 1,
+               "Fecha": "08/10/2026",
+               "Sesión": "Pública Ordinaria",
+               "Asistencias": [
+                    {
+                         "Diputado": "Floricel González Méndez",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "Guadalupe Yamak Taja",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "José Miguel Trujillo  de Ita",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "Andrés Iván Villegas Mendoza",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "Elvia Graciela Palomares Ramírez",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "Nayeli Salvatori Bojalil",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "Roberto Zataráin Leal",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "Azucena Rosas Tapia",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "Pável Gaspar Ramírez",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "Rosalío Zanatta Vidaurri",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "María Soledad Amieva Zamora",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "Jaime Alejandro Aurioles Barroeta",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "Ana Laura Gómez Ramírez",
+                         "Asistencia": 2
+                    },
+                    {
+                         "Diputado": "Julio Miguel Huerta Gómez",
+                         "Asistencia": 2
+                    },
+                    {
+                         "Diputado": "Ana Lilia Tepole Armenta",
+                         "Asistencia": 2
+                    },
+                    {
+                         "Diputado": "Cinthya Gabriela Chumacero Rodríguez",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "Elisa Limon Balderrabano",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "Laura Guadalupe Vargas Vargas",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "Miguel Márquez Ríos",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "Kathya Sánchez Rodríguez",
+                         "Asistencia": 2
+                    },
+                    {
+                         "Diputado": "Norma Estela Pimentel Méndez",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "Jaime Natale Uranga",
+                         "Asistencia": 2
+                    },
+                    {
+                         "Diputado": "María Fernanda De la Barreda Angon",
+                         "Asistencia": 2
+                    },
+                    {
+                         "Diputado": "Beatriz Manrique Guevara",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "Esther Martínez Romano",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "Angélica Patricia Alvarado Juárez",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "Xel Arianna Hernández García",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "Óscar Mauricio Céspedes Peregrina",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "José Luis Figueroa Cortés",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "Araceli Celestino Rosas",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "Luana Armida Amador Vallejo",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "Celia Bonaga Ruíz",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "Marcos Castro Martínez",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "Rafael Alejandro Micalco Méndez",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "Susana del Carmen Riestra Piña",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "Elpidio Díaz Escobar",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "Modesta Delgado Juárez",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "Elías Lozada Ortega",
+                         "Asistencia": 2
+                    },
+                    {
+                         "Diputado": "Leonela Jazmín Martínez Ayala",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "Delfina Pozos Vergara",
+                         "Asistencia": 1
+                    },
+                    {
+                         "Diputado": "Fedrha Isabel Suriano Corrales",
+                         "Asistencia": 1
+                    }
+               ],
+               "Totales": {
+                    "Asistencia": 34,
+                    "Retardo Justificado": 7,
                     "Retardo Injustificado": 0,
                     "Inasistencia Justificada": 0,
                     "Inasistencia Injustificada": 0,

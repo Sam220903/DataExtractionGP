@@ -256,6 +256,50 @@ for col_idx in range(VOTE_START_COL, VOTE_START_COL + NUM_VOTES):
 # El original congela en "C10" (= col C hacia la derecha, fila 10 hacia abajo)
 ws.freeze_panes = "C10"
 
+# ── Hoja extra: claves ───────────────────────────────────────────────────────
+VOTE_MEANING = {
+    1: "A favor",
+    2: "En contra",
+    3: "Abstención",
+    4: "Votación secreta",
+    0: "Ausencia / Sin voto",
+}
+
+ws_claves = wb.create_sheet(title="claves")
+
+# Encabezados
+headers = ["Número", "Significado"]
+for col_idx, text in enumerate(headers, start=1):
+    c = ws_claves.cell(row=1, column=col_idx, value=text)
+    c.font = Font(bold=True)
+    c.fill = _fill(SALMON)
+    c.alignment = ALIGN_CENTER
+    c.border = BORDER
+
+# Una fila por código, con la celda del número pintada con su color
+for row_idx, code in enumerate([1, 2, 3, 4, 0], start=2):
+    num_cell = ws_claves.cell(row=row_idx, column=1, value=code)
+    num_cell.fill = _fill(VOTE_COLORS[code])
+    num_cell.alignment = ALIGN_CENTER
+    num_cell.font = Font(bold=True)
+    num_cell.border = BORDER
+
+    mean_cell = ws_claves.cell(row=row_idx, column=2, value=VOTE_MEANING[code])
+    mean_cell.alignment = Alignment(vertical="center")
+    mean_cell.border = BORDER
+
+# Fila extra para las celdas sin dato (las que llevan "-" en la hoja principal)
+extra_row = 2 + len(VOTE_MEANING)
+dash_cell = ws_claves.cell(row=extra_row, column=1, value="-")
+dash_cell.fill = _fill(GREY_EMPTY)
+dash_cell.alignment = ALIGN_CENTER
+dash_cell.font = Font(bold=True)
+dash_cell.border = BORDER
+ws_claves.cell(row=extra_row, column=2, value="Sin dato / licencia").border = BORDER
+
+ws_claves.column_dimensions["A"].width = 12
+ws_claves.column_dimensions["B"].width = 26
+
 # ── Guardar ──────────────────────────────────────────────────────────────────
 output_path = os.path.join(output_folder, output_filename)
 wb.save(output_path)

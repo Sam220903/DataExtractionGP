@@ -31,6 +31,12 @@ parser = "html.parser"
 # (los documentos restantes quedan pendientes para la siguiente ejecución).
 MAX_CONSECUTIVE_AI_FAILURES = 3
 
+# Mensajes para el usuario cuando se agota la cuota diaria de la IA
+QUOTA_ERROR_MESSAGES = {
+    "cuota_gratuita_agotada": "Se agotó el margen gratuito diario de la API de Gemini.",
+    "cuota_agotada": "Se agotó la cuota diaria de la API de Gemini.",
+}
+
 dh = DateHandler()
 ec = EventClassifier()
 pdf_processor = PDFProcessor()
@@ -57,6 +63,7 @@ pending_records = []
 # Estado de la IA durante esta ejecución
 aiStopReason = None
 consecutiveAiFailures = 0
+quotaExhaustedType = None
 
 
 def registerAiSuccess():
@@ -82,6 +89,42 @@ def registerAiFailure(errorType):
 
     if aiStopReason:
         print(f"  Se detiene el análisis con IA en esta ejecución: {aiStopReason}")
+
+
+def registerAiQuotaExhausted(errorType):
+    """
+    Se agotó la cuota diaria de la IA (la detectó el procesador): se detiene el uso
+    de la IA durante el resto de la ejecución y se avisa de inmediato al usuario.
+    """
+    global aiStopReason, quotaExhaustedType
+
+    if quotaExhaustedType is None:
+        print("\n  !!! ALERTA: se agotó el margen de uso de la IA. "
+              "No se enviarán más documentos a Gemini en esta ejecución. !!!")
+
+    quotaExhaustedType = errorType
+    aiStopReason = QUOTA_ERROR_MESSAGES.get(errorType, errorType)
+
+
+def printQuotaAlert():
+    """Alerta destacada al final de la ejecución cuando se agotó el margen de uso de la IA"""
+    notAttempted = 0
+    for record in pending_records:
+        if record.get("Código de error") == "no_intentado":
+            notAttempted += 1
+
+    print("\n" + "!" * 70)
+    print("ALERTA: SE AGOTÓ EL MARGEN DE USO DE LA IA")
+    print("!" * 70)
+    print(QUOTA_ERROR_MESSAGES.get(quotaExhaustedType, quotaExhaustedType))
+    print("Se detuvo el envío de documentos a la IA para no consumir más tokens de lo debido.")
+    print(f"Documentos pendientes que no se alcanzaron a intentar: {notAttempted}")
+    print("\nQué puedes hacer:")
+    print("  - Esperar a que se restablezca la cuota (la diaria normalmente se renueva al día siguiente).")
+    print("  - O usar una API key con facturación activa en GEMINI_API_KEY (archivo .env).")
+    print("\nLos documentos ya extraídos quedaron guardados en la caché: al volver a ejecutar")
+    print("solo se enviarán a la IA los pendientes.")
+    print("!" * 70)
 
 
 def build_default_extracted_data():
@@ -229,6 +272,10 @@ def process_session_document(stenographic_link, acta_link, group_name, group_typ
             "Código de error": errorType
         })
         registerAiFailure(errorType)
+
+        # El procesador detectó que se agotó la cuota diaria: se frena todo uso de la IA
+        if processor.quotaExhaustedType:
+            registerAiQuotaExhausted(processor.quotaExhaustedType)
 
     return extracted_data
 
@@ -517,5 +564,9 @@ if pending_records:
         print("Vuelve a ejecutar el script cuando se resuelva el problema de la IA: solo se enviarán a Gemini los documentos pendientes.")
 else:
     print("Todos los registros con documento disponible se extrajeron correctamente. No hay pendientes.")
+
+# Alerta final bien visible si se agotó el margen de uso de la IA
+if quotaExhaustedType:
+    printQuotaAlert()
 
 print(f"\nProceso terminado. Registros guardados: {len(data)}")
