@@ -50,6 +50,25 @@ os.makedirs(gm_pdf_dir, exist_ok=True)
 # Salida
 output_json_path = os.path.join(data_dir, 'Iniciativas_PA.json')
 
+# ------------------------------------------------------------------------------
+# Requisitos: este script usa JSON que generan otras bases de datos. Si falta
+# alguno no se ejecuta nada (ni siquiera se pregunta por la IA).
+# ------------------------------------------------------------------------------
+requisitos = [
+    (perfiles_path, 'perfiles.json', 'la base 1 (Perfiles)'),
+    (comisiones_path, 'comisiones_contenido.json', 'la base 5 (Comisiones y comités)'),
+]
+faltantes = [(nombre, base) for ruta, nombre, base in requisitos if not os.path.isfile(ruta)]
+if faltantes:
+    print("\n" + "=" * 70)
+    print("NO SE PUEDE EJECUTAR: faltan archivos de otras bases de datos")
+    print("=" * 70)
+    for nombre, base in faltantes:
+        print(f"  - Falta {nombre}: primero debes extraer {base}.")
+    print("Extrae esas bases desde el menú y vuelve a ejecutar la base 7.")
+    print("=" * 70)
+    sys.exit(1)
+
 pdf_processor = PDFProcessor()
 # ------------------------------------------------------------------------------
 # ¿Usar IA? Solo regex (rápido, sin costo; 'Contenido' y 'Comentario' quedan en null)
