@@ -1,5 +1,7 @@
 import json
 import os
+import re
+import unicodedata
 from datetime import datetime
 from openpyxl import Workbook
 from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
@@ -41,6 +43,83 @@ def parse_date(date_str):
         return datetime.min
 
 
+# ---------------------------------------------------------------------------
+# Orden alfabético por apellido paterno
+# ---------------------------------------------------------------------------
+# Formato en que viene el nombre completo en el JSON:
+#   "nombre_primero"   -> "Juan Carlos Pérez López"  (nombre(s) + paterno + materno)
+#   "apellido_primero" -> "Pérez López Juan Carlos"  (paterno + materno + nombre(s))
+# Si el nombre trae coma ("Pérez López, Juan Carlos") se detecta solo, sin
+# importar esta opción.
+FORMATO_NOMBRE = "nombre_primero"
+
+_TITULOS = {"c", "dip", "diputado", "diputada", "lic", "licda", "mtro", "mtra",
+            "dr", "dra", "ing", "prof", "profa", "arq", "sen", "senador", "senadora"}
+_PARTICULAS = {"de", "del", "la", "las", "los", "le", "san", "santa", "da", "di", "van", "von"}
+
+
+def _clave_texto(s: str) -> str:
+    """Minúsculas y sin acentos; la ñ queda después de la n (como en español)."""
+    s = str(s or "").lower().replace("ñ", "n\uffff")
+    s = unicodedata.normalize("NFKD", s)
+    s = "".join(c for c in s if not unicodedata.combining(c))
+    return re.sub(r"\s+", " ", s).strip()
+
+
+def _grupos(tokens: list[str]) -> list[str]:
+    """Une las partículas con su apellido: ['De','la','Cruz'] -> ['De la Cruz']."""
+    grupos, actual = [], []
+    for t in reversed(tokens):
+        actual.insert(0, t)
+        if t.lower() not in _PARTICULAS:
+            grupos.insert(0, " ".join(actual))
+            actual = []
+    if actual:  # partículas sueltas al inicio
+        if grupos:
+            grupos[0] = " ".join(actual) + " " + grupos[0]
+        else:
+            grupos.append(" ".join(actual))
+    return grupos
+
+
+def separar_nombre(nombre_completo: str) -> tuple[str, str, str]:
+    """Devuelve (apellido_paterno, apellido_materno, nombres)."""
+    texto = re.sub(r"\s+", " ", str(nombre_completo or "")).strip()
+    if not texto:
+        return "", "", ""
+
+    # Quita títulos al inicio (Dip., C., Lic., ...)
+    tokens = texto.split(" ")
+    while len(tokens) > 1 and tokens[0].lower().strip(".") in _TITULOS:
+        tokens.pop(0)
+    texto = " ".join(tokens)
+
+    # "Apellidos, Nombres"
+    if "," in texto:
+        apellidos, nombres = [p.strip() for p in texto.split(",", 1)]
+        g = _grupos(apellidos.split())
+        return (g[0] if g else ""), (" ".join(g[1:]) if len(g) > 1 else ""), nombres
+
+    g = _grupos(texto.split())
+    if len(g) == 1:
+        return g[0], "", ""
+
+    if FORMATO_NOMBRE == "apellido_primero":
+        if len(g) == 2:
+            return g[0], "", g[1]
+        return g[0], g[1], " ".join(g[2:])
+
+    # nombre_primero
+    if len(g) == 2:
+        return g[1], "", g[0]
+    return g[-2], g[-1], " ".join(g[:-2])
+
+
+def clave_orden_nombre(nombre_completo: str) -> tuple:
+    pat, mat, nom = separar_nombre(nombre_completo)
+    return (_clave_texto(pat), _clave_texto(mat), _clave_texto(nom))
+
+
 # ── Carga y procesamiento de datos ──────────────────────────────────────────
 # Ajuste de ruta dinámica para el archivo JSON
 input_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'data', 'votaciones.json')
@@ -59,7 +138,8 @@ for r in registros:
         if name not in deputies_info:
             deputies_info[name] = v.get("partido", "")
 
-deputies_list = list(deputies_info.keys())
+# Orden alfabético por apellido paterno (luego materno, luego nombre)
+deputies_list = sorted(deputies_info.keys(), key=clave_orden_nombre)
 
 # ── Creación del libro ───────────────────────────────────────────────────────
 wb = Workbook()

@@ -1,6 +1,8 @@
 import json
 import os
+import re
 import sys
+import unicodedata
 from datetime import datetime
 from openpyxl import Workbook
 from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
@@ -33,6 +35,125 @@ VALOR_VACIO = "N/A"  # criterio de la plantilla original para celdas sin dato
 
 ANCHO_MINIMO = 8
 ANCHO_MAXIMO = 60  # evita columnas gigantes cuando hay textos muy largos (direcciones, preparación, etc.)
+
+
+# ---------------------------------------------------------------------------
+# Orden alfabético por apellido paterno
+# ---------------------------------------------------------------------------
+# Formato en que viene el nombre completo en el JSON:
+#   "nombre_primero"   -> "Juan Carlos Pérez López"  (nombre(s) + paterno + materno)
+#   "apellido_primero" -> "Pérez López Juan Carlos"  (paterno + materno + nombre(s))
+# Si el nombre trae coma ("Pérez López, Juan Carlos") se detecta solo, sin
+# importar esta opción.
+FORMATO_NOMBRE = "nombre_primero"
+
+_TITULOS = {"c", "dip", "diputado", "diputada", "lic", "licda", "mtro", "mtra",
+            "dr", "dra", "ing", "prof", "profa", "arq", "sen", "senador", "senadora"}
+_PARTICULAS = {"de", "del", "la", "las", "los", "le", "san", "santa", "da", "di", "van", "von"}
+
+
+def _clave_texto(s: str) -> str:
+    """Minúsculas y sin acentos; la ñ queda después de la n (como en español)."""
+    s = str(s or "").lower().replace("ñ", "n\uffff")
+    s = unicodedata.normalize("NFKD", s)
+    s = "".join(c for c in s if not unicodedata.combining(c))
+    return re.sub(r"\s+", " ", s).strip()
+
+
+def _grupos(tokens: list[str]) -> list[str]:
+    """Une las partículas con su apellido: ['De','la','Cruz'] -> ['De la Cruz']."""
+    grupos, actual = [], []
+    for t in reversed(tokens):
+        actual.insert(0, t)
+        if t.lower() not in _PARTICULAS:
+            grupos.insert(0, " ".join(actual))
+            actual = []
+    if actual:  # partículas sueltas al inicio
+        if grupos:
+            grupos[0] = " ".join(actual) + " " + grupos[0]
+        else:
+            grupos.append(" ".join(actual))
+    return grupos
+
+
+def separar_nombre(nombre_completo: str) -> tuple[str, str, str]:
+    """Devuelve (apellido_paterno, apellido_materno, nombres)."""
+    texto = re.sub(r"\s+", " ", str(nombre_completo or "")).strip()
+    if not texto:
+        return "", "", ""
+
+    # Quita títulos al inicio (Dip., C., Lic., ...)
+    tokens = texto.split(" ")
+    while len(tokens) > 1 and tokens[0].lower().strip(".") in _TITULOS:
+        tokens.pop(0)
+    texto = " ".join(tokens)
+
+    # "Apellidos, Nombres"
+    if "," in texto:
+        apellidos, nombres = [p.strip() for p in texto.split(",", 1)]
+        g = _grupos(apellidos.split())
+        return (g[0] if g else ""), (" ".join(g[1:]) if len(g) > 1 else ""), nombres
+
+    g = _grupos(texto.split())
+    if len(g) == 1:
+        return g[0], "", ""
+
+    if FORMATO_NOMBRE == "apellido_primero":
+        if len(g) == 2:
+            return g[0], "", g[1]
+        return g[0], g[1], " ".join(g[2:])
+
+    # nombre_primero
+    if len(g) == 2:
+        return g[1], "", g[0]
+    return g[-2], g[-1], " ".join(g[:-2])
+
+
+def clave_orden_nombre(nombre_completo: str) -> tuple:
+    pat, mat, nom = separar_nombre(nombre_completo)
+    return (_clave_texto(pat), _clave_texto(mat), _clave_texto(nom))
+
+
+# Campo del JSON que trae el nombre completo. None = detectarlo solo.
+CAMPO_NOMBRE = None
+_CAMPOS_NOMBRE = ["nombre completo", "nombre_completo", "nombre", "nombres", "diputado", "diputada"]
+_CAMPOS_PATERNO = ["apellido paterno", "apellido_paterno", "primer apellido", "paterno"]
+_CAMPOS_MATERNO = ["apellido materno", "apellido_materno", "segundo apellido", "materno"]
+
+
+def _buscar_campo(claves: list[str], candidatos: list[str]):
+    mapa = {_clave_texto(k): k for k in claves}
+    for c in candidatos:
+        if c in mapa:
+            return mapa[c]
+    return None
+
+
+def ordenar_por_apellido(registros: list[dict]) -> list[dict]:
+    """Ordena alfabéticamente empezando por el apellido paterno."""
+    claves = construir_columnas(registros)
+
+    campo_pat = _buscar_campo(claves, _CAMPOS_PATERNO)
+    if campo_pat and not CAMPO_NOMBRE:
+        campo_mat = _buscar_campo(claves, _CAMPOS_MATERNO)
+        campo_nom = _buscar_campo(claves, _CAMPOS_NOMBRE)
+
+        def clave(r):
+            return (_clave_texto(r.get(campo_pat)),
+                    _clave_texto(r.get(campo_mat)) if campo_mat else "",
+                    _clave_texto(r.get(campo_nom)) if campo_nom else "")
+
+        print(f"Orden: por '{campo_pat}' (apellido paterno).")
+        return sorted(registros, key=clave)
+
+    campo = CAMPO_NOMBRE or _buscar_campo(claves, _CAMPOS_NOMBRE)
+    if not campo:
+        print("[aviso] No se encontró el campo con el nombre; se deja el orden original. "
+              "Define CAMPO_NOMBRE al inicio del script.")
+        return registros
+
+    print(f"Orden: por apellido paterno a partir del campo '{campo}'.")
+    return sorted(registros, key=lambda r: clave_orden_nombre(r.get(campo)))
 
 
 def autoajustar_anchos(ws, ultima_col: int, ultima_fila: int) -> None:
@@ -161,6 +282,7 @@ def main():
     os.makedirs(os.path.dirname(ruta_salida), exist_ok=True)
 
     registros = cargar_registros(ruta_json)
+    registros = ordenar_por_apellido(registros)
     generar_excel(registros, ruta_salida)
 
 
