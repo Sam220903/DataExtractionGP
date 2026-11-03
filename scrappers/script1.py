@@ -7,6 +7,7 @@ import re
 import json
 import time  # Pausa ética entre peticiones
 import unicodedata
+from urllib.parse import urljoin, quote
 from curl_cffi import requests
 from bs4 import BeautifulSoup
 
@@ -18,6 +19,9 @@ listing_url = f'{domain}/index.php?option=com_content&view=article&id=11527'
 detail_endpoint = f'{domain}/congreso/diputados/informacion.php'
 browser = "edge"
 parser = "html.parser"
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+PROJECT_ROOT = os.path.dirname(BASE_DIR)
+DATA_DIR = os.path.join(PROJECT_ROOT, 'data')
 
 # Si es True, una línea como "Diputada Federal Suplente..." NO cuenta como experiencia legislativa
 EXCLUDE_SUPLENTE_AS_EXPERIENCE = True
@@ -144,6 +148,118 @@ def li_lines(li):
     for br in li.find_all('br'):
         br.replace_with('§§')
     return [clean(part) for part in li.get_text().split('§§') if clean(part)]
+
+
+CURRICULUM_HEADINGS = {'formacion academica', 'experiencia laboral', 'informacion general'}
+FLAT_HEADING_RE = re.compile(
+    r'(?:abcd)?\s*(FORMACI[ÓO]N\s+ACAD[ÉE]MICA|EXPERIENCIA\s+LABORAL|INFORMACI[ÓO]N\s+GENERAL)',
+    re.IGNORECASE,
+)
+
+
+def heading_key(node):
+    if not getattr(node, 'get_text', None):
+        return None
+    text = norm(clean(node.get_text(' ', strip=True)))
+    text = re.sub(r'^[^a-z]+|[^a-z]+$', '', text)
+    return text if text in CURRICULUM_HEADINGS else None
+
+
+def parse_curriculum_dom(curriculum):
+    """Parser para encabezados div.tituloCurriculo y encabezados p seguidos de ul."""
+    sections = {}
+    containers = [curriculum] + curriculum.find_all(class_='contenedorCurriculo')
+    for container in containers:
+        children = [x for x in container.find_all(recursive=False) if getattr(x, 'name', None)]
+        i = 0
+        while i < len(children):
+            key = heading_key(children[i])
+            if not key:
+                i += 1
+                continue
+            lines, j = [], i + 1
+            while j < len(children) and not heading_key(children[j]):
+                node = children[j]
+                if node.name == 'ul':
+                    for li in node.find_all('li', recursive=False):
+                        lines.extend(li_lines(li))
+                elif node.name == 'li' and not node.find(class_='tituloCurriculo'):
+                    # Algunas fichas colocan la viñeta directamente en el contenedor,
+                    # sin <ul>. Si contiene otro encabezado, se deja al parser plano
+                    # para evitar mezclar dos secciones dentro de la misma viñeta.
+                    lines.extend(li_lines(node))
+                elif node.name in ('p', 'div', 'span') and not node.find('ul'):
+                    value = clean(node.get_text(' ', strip=True))
+                    if value:
+                        lines.append(value)
+                j += 1
+            if lines:
+                sections.setdefault(key, []).extend(lines)
+            i = max(j, i + 1)
+
+    if not any(sections.values()):
+        for title in curriculum.find_all(['div', 'p', 'strong', 'b', 'span']):
+            key = heading_key(title)
+            if not key:
+                continue
+            sibling, lines = title.find_next_sibling(), []
+            while sibling and not heading_key(sibling):
+                if sibling.name == 'ul':
+                    for li in sibling.find_all('li'):
+                        lines.extend(li_lines(li))
+                elif sibling.name == 'li' and not sibling.find(class_='tituloCurriculo'):
+                    # Respaldo para viñetas sueltas fuera de una lista <ul>.
+                    # No incorporar una viñeta que contenga el siguiente encabezado.
+                    lines.extend(li_lines(sibling))
+                elif sibling.name in ('p', 'div', 'span'):
+                    value = clean(sibling.get_text(' ', strip=True))
+                    if value and norm(value) not in CURRICULUM_HEADINGS:
+                        lines.append(value)
+                sibling = sibling.find_next_sibling()
+            if lines:
+                sections.setdefault(key, []).extend(lines)
+    return sections
+
+
+def parse_curriculum_flat(curriculum):
+    """Respaldo para currículums cuyos títulos y contenidos no tienen estructura uniforme."""
+    # Separar por saltos reales entre elementos HTML, no por el formato del código fuente.
+    text = curriculum.get_text("\n", strip=True)
+    text = re.sub(r"\n+", "\n", text)
+    parts = FLAT_HEADING_RE.split(text)
+    sections = {}
+    for i in range(1, len(parts), 2):
+        key = norm(clean(parts[i]))
+        body = parts[i + 1] if i + 1 < len(parts) else ""
+        lines = [clean(x) for x in re.split(r"\n+", body) if clean(x)]
+        if lines:
+            sections.setdefault(key, []).extend(lines)
+    return sections
+
+
+def parse_curriculum(curriculum):
+    # Primero se intenta recuperar la estructura DOM.
+    sections = parse_curriculum_dom(curriculum)
+
+    # El respaldo plano se ejecuta también cuando el DOM recuperó SOLO algunas
+    # secciones. Antes únicamente se ejecutaba si no había recuperado ninguna;
+    # por eso, si encontraba experiencia laboral pero perdía formación académica,
+    # nunca intentaba recuperar esta última.
+    flat_sections = parse_curriculum_flat(curriculum)
+    for key, lines in flat_sections.items():
+        if not sections.get(key):
+            sections[key] = lines
+
+    cleaned = {}
+    for key, lines in sections.items():
+        seen = set()
+        for line in lines:
+            line = clean(line)
+            marker = norm(line)
+            if line and marker not in seen:
+                cleaned.setdefault(key, []).append(line)
+                seen.add(marker)
+    return cleaned
 
 
 # ---------------------------------------------------------------------------
@@ -365,59 +481,54 @@ def parse_detail(detail_html, member_id):
         'office': None, 'work_plan_url': None, 'sections': {},
     }
 
-    # --- Contacto ---------------------------------------------------------
     table = soup.find('table', class_='tablasInformativaContacto')
     if table:
-        # Correo: viene como texto plano dentro de <sub>, no como enlace mailto
         email_match = email_regex.search(contact_value(table, 'icon-correo2'))
         if email_match:
             result['email'] = email_match.group(0)
         else:
             for link in table.find_all('a', href=re.compile(r'^mailto:', re.IGNORECASE)):
-                email_match = email_regex.search(link['href'])
+                email_match = email_regex.search(link.get('href', ''))
                 if email_match:
                     result['email'] = email_match.group(0)
                     break
 
-        # Teléfono de oficina
         result['phone'] = contact_value(table, 'icon-telefono') or None
-
-        # Casa(s) de gestión: puede haber más de una
         offices = []
         for icon in table.find_all('span', class_='icon-casaGestion2b'):
             cell = icon.find_parent('td')
             value_cell = cell.find_next_sibling('td') if cell else None
             if value_cell and clean(value_cell.get_text(' ')):
                 offices.append(clean(value_cell.get_text(' ')))
-        result['office'] = ' | '.join(offices) if offices else None
+        result['office'] = ' | '.join(dict.fromkeys(offices)) if offices else None
 
-        # Redes sociales: se identifican por dominio, no por la clase del ícono
         for link in table.find_all('a', href=True):
             kind = classify_social(link['href'])
             if kind and not result[kind]:
                 result[kind] = link['href'].strip()
 
-    # --- Currículum -------------------------------------------------------
     curriculum = soup.find('div', id='curriculo')
     if curriculum:
-        for title_tag in curriculum.find_all('div', class_='tituloCurriculo'):
-            key = norm(title_tag.get_text(strip=True))
-            bullets_list = title_tag.find_next_sibling('ul')
-            lines = []
-            if bullets_list:
-                for li in bullets_list.find_all('li'):
-                    lines.extend(li_lines(li))
-            result['sections'].setdefault(key, []).extend(lines)
+        result['sections'] = parse_curriculum(curriculum)
 
-    # --- Plan de trabajo --------------------------------------------------
     work_info = soup.find('div', id=f'divInformacion{member_id}')
     if work_info:
         for link in work_info.find_all('a', href=True):
-            if 'plan de trabajo' in link.get_text(strip=True).lower():
-                result['work_plan_url'] = link['href']
+            if 'plan de trabajo' in clean(link.get_text(' ', strip=True)).lower():
+                result['work_plan_url'] = urljoin(domain, link['href'])
                 break
-
     return result
+
+
+def parse_inline_detail(listing_soup, member_id):
+    """Respaldo: algunas versiones del directorio incluyen una ficha ya renderizada en #infoDip."""
+    for close_button in listing_soup.select('#infoDip .menosInfoDip[onclick]'):
+        match = re.search(r'informacionDip\((\d+)\)', close_button.get('onclick', ''))
+        if match and int(match.group(1)) == int(member_id):
+            info_container = listing_soup.find('div', id='infoDip')
+            if info_container:
+                return parse_detail(str(info_container), member_id)
+    return None
 
 
 # ---------------------------------------------------------------------------
@@ -426,7 +537,7 @@ def parse_detail(detail_html, member_id):
 def main():
     print("Accediendo a la página de perfiles")
 
-    response = requests.get(listing_url, impersonate=browser)
+    response = requests.get(listing_url, impersonate=browser, timeout=30)
 
     # Iniciar un contador de registros
     total_records = 0
@@ -447,12 +558,14 @@ def main():
     soup = BeautifulSoup(response.text, parser)
 
     # Sección de "Mayoría Relativa" y de "Representación Proporcional"
-    mr_section = soup.find('section', id='listaMayoriaRelativa').find('div', class_="contenedorFichaDips")
-    rp_section = soup.find('section', id="listaRepresentacionProporcional").find('div', class_="contenedorFichaDips")
+    mr_section_tag = soup.find('section', id='listaMayoriaRelativa')
+    rp_section_tag = soup.find('section', id='listaRepresentacionProporcional')
+    mr_section = mr_section_tag.find('div', class_='contenedorFichaDips') if mr_section_tag else None
+    rp_section = rp_section_tag.find('div', class_='contenedorFichaDips') if rp_section_tag else None
 
     # Todas las fichas de ambas secciones, junto con su tipo de elección
-    mr_cards = mr_section.find_all('div', class_="fichaPerfil")
-    rp_cards = rp_section.find_all('div', class_="fichaPerfil")
+    mr_cards = mr_section.find_all('div', class_='fichaPerfil') if mr_section else []
+    rp_cards = rp_section.find_all('div', class_='fichaPerfil') if rp_section else []
     all_cards = [(card, "Mayoría Relativa") for card in mr_cards] + \
                 [(card, "Representación Proporcional") for card in rp_cards]
 
@@ -474,7 +587,7 @@ def main():
 
         # Nombre completo
         name_tag = card.find('div', class_='nombreDipCV')
-        full_name = name_tag.get_text(strip=True) if name_tag else None
+        full_name = clean(name_tag.get_text(' ', strip=True)) if name_tag else None
 
         print(f"\nProcesando diputado {member_id}: {full_name}")
 
@@ -539,15 +652,20 @@ def main():
 
         # Descargar la fotografía y guardarla en data/photos/{id}.jpg
         photo_tag = card.find('img')
-        photo_source_url = f"{domain}{photo_tag['src']}" if photo_tag and photo_tag.get('src') else None
-        photo_folder = os.path.join('data', 'photos')
+        photo_source_url = urljoin(domain, quote(photo_tag["src"], safe=":/%?=&")) if photo_tag and photo_tag.get("src") else None
+        photo_folder = os.path.join(DATA_DIR, 'photos')
         os.makedirs(photo_folder, exist_ok=True)
 
         if photo_source_url:
-            photo_response = requests.get(photo_source_url, impersonate=browser)
-            if photo_response.status_code == 200:
-                with open(os.path.join(photo_folder, f'{member_id}.jpg'), 'wb') as photo_file:
-                    photo_file.write(photo_response.content)
+            try:
+                photo_response = requests.get(photo_source_url, impersonate=browser, timeout=30)
+                if photo_response.status_code == 200:
+                    with open(os.path.join(photo_folder, f'{member_id}.jpg'), 'wb') as photo_file:
+                        photo_file.write(photo_response.content)
+                else:
+                    print(f"  Aviso: no se pudo descargar la foto ({photo_response.status_code}).")
+            except Exception as exc:
+                print(f"  Aviso: error descargando foto: {exc}")
 
         photo_id = f'{member_id}.jpg'
 
@@ -556,7 +674,8 @@ def main():
             detail_endpoint,
             data={"diputad": member_id},
             impersonate=browser,
-            headers={"Content-Type": "application/x-www-form-urlencoded"}
+            headers={"Content-Type": "application/x-www-form-urlencoded"},
+            timeout=30,
         )
 
         detail = {
@@ -567,6 +686,30 @@ def main():
             detail = parse_detail(detail_response.text, member_id)
         else:
             print(f"  Error obteniendo el detalle del diputado {member_id}: {detail_response.status_code}")
+
+        # Complementar el detalle AJAX con la ficha inline del listado.
+        # El endpoint puede devolver algunas secciones (por ejemplo, experiencia)
+        # y omitir otras (por ejemplo, formación académica). Por eso el respaldo
+        # debe consultarse siempre, no únicamente cuando AJAX devuelve cero secciones.
+        inline_detail = parse_inline_detail(soup, member_id)
+        if inline_detail:
+            for section_name, inline_lines in inline_detail.get('sections', {}).items():
+                if inline_lines and not detail['sections'].get(section_name):
+                    detail['sections'][section_name] = inline_lines
+
+            # La ficha ampliada sigue teniendo prioridad; inline solo completa vacíos.
+            detail['email'] = detail['email'] or inline_detail['email']
+            detail['phone'] = detail['phone'] or inline_detail['phone']
+            detail['facebook'] = detail['facebook'] or inline_detail['facebook']
+            detail['twitter'] = detail['twitter'] or inline_detail['twitter']
+            detail['office'] = detail['office'] or inline_detail['office']
+            detail['work_plan_url'] = detail['work_plan_url'] or inline_detail['work_plan_url']
+
+        section_count = sum(bool(v) for v in detail['sections'].values())
+        if section_count:
+            print(f"  Currículum recuperado: {', '.join(detail['sections'].keys())}")
+        else:
+            print("  AVISO: no se encontraron secciones de currículum para este perfil.")
 
         # La ficha ampliada manda; la del listado queda de respaldo
         email = detail['email'] or card_email
@@ -621,7 +764,7 @@ def main():
         # Pausa ética entre peticiones
         time.sleep(1)
 
-    folder = 'data'
+    folder = DATA_DIR
     os.makedirs(folder, exist_ok=True)
     output_path = os.path.join(folder, 'perfiles.json')
 
@@ -633,7 +776,10 @@ def main():
 
     print("\n¡Archivo JSON guardado con éxito!")
     print(f"\nRegistros extraídos: {total_records}")
+    print(f"Archivo generado: {os.path.abspath(output_path)}")
+    print(f"Currículums generados: {sum(1 for v in raw_curricula.values() if any(k != "nombre" for k in v))}")
 
 
 if __name__ == "__main__":
     main()
+
