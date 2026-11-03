@@ -1,9 +1,6 @@
 {
   "701": {
     "nombre": "Laura Guadalupe Vargas Vargas",
-    "informacion legislativa": [
-      "Electo por Principio de Mayoría Relativa Perteneciente al Grupo Legislativo del Partido Verde Ecologista"
-    ],
     "formacion academica": [
       "Instituto Tecnológico Autónomo de México (ITAM): Licenciada en Ciencia Política",
       "Instituto Tecnológico Latinoamericano: Maestría en Gestión Pública con Especialidad en Gobierno y Administración"
@@ -29,7 +26,10 @@
     "experiencia laboral": [
       "Secretario de Fomento a la Salud y Previsión Social Huachinango y Nuevo Necaxa - Sindicato de Mexicano de Electricistas.",
       "Prosecretario de divisiones - Sindicato Mexicano de Electricistas.",
-      "Subsecretario General de la División Necaxa y Huauchinango, Puebla - Sindicato Mexicano de Electricistas."
+      "Subsecretario General de la División Necaxa y Huauchinango, Puebla - Sindicato Mexicano de Electricistas.",
+      "Agrega",
+      "contenido",
+      "en bullets"
     ]
   },
   "703": {
@@ -156,7 +156,7 @@
     ]
   },
   "712": {
-    "nombre": "José Miguel Trujillo  de Ita",
+    "nombre": "José Miguel Trujillo de Ita",
     "formacion academica": [
       "Benemérita Universidad Autónoma de Puebla, Licenciatura en Administración."
     ],
@@ -195,7 +195,6 @@
     ],
     "informacion general": [
       "Curso de paridad de género, Derechos Humanos, no discriminación, prevención, atención y erradicación de la violencia política contra las mujeres en razón de género.",
-      "Curso de Actualización en Materia Político Electoral Rumbo al Proceso Electoral.",
       "Curso de Actualización en Materia Político Electoral Rumbo al Proceso Electoral."
     ]
   },
@@ -397,10 +396,49 @@
     ]
   },
   "734": {
-    "nombre": "Ana Laura Gómez Ramírez"
+    "nombre": "Ana Laura Gómez Ramírez",
+    "formacion academica": [
+      "Universidad Iberoamericana Puebla, Licenciatura en Contaduría Pública Especialista en Sustentabilidad Experta en procesos de calidad Experta en Finanzas y Administración Experta en contabilidad y Finanzas Experta en Ingeniería de Producción"
+    ],
+    "experiencia laboral": [
+      "2001-2009"
+    ],
+    "informacion general": [
+      "2023 Diplomado en Sustentabilidad",
+      "2022 Diplomado en sistemas de calidad sustentables",
+      "2021 Diplomado en sistemas de calidad Lean Six Sigma Grado Master Black Belt",
+      "2019 Diplomado en eficiencia de costos",
+      "2017 Diplomado en contraloría y auditoría",
+      "2015 Curso de actualizaciones contables",
+      "2012 Curso de administración Básica",
+      "2026 Maestría en Innovación Pública e Inteligencia Artificial",
+      "2026 Promotoria en Gestión Integral de Residuos y Economía Circular"
+    ]
   },
   "729": {
-    "nombre": "Jaime Alejandro Aurioles Barroeta"
+    "nombre": "Jaime Alejandro Aurioles Barroeta",
+    "formacion academica": [
+      "Instituto Tecnológico y de Estudios Superiores de Monterrey, Maestría en Gestión Publica.",
+      "Universidad Popular Autónoma del Estado de Puebla, Licenciatura en Ciencias Políticas."
+    ],
+    "experiencia laboral": [
+      "2021-2024 Secretario de Desarrollo Económico, Turismo y Cultura en el Ayuntamiento de San Martín Texmelucan.",
+      "2019-2021 Director de Desarrollo Económico en el Ayuntamiento de San Martín Texmelucan."
+    ],
+    "informacion general": [
+      "Cursos:",
+      "Liderazgo contemporáneo.",
+      "Comunicación organizacional.",
+      "Análisis de contenido.",
+      "Análisis de silogismos.",
+      "Mercadotecnia.",
+      "Estudios de opinión y entrevistas.",
+      "Calidad en la atención y servicio al cliente.",
+      "Certificación de Competencias.",
+      "Desarrollo de Competencias Conversacionales para la mejora de la productividad.",
+      "Comunicación y Liderazgo.",
+      "Equidad de género."
+    ]
   },
   "740": {
     "nombre": "Ana Lilia Tepole Armenta",
@@ -513,13 +551,10 @@
   "730": {
     "nombre": "Celia Bonaga Ruíz",
     "formacion academica": [
-      "Universidad Popular Autónoma del Estado de Puebla, Licenciatura en Ciencias Políticas Universidad Popular Autónoma del Estado de Puebla, Maestría en Ciencias Políticas",
-      "Universidad Popular Autónoma del Estado de Puebla, Maestría en Ciencias Políticas"
+      "Universidad Popular Autónoma del Estado de Puebla, Licenciatura en Ciencias Políticas Universidad Popular Autónoma del Estado de Puebla, Maestría en Ciencias Políticas"
     ],
     "experiencia laboral": [
-      "2021-2023 Secretaria Particular en el H. Ayuntamiento de Puebla 2011-2012 Directora de Atención Ciudadana en el H. Ayuntamiento de Puebla 2003-2011 Coordinadora General del GP PAN en el H. Congreso del Estado de Puebla",
-      "2011-2012 Directora de Atención Ciudadana en el H. Ayuntamiento de Puebla 2003-2011 Coordinadora General del GP PAN en el H. Congreso del Estado de Puebla",
-      "2003-2011 Coordinadora General del GP PAN en el H. Congreso del Estado de Puebla"
+      "2021-2023 Secretaria Particular en el H. Ayuntamiento de Puebla 2011-2012 Directora de Atención Ciudadana en el H. Ayuntamiento de Puebla 2003-2011 Coordinadora General del GP PAN en el H. Congreso del Estado de Puebla"
     ],
     "informacion general": [
       "Experiencia en la planificación y desarrollo de planes de trabajo en el sector público tanto en el Ayuntamiento de Puebla como en el H. Congreso del Estado."
@@ -597,26 +632,37 @@
     ]
   },
   "727": {
-    "nombre": "Luana Armida Amador Vallejo"
+    "nombre": "Luana Armida Amador Vallejo",
+    "formacion academica": [
+      "Universidad de las Américas México, Maestría en Economía",
+      "Universidad de las Américas Puebla, Licenciatura en Economía con especialidad en Antropología y Relaciones Exteriores"
+    ],
+    "experiencia laboral": [
+      "1981 – 1983 Jefe de Unidad en la Dirección de Estímulos al Comercio Exterior (Gobierno Federal)",
+      "1983 a la fecha Empresaria",
+      "2008 – 2011 Diputada Local del Estado de Puebla",
+      "2012 – 2013 Representante Estatal ante la Asamblea Consultiva del CONADIS (Suplente)"
+    ],
+    "informacion general": [
+      "Fundadora de Chanolliliztli, Familias en Movimiento, A.C., en funcionamiento desde 2003 a la fecha",
+      "Cofundadora del Colectivo Inclusión en Acción, en funcionamiento desde 2011 a la fecha",
+      "Colaboración en diversas organizaciones relacionadas a las Personas con Discapacidad",
+      "Diplomado en Programación Neurolingüística, Reingeniería Humana",
+      "Reconocimiento \"El Mejor Estudiante de México\", 1981",
+      "\"Premio Nacional de la Administración Pública\" (Gobierno Federal), 1983."
+    ]
   },
   "737": {
     "nombre": "Delfina Pozos Vergara",
     "formacion academica": [
-      "Tecnológico de Tehuacán, Ingeniería en sistemas computacionales Maestría en Administración Pública",
-      "Maestría en Administración Pública"
+      "Tecnológico de Tehuacán, Ingeniería en sistemas computacionales Maestría en Administración Pública"
     ],
     "experiencia laboral": [
-      "Empresaria en el Rubro Gasolinero y de Bienes Raíces 2023 Secretaria General, Comité Directivo Estatal del PRI 2021 Secretaria Operación Política, Comité directivo Estatal del PRI 2021 Candidata a Diputada Federal, Distrito Federal 08 Ciudad Serdán Secretaria Adjunta a Presidencia del Comité 2018 Candidata a Diputada Local, Distrito local 03 Zacatlán 2004 - 2007 H. Ayuntamiento de Libres, Puebla, Soluciones y Soporte de Sistemas.",
-      "2023 Secretaria General, Comité Directivo Estatal del PRI 2021 Secretaria Operación Política, Comité directivo Estatal del PRI 2021 Candidata a Diputada Federal, Distrito Federal 08 Ciudad Serdán Secretaria Adjunta a Presidencia del Comité 2018 Candidata a Diputada Local, Distrito local 03 Zacatlán 2004 - 2007 H. Ayuntamiento de Libres, Puebla, Soluciones y Soporte de Sistemas.",
-      "2021 Secretaria Operación Política, Comité directivo Estatal del PRI 2021 Candidata a Diputada Federal, Distrito Federal 08 Ciudad Serdán Secretaria Adjunta a Presidencia del Comité 2018 Candidata a Diputada Local, Distrito local 03 Zacatlán 2004 - 2007 H. Ayuntamiento de Libres, Puebla, Soluciones y Soporte de Sistemas.",
-      "2021 Candidata a Diputada Federal, Distrito Federal 08 Ciudad Serdán Secretaria Adjunta a Presidencia del Comité 2018 Candidata a Diputada Local, Distrito local 03 Zacatlán 2004 - 2007 H. Ayuntamiento de Libres, Puebla, Soluciones y Soporte de Sistemas.",
-      "2018 Candidata a Diputada Local, Distrito local 03 Zacatlán 2004 - 2007 H. Ayuntamiento de Libres, Puebla, Soluciones y Soporte de Sistemas.",
-      "2004 - 2007 H. Ayuntamiento de Libres, Puebla, Soluciones y Soporte de Sistemas."
+      "Empresaria en el Rubro Gasolinero y de Bienes Raíces 2023 Secretaria General, Comité Directivo Estatal del PRI 2021 Secretaria Operación Política, Comité directivo Estatal del PRI 2021 Candidata a Diputada Federal, Distrito Federal 08 Ciudad Serdán Secretaria Adjunta a Presidencia del Comité 2018 Candidata a Diputada Local, Distrito local 03 Zacatlán 2004 - 2007 H. Ayuntamiento de Libres, Puebla, Soluciones y Soporte de Sistemas."
     ]
   },
   "739": {
     "nombre": "Fedrha Isabel Suriano Corrales",
-    "formacion academica": [],
     "experiencia laboral": [
       "Actual Secretaria de Acuerdos de Movimiento Ciudadano Puebla Capital 2024 Candidata a Diputada Local Plurinominal por el Partido Movimiento Ciudadano. Coordinadora de Campaña del Candidato José Antonio Gali Fayad en el Distrito 26 con Cabecera en Ajalpan, Puebla. 2021 Candidata a Diputada Local Plurinominal por el Partido Movimiento Ciudadano. 2015 – 2017 Asesora de la Secretaria de Gobernación. 2017 – 2018 Coordinadora de Enlaces a Municipios de la Oficina del Ejecutivo",
       "2024 Candidata a Diputada Local Plurinominal por el Partido Movimiento Ciudadano. Coordinadora de Campaña del Candidato José Antonio Gali Fayad en el Distrito 26 con Cabecera en Ajalpan, Puebla. 2021 Candidata a Diputada Local Plurinominal por el Partido Movimiento Ciudadano. 2015 – 2017 Asesora de la Secretaria de Gobernación. 2017 – 2018 Coordinadora de Enlaces a Municipios de la Oficina del Ejecutivo",
@@ -624,6 +670,9 @@
       "2021 Candidata a Diputada Local Plurinominal por el Partido Movimiento Ciudadano. 2015 – 2017 Asesora de la Secretaria de Gobernación. 2017 – 2018 Coordinadora de Enlaces a Municipios de la Oficina del Ejecutivo",
       "2015 – 2017 Asesora de la Secretaria de Gobernación. 2017 – 2018 Coordinadora de Enlaces a Municipios de la Oficina del Ejecutivo",
       "2017 – 2018 Coordinadora de Enlaces a Municipios de la Oficina del Ejecutivo"
+    ],
+    "formacion academica": [
+      "Universidad del Real, Licenciatura en Derecho"
     ]
   },
   "745": {
