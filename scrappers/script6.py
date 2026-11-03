@@ -1,3 +1,5 @@
+# script6.py
+
 import sys
 import os
 # Añadimos la carpeta principal al path para poder importar desde lib/
