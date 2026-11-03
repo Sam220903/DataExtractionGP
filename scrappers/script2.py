@@ -63,18 +63,77 @@ def tallyVotes(members):
     return tally
 
 
+# ------------------------------------------------------------------------------
+# Requisitos: este script usa JSON que genera otra base de datos. Si falta
+# no se ejecuta nada (no se accede a la página del Congreso).
+# ------------------------------------------------------------------------------
+data_dir = os.path.join(os.path.dirname(__file__), '..', 'data')
+unidad_participacion_path = os.path.join(data_dir, 'unidad_participacion.json')
+
+requisitos = [
+    (unidad_participacion_path, 'unidad_participacion.json', 'la base 3 (Unidad y participación)'),
+]
+faltantes = [(nombre, base) for ruta, nombre, base in requisitos if not os.path.isfile(ruta)]
+if faltantes:
+    print("\n" + "=" * 70)
+    print("NO SE PUEDE EJECUTAR: faltan archivos de otras bases de datos")
+    print("=" * 70)
+    for nombre, base in faltantes:
+        print(f"  - Falta {nombre}: primero debes extraer {base}.")
+    print("Extrae esa base desde el menú y vuelve a ejecutar la base 2.")
+    print("=" * 70)
+    sys.exit(1)
+
+
 # Establecer parámetros iniciales
 domain = 'https://www.congresopuebla.gob.mx'
 url = f'{domain}/index.php?option=com_content&view=article&id=12718'
 browser = "edge"
 parser = "html.parser"
 
+# Parámetros de red: el sitio del Congreso es lento y a veces corta la conexión
+# a mitad de la descarga, así que se usa un timeout amplio y reintentos.
+REQUEST_TIMEOUT = 90      # segundos por intento (curl_cffi usa 30 por defecto)
+MAX_RETRIES = 5           # intentos por URL
+RETRY_BASE_DELAY = 3      # espera base entre intentos (backoff exponencial: 3, 6, 12, 24 s)
+
+
+def fetch(url, label=""):
+    """
+    GET con timeout amplio y reintentos con backoff exponencial.
+    Regresa la respuesta (status 200). Si tras todos los intentos no se logra,
+    detiene el script SIN guardar votaciones.json: el 'numero_votacion' de cada
+    día depende de visitar todos los registros en orden, así que omitir uno
+    dejaría datos incorrectos en silencio.
+    """
+    for attempt in range(1, MAX_RETRIES + 1):
+        try:
+            response = requests.get(url, impersonate=browser, timeout=REQUEST_TIMEOUT)
+            if response.status_code == 200:
+                return response
+            print(f"  [!] {label or url}: HTTP {response.status_code} (intento {attempt}/{MAX_RETRIES})")
+        except Exception as error:  # Timeout, CurlError, ConnectionError, etc.
+            print(f"  [!] {label or url}: {type(error).__name__} (intento {attempt}/{MAX_RETRIES})")
+
+        if attempt < MAX_RETRIES:
+            time.sleep(RETRY_BASE_DELAY * 2 ** (attempt - 1))
+
+    print("\n" + "=" * 70)
+    print("NO SE PUDO COMPLETAR LA EXTRACCIÓN: falló la conexión con el sitio del Congreso")
+    print("=" * 70)
+    print(f"  - No se pudo descargar: {label or url}")
+    print(f"  - Se intentó {MAX_RETRIES} veces.")
+    print("  - No se guardó votaciones.json para no dejar datos incompletos.")
+    print("Revisa tu conexión a internet y vuelve a ejecutar la base 2.")
+    print("=" * 70)
+    sys.exit(1)
+
 date_formatter = DateFormatter()
 classifier = EventClassifier()
 
 print("Accediendo a la página de votaciones")
 
-response = requests.get(url, impersonate=browser)
+response = fetch(url, "página principal de votaciones")
 
 # Iniciar un contador de registros
 total_records = 0
@@ -108,7 +167,7 @@ if response.status_code == 200:
         print(f"\nProcesando el año: {year_text}")
         
         # Acceder a los registros de ese año
-        year_page_response = requests.get(full_year_link, impersonate=browser)
+        year_page_response = fetch(full_year_link, f"año {year_text}")
 
         
         if year_page_response.status_code == 200:
@@ -154,7 +213,7 @@ if response.status_code == 200:
 
                     visited_links.add(record_link)
                     
-                    record_page_response = requests.get(record_link, impersonate=browser)
+                    record_page_response = fetch(record_link, record_link)
 
                     # Corrección: Añadido .status_code para que la validación funcione
                     if record_page_response.status_code == 200:

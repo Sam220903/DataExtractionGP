@@ -20,6 +20,35 @@ commitees_url = f'{domain}/index.php?option=com_k2&view=itemlist&layout=category
 browser = "edge"
 parser = "html.parser"
 
+# Parámetros de red: el sitio del congreso es lento y a veces corta la conexión
+# a mitad de la descarga, así que usamos un timeout más amplio y reintentos.
+REQUEST_TIMEOUT = 90      # segundos por intento (curl_cffi usa 30 por defecto)
+MAX_RETRIES = 4           # intentos por URL
+RETRY_BASE_DELAY = 3      # espera base entre intentos (backoff exponencial)
+failed_urls = []          # URLs que no se pudieron descargar tras todos los intentos
+
+
+def fetch(url, label=""):
+    """
+    GET con timeout amplio y reintentos con backoff exponencial.
+    Regresa la respuesta si fue exitosa (status 200) o None si falló definitivamente,
+    de modo que un fallo de red en una sola página no tumbe todo el script.
+    """
+    for attempt in range(1, MAX_RETRIES + 1):
+        try:
+            response = requests.get(url, impersonate=browser, timeout=REQUEST_TIMEOUT)
+            if response is not None:
+                return response
+            print(f"  [!] {label or url}: HTTP {response.status_code} (intento {attempt}/{MAX_RETRIES})")
+        except Exception as error:  # Timeout, CurlError, ConnectionError, etc.
+            print(f"  [!] {label or url}: {type(error).__name__} (intento {attempt}/{MAX_RETRIES})")
+
+        if attempt < MAX_RETRIES:
+            time.sleep(RETRY_BASE_DELAY * 2 ** (attempt - 1))
+
+    failed_urls.append(label or url)
+    return None
+
 dh = DateHandler()
 ec = EventClassifier()
 
@@ -90,12 +119,12 @@ data = []
 # ----------------------------------------- Extracción de datos de comisiones -----------------------------------------
 print("Accediendo a la página de comisiones")
 
-response = requests.get(comissions_url, impersonate=browser)
+response = fetch(comissions_url, "listado de comisiones")
 
 # Iniciar un contador de registros
 total_records = 0
 
-if response.status_code == 200:
+if response is not None:
 
     # Conjunto para almacenar los ids ya procesados
     visited_ids = set()
@@ -116,9 +145,9 @@ if response.status_code == 200:
 
         print(f"\nProcesando la comisión: {commision_title}")
 
-        commision_response = requests.get(commision_link, impersonate=browser)
+        commision_response = fetch(commision_link, commision_title)
 
-        if commision_response.status_code == 200:
+        if commision_response is not None:
             commision_soup = BeautifulSoup(commision_response.text, parser)
 
             info_divs = commision_soup.find('div', class_="contenedorGeneralComision").find_all('div', recursive=False)
@@ -145,12 +174,12 @@ if response.status_code == 200:
 #  ------------------------------------- Extracción de datos de comités ---------------------------------------
 print("Accediendo a la página de comités")
 
-response = requests.get(commitees_url, impersonate=browser)
+response = fetch(commitees_url, "listado de comités")
 
 # Iniciar un contador de registros
 total_records = 0
 
-if response.status_code == 200:
+if response is not None:
 
     # Conjunto para almacenar los ids ya procesados
     visited_ids = set()
@@ -171,9 +200,9 @@ if response.status_code == 200:
 
         print(f"\nProcesando el comité: {commitee_title}")
 
-        commitee_response = requests.get(commitee_link, impersonate=browser)
+        commitee_response = fetch(commitee_link, commitee_title)
 
-        if commitee_response.status_code == 200:
+        if commitee_response is not None:
             commitee_soup = BeautifulSoup(commitee_response.text, parser)
 
             info_divs = commitee_soup.find('div', class_="contenedorGeneralComision").find_all('div', recursive=False)
@@ -204,3 +233,9 @@ with open(ruta_archivo, 'w', encoding='utf-8') as output_file:
     json.dump(data, output_file, ensure_ascii=False, indent=4)
 
 print(f"\nProceso terminado. Registros guardados: {len(data)}")
+
+if failed_urls:
+    print(f"\n[!] No se pudieron descargar {len(failed_urls)} páginas tras {MAX_RETRIES} intentos:")
+    for item in failed_urls:
+        print(f"    - {item}")
+    print("    Vuelve a ejecutar el script para completar esos registros.")

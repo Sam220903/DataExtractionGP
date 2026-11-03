@@ -33,8 +33,8 @@ def getAppDir():
 BASE_DIR = getAppDir()
 
 # Diccionario con los nombres de las bases de datos
-BASES_DE_DATOS = {1: "Perfiles", 2: "Votaciones", 3: "Unidad y Participación", 4: "Asistencias", 5: "Comisiones y comites", 6: "Sesiones",
-                  7: "Iniciativas y Puntos de Acuerdo"}
+BASES_DE_DATOS = {1: "Perfiles", 2: "Votaciones (Necesita base 3)", 3: "Unidad y Participación", 4: "Asistencias", 5: "Comisiones y comites", 6: "Sesiones",
+                  7: "Iniciativas y Puntos de Acuerdo (Necesita bases 1 y 5)"}
 
 def mostrar_menu():
     """Genera y muestra la tabla del menú principal."""
