@@ -30,6 +30,10 @@ os.makedirs(data_dir, exist_ok=True)
 
 # JSON ya extraído con el que se empatan C1..C6 (catálogo de comisiones)
 comisiones_path = os.path.join(data_dir, 'comisiones_contenido.json')
+# perfiles.json: nombre oficial y partido de cada diputado
+perfiles_path = os.path.join(data_dir, 'perfiles.json')
+# Caché de resultados de IA (si se interrumpe la corrida no se vuelve a pagar por lo ya resumido)
+ia_cache_path = os.path.join(data_dir, 'ia_cache_iniciativas.json')
 
 # Rutas de descarga de gacetas legislativas mensuales
 gm_pdf_dir = os.path.join(data_dir, 'pdfs', 'gms')
@@ -39,7 +43,14 @@ os.makedirs(gm_pdf_dir, exist_ok=True)
 output_json_path = os.path.join(data_dir, 'Iniciativas_PA.json')
 
 pdf_processor = PDFProcessor()
-ipa_processor = GacetaIPAProcessor(comisiones_path=comisiones_path)
+# usar_ia=True: Gemini resume 'Contenido' (solo Iniciativas) y llena 'Comentario' solo en
+# casos extraordinarios. Requiere GEMINI_API_KEY en .env; si falta, el resto funciona igual.
+ipa_processor = GacetaIPAProcessor(
+    comisiones_path=comisiones_path,
+    perfiles_path=perfiles_path,
+    usar_ia=True,
+    ia_cache_path=ia_cache_path,
+)
 
 data = {"registros": []}
 
