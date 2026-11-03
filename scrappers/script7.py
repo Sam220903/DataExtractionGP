@@ -1,6 +1,10 @@
 # script7.py
 # Scrapper de Gacetas Legislativas -> Iniciativas_PA.json
 # Basado en script6.py; cambia GMProcessor por GacetaIPAProcessor.
+#
+# Si la IA agota su límite gratuito diario: se imprime la alerta, se deja de
+# recorrer gacetas, se guarda el JSON con lo extraído y el script sale con
+# código 3 (app.py lo detecta, avisa que hay que esperar un día y no corre el writer).
 
 import sys
 import os
@@ -15,6 +19,10 @@ from urllib.parse import urljoin
 
 from lib.PDFProcessor import PDFProcessor
 from extractors.GacetaIPAProcessor import GacetaIPAProcessor
+
+# Código de salida con el que se avisa a app.py que se agotó el límite de la IA
+# (debe coincidir con EXIT_CODE_QUOTA de app.py)
+EXIT_CODE_QUOTA = 3
 
 # ------------------------------------------------------------------------------
 # Parámetros iniciales
@@ -43,16 +51,32 @@ os.makedirs(gm_pdf_dir, exist_ok=True)
 output_json_path = os.path.join(data_dir, 'Iniciativas_PA.json')
 
 pdf_processor = PDFProcessor()
-# usar_ia=True: Gemini resume 'Contenido' (solo Iniciativas) y llena 'Comentario' solo en
-# casos extraordinarios. Requiere GEMINI_API_KEY en .env; si falta, el resto funciona igual.
+# ------------------------------------------------------------------------------
+# ¿Usar IA? Solo regex (rápido, sin costo; 'Contenido' y 'Comentario' quedan en null)
+# o regex + IA (Gemini resume 'Contenido' de las Iniciativas y llena 'Comentario' en
+# casos extraordinarios; requiere GEMINI_API_KEY en .env).
+# ------------------------------------------------------------------------------
+while True:
+    respuesta = input("¿Usar IA para llenar 'Contenido' y 'Comentario'? (Si/No): ").strip().lower()
+    if respuesta in ('s', 'si', 'sí'):
+        usar_ia = True
+        break
+    if respuesta in ('n', 'no'):
+        usar_ia = False
+        break
+    print("  Respuesta no válida: escribe Si (s) o No (n).")
+
+print(f"Modo: {'regex + IA (Gemini)' if usar_ia else 'solo regex (sin IA)'}")
+
 ipa_processor = GacetaIPAProcessor(
     comisiones_path=comisiones_path,
     perfiles_path=perfiles_path,
-    usar_ia=True,
+    usar_ia=usar_ia,
     ia_cache_path=ia_cache_path,
 )
 
 data = {"registros": []}
+limite_ia_agotado = False
 
 
 def save_json():
@@ -157,6 +181,7 @@ if response.status_code == 200:
                     clean_text = raw_text
 
                     # 3. Procesar la gaceta completa -> lista de registros
+                    #    (si la IA se agota a media gaceta, devuelve lo procesado hasta ahí)
                     new_records = ipa_processor.process_file(clean_text, source_file=local_pdf_path)
                     data["registros"].extend(new_records)
                     print(f"    -> {len(new_records)} registro(s) en esta gaceta")
@@ -167,6 +192,14 @@ if response.status_code == 200:
                 except Exception as e:
                     print(f"  Error procesando {local_pdf_path}: {e}")
                     traceback.print_exc()
+
+                # Límite gratuito de la IA agotado: no tiene caso seguir con más gacetas
+                if ipa_processor.ia_quota_exhausted:
+                    limite_ia_agotado = True
+                    break
+
+            if limite_ia_agotado:
+                break
     else:
         print("La estructura de la página cambió, no se encontró el contenedor de botones de años.")
 
@@ -179,6 +212,7 @@ else:
 # Estatus / Fecha de aprobación / F-C-A de una iniciativa dependen de un
 # dictamen que normalmente aparece en OTRA sesión (a veces otra gaceta), por
 # lo que solo pueden resolverse cuando ya se procesaron todas.
+# (Si la corrida se detuvo por el límite de la IA, se resuelve con lo disponible.)
 if data["registros"] and hasattr(ipa_processor, "finalize"):
     data["registros"] = ipa_processor.finalize(data["registros"])
 
@@ -187,5 +221,19 @@ if data["registros"] and hasattr(ipa_processor, "finalize"):
 # ==============================================================================
 if not save_json():
     print("\nEl proceso terminó, pero no se generaron registros para guardar.")
+
+# ==============================================================================
+# ALERTA: LÍMITE GRATUITO DE LA IA AGOTADO
+# ==============================================================================
+if limite_ia_agotado:
+    print("\n" + "=" * 70)
+    print("ALERTA: SE AGOTÓ EL LÍMITE GRATUITO DIARIO DE LA IA (Gemini)")
+    print("=" * 70)
+    print(f"La extracción se detuvo. Se guardó lo extraído ({len(data['registros'])} registro(s)) en:")
+    print(f"  {output_json_path}")
+    print("Debes ESPERAR UN DÍA para que se restablezca el límite gratuito y volver a ejecutar.")
+    print("Lo ya resumido quedó en la caché de IA: al reanudar solo se enviarán las iniciativas pendientes.")
+    print("=" * 70)
+    sys.exit(EXIT_CODE_QUOTA)
 
 print("\n=== Ejecución finalizada ===")

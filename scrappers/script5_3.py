@@ -27,6 +27,9 @@ commitees_url = f'{domain}/index.php?option=com_k2&view=itemlist&layout=category
 browser = "edge"
 parser = "html.parser"
 
+# Código de salida con el que se avisa a app.py que se agotó el límite de la IA
+EXIT_CODE_QUOTA = 3   # debe coincidir con app.py
+
 # Tras este número de fallas de IA seguidas se deja de llamar a Gemini en esta ejecución
 # (los documentos restantes quedan pendientes para la siguiente ejecución).
 MAX_CONSECUTIVE_AI_FAILURES = 3
@@ -100,7 +103,7 @@ def registerAiQuotaExhausted(errorType):
 
     if quotaExhaustedType is None:
         print("\n  !!! ALERTA: se agotó el margen de uso de la IA. "
-              "No se enviarán más documentos a Gemini en esta ejecución. !!!")
+              "Se detiene la ejecución y se guardará lo extraído hasta ahora. !!!")
 
     quotaExhaustedType = errorType
     aiStopReason = QUOTA_ERROR_MESSAGES.get(errorType, errorType)
@@ -108,22 +111,21 @@ def registerAiQuotaExhausted(errorType):
 
 def printQuotaAlert():
     """Alerta destacada al final de la ejecución cuando se agotó el margen de uso de la IA"""
-    notAttempted = 0
-    for record in pending_records:
-        if record.get("Código de error") == "no_intentado":
-            notAttempted += 1
+    gratuita = quotaExhaustedType == "cuota_gratuita_agotada"
 
     print("\n" + "!" * 70)
-    print("ALERTA: SE AGOTÓ EL MARGEN DE USO DE LA IA")
+    print("ALERTA: SE AGOTÓ EL LÍMITE GRATUITO DIARIO DE LA IA" if gratuita
+          else "ALERTA: SE AGOTÓ EL MARGEN DE USO DE LA IA")
     print("!" * 70)
     print(QUOTA_ERROR_MESSAGES.get(quotaExhaustedType, quotaExhaustedType))
-    print("Se detuvo el envío de documentos a la IA para no consumir más tokens de lo debido.")
-    print(f"Documentos pendientes que no se alcanzaron a intentar: {notAttempted}")
-    print("\nQué puedes hacer:")
-    print("  - Esperar a que se restablezca la cuota (la diaria normalmente se renueva al día siguiente).")
-    print("  - O usar una API key con facturación activa en GEMINI_API_KEY (archivo .env).")
-    print("\nLos documentos ya extraídos quedaron guardados en la caché: al volver a ejecutar")
-    print("solo se enviarán a la IA los pendientes.")
+    print("Se detuvo la ejecución para no seguir enviando documentos a la IA.")
+    print("Lo extraído hasta ahora quedó guardado en el JSON y en la caché.")
+    if gratuita:
+        print("\nDebes esperar un día para que se restablezca el límite gratuito")
+        print("(normalmente se reinicia a medianoche, hora del Pacífico de EE. UU.) y volver a ejecutar.")
+    else:
+        print("\nEspera a que se restablezca la cuota o usa una API key con facturación activa en GEMINI_API_KEY (.env).")
+    print("Al reanudar, los documentos ya extraídos no se vuelven a enviar a la IA: solo los pendientes.")
     print("!" * 70)
 
 
@@ -388,6 +390,14 @@ if response.status_code == 200:
                     **extracted_data
                 })
 
+                # Se agotó el límite de la IA: se deja de recorrer sesiones
+                if quotaExhaustedType:
+                    break
+
+            # Comisión a medias por el límite de la IA: no se agrega (al guardar se conserva su versión previa)
+            if quotaExhaustedType:
+                break
+
             commission_data = {
                 "Nombre": name,
                 "Tipo": "Comisión",
@@ -402,14 +412,17 @@ if response.status_code == 200:
 
 
 #  ------------------------------------- Extracción de datos de comités ---------------------------------------
-print("Accediendo a la página de comités")
-
-response = requests.get(commitees_url, impersonate=browser)
+if quotaExhaustedType:
+    print("Se omite la extracción de comités: se agotó el límite de la IA")
+    response = None
+else:
+    print("Accediendo a la página de comités")
+    response = requests.get(commitees_url, impersonate=browser)
 
 # Iniciar un contador de registros
 total_records = 0
 
-if response.status_code == 200:
+if response is not None and response.status_code == 200:
 
     # Conjunto para almacenar los ids ya procesados
     visited_ids = set()
@@ -511,6 +524,14 @@ if response.status_code == 200:
                     **extracted_data
                 })
 
+                # Se agotó el límite de la IA: se deja de recorrer sesiones
+                if quotaExhaustedType:
+                    break
+
+            # Comité a medias por el límite de la IA: no se agrega (al guardar se conserva su versión previa)
+            if quotaExhaustedType:
+                break
+
             commitee_data = {
                 "Nombre": name,
                 "Tipo": "Comité",
@@ -528,6 +549,18 @@ if response.status_code == 200:
 folder = "data"
 os.makedirs(folder, exist_ok=True)
 ruta_archivo = os.path.join(folder, "comisiones_contenido.json")
+
+# Si la ejecución se detuvo por el límite de la IA, no se pierde lo que ya había en el JSON:
+# las comisiones/comités que no se alcanzaron a procesar conservan su versión anterior.
+if quotaExhaustedType and os.path.exists(ruta_archivo):
+    try:
+        with open(ruta_archivo, encoding='utf-8') as previous_file:
+            previous_data = json.load(previous_file)
+        already_new = {(item.get("Tipo"), item.get("Nombre")) for item in data}
+        data.extend(item for item in previous_data if (item.get("Tipo"), item.get("Nombre")) not in already_new)
+    except (OSError, ValueError):
+        pass
+
 with open(ruta_archivo, 'w', encoding='utf-8') as output_file:
     json.dump(data, output_file, ensure_ascii=False, indent=4)
 
@@ -570,3 +603,7 @@ if quotaExhaustedType:
     printQuotaAlert()
 
 print(f"\nProceso terminado. Registros guardados: {len(data)}")
+
+# Si se agotó el límite de la IA se sale con un código especial para que app.py lo detecte
+if quotaExhaustedType:
+    sys.exit(EXIT_CODE_QUOTA)

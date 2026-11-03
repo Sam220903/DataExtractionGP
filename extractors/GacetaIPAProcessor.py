@@ -220,6 +220,7 @@ class GacetaIPAProcessor:
         self._ia_client = None
         self._ia_types = None
         self.ia_disabled_reason = None
+        self.ia_quota_exhausted = False   # True cuando se agota el límite gratuito diario
         if usar_ia:
             self._init_ia()
         self.comisiones = []          # nombres canónicos
@@ -346,7 +347,8 @@ No incluyas saludos ni markdown.
 
     def _llamar_modelo(self, prompt):
         """Llama a Gemini con reintentos. Devuelve lista de dicts o None si falla.
-        Si se agota la cuota o la API key es inválida, desactiva la IA el resto de la corrida."""
+        Si se agota la cuota o la API key es inválida, desactiva la IA el resto de la corrida.
+        Si lo que se agotó es el límite gratuito DIARIO, además marca ia_quota_exhausted."""
         for intento in range(1, self.IA_MAX_ATTEMPTS + 1):
             try:
                 resp = self._ia_client.models.generate_content(
@@ -359,10 +361,16 @@ No incluyas saludos ni markdown.
             except Exception as e:
                 msg = str(e).lower()
                 code = getattr(e, 'code', None)
-                fatal = code in (401, 403) or "api key" in msg or (code == 429 and ("per day" in msg or "perday" in msg))
+                cuota_diaria = code == 429 and "perday" in msg.replace(" ", "")
+                fatal = code in (401, 403) or "api key" in msg or cuota_diaria
                 if fatal:
-                    self.ia_disabled_reason = f"IA desactivada por error fatal: {e}"
-                    print(f"  {self.ia_disabled_reason}")
+                    if cuota_diaria:
+                        self.ia_quota_exhausted = True
+                        self.ia_disabled_reason = "Se agotó el límite gratuito diario de la IA"
+                        print("\n  !!! LÍMITE GRATUITO DIARIO DE LA IA AGOTADO: se detiene la extracción.")
+                    else:
+                        self.ia_disabled_reason = f"IA desactivada por error fatal: {e}"
+                        print(f"  {self.ia_disabled_reason}")
                     return None
                 reintentable = code in (429, 500, 502, 503, 504) or isinstance(e, (ValueError, ConnectionError, TimeoutError))
                 if reintentable and intento < self.IA_MAX_ATTEMPTS:
@@ -941,6 +949,9 @@ No incluyas saludos ni markdown.
             self._enriquecer_con_ia(s, [r for r in records if r['_fecha'] == s['fecha']])
             print(f"  Sesión {fmt_date(s['fecha'])}: {n_i} iniciativa(s), "
                   f"{n_p} punto(s) de acuerdo/acuerdo(s), {n_d} dictamen(es) aprobados")
+            if self.ia_quota_exhausted:
+                print("  Se detiene esta gaceta: límite de IA agotado.")
+                break
         return records
 
     MINUTA_RE = re.compile(

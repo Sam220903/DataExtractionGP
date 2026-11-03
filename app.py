@@ -14,6 +14,13 @@ console = Console()
 # Bandera interna: el .exe se vuelve a lanzar a sí mismo con esta bandera para ejecutar un script
 RUN_SCRIPT_FLAG = "--run-script"
 
+# Código de salida con el que un scrapper avisa que se agotó el límite de la IA
+# (debe coincidir con EXIT_CODE_QUOTA de los scrappers)
+EXIT_CODE_QUOTA = 3
+
+# Los scripts hijos imprimen su progreso sin búfer, para que se vea en cuanto ocurre
+CHILD_ENV = dict(os.environ, PYTHONUNBUFFERED="1")
+
 
 def getAppDir():
     """Carpeta raíz de la aplicación: junto al .exe si está empaquetada, o junto a app.py en desarrollo."""
@@ -96,20 +103,32 @@ def ejecutar_scripts(db_number):
     console.print(Panel(f"[bold blue]Iniciando extracción para la Base de Datos {db_number}: {BASES_DE_DATOS[db_number]}[/bold blue]"))
 
     # 2. Ejecutar Scrapper
+    # Sin spinner (console.status): el spinner se redibuja encima de lo que imprime el script
+    # y tapa su progreso y sus preguntas (input). El script imprime directo en esta consola.
     try:
-        with console.status(f"[bold yellow]Ejecutando scrappers/script{db_number}.py...[/bold yellow]", spinner="dots"):
-            # Desarrollo: usa el mismo Python del entorno virtual. Empaquetado: el .exe se relanza a sí mismo
-            subprocess.run(buildScriptCommand(scrapper_path), check=True)
-        console.print(f"[bold green]✓ Scrapper (script{db_number}.py) finalizado correctamente.[/bold green]")
+        console.print(f"[bold yellow]Ejecutando scrappers/script{db_number}.py...[/bold yellow]\n")
+        # Desarrollo: usa el mismo Python del entorno virtual. Empaquetado: el .exe se relanza a sí mismo
+        subprocess.run(buildScriptCommand(scrapper_path), check=True, env=CHILD_ENV)
+        console.print(f"\n[bold green]✓ Scrapper (script{db_number}.py) finalizado correctamente.[/bold green]")
     except subprocess.CalledProcessError as e:
+        if e.returncode == EXIT_CODE_QUOTA:
+            # Se agotó el límite de la IA: el scrapper ya guardó el JSON con lo extraído
+            console.print(Panel(
+                "[bold yellow]Se agotó el límite gratuito de la IA.[/bold yellow]\n"
+                "Lo extraído hasta ahora quedó guardado en el JSON.\n"
+                "Debes [bold]esperar un día[/bold] para que se restablezca el límite y volver a ejecutar:\n"
+                "solo se procesarán los elementos pendientes.\n"
+                "[dim]No se generó el Excel porque la extracción está incompleta.[/dim]",
+                title="[bold red]Ejecución detenida[/bold red]", border_style="red"))
+            return  # no se ejecuta el writer ni el verificador
         console.print(f"[bold red]✗ Error fatal durante la ejecución del Scrapper.[/bold red]\nDetalles: {e}")
         return  # Si falla el scrapper, detenemos el proceso y no ejecutamos el writer
 
     # 3. Ejecutar Writer
     try:
-        with console.status(f"[bold yellow]Ejecutando writers/script{db_number}.py...[/bold yellow]", spinner="dots"):
-            subprocess.run(buildScriptCommand(writer_path), check=True)
-        console.print(f"[bold green]✓ Writer (script{db_number}.py) finalizado correctamente.[/bold green]")
+        console.print(f"\n[bold yellow]Ejecutando writers/script{db_number}.py...[/bold yellow]\n")
+        subprocess.run(buildScriptCommand(writer_path), check=True, env=CHILD_ENV)
+        console.print(f"\n[bold green]✓ Writer (script{db_number}.py) finalizado correctamente.[/bold green]")
     except subprocess.CalledProcessError as e:
         console.print(f"[bold red]✗ Error fatal durante la ejecución del Writer.[/bold red]\nDetalles: {e}")
         return
@@ -117,10 +136,9 @@ def ejecutar_scripts(db_number):
     # 4. Ejecutar Verificador (opcional: solo si existe)
     if os.path.exists(verifier_path):
         try:
-            # Sin status/spinner por si el verificador imprime resultados en pantalla
-            console.print(f"[bold yellow]Ejecutando verification/script{db_number}.py...[/bold yellow]")
-            subprocess.run(buildScriptCommand(verifier_path), check=True)
-            console.print(f"[bold green]✓ Verificador (script{db_number}.py) finalizado correctamente.[/bold green]")
+            console.print(f"\n[bold yellow]Ejecutando verification/script{db_number}.py...[/bold yellow]\n")
+            subprocess.run(buildScriptCommand(verifier_path), check=True, env=CHILD_ENV)
+            console.print(f"\n[bold green]✓ Verificador (script{db_number}.py) finalizado correctamente.[/bold green]")
         except subprocess.CalledProcessError as e:
             console.print(f"[bold red]✗ Error durante la ejecución del Verificador.[/bold red]\nDetalles: {e}")
             return

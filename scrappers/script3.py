@@ -25,6 +25,9 @@ parser = 'html.parser'
 DATA_DIR = os.path.join(os.path.dirname(__file__), '..', 'data')
 pdf_dir = os.path.join(DATA_DIR, 'pdfs', 'minutes')
 
+# Código de salida con el que se avisa a app.py que se agotó el límite de la IA
+EXIT_CODE_QUOTA = 3   # debe coincidir con app.py
+
 
 def acta_id_from(text):
     m = re.search(r'acta_(\d+)', text) or re.search(r'[?&]id=(\d+)', text)
@@ -128,17 +131,22 @@ def buildStopMessage(gaceta_processor, consecutiveFailures):
 
 
 def printQuotaAlert(errorType, notAttempted):
-    """Alerta destacada cuando se agota el margen de uso (gratuito) de la IA. Se imprime en cuanto ocurre."""
+    """Alerta destacada cuando se agota el límite de uso de la IA. Se imprime en cuanto ocurre."""
+    gratuita = errorType == "cuota_gratuita_agotada"
     print("\n" + "!" * 70)
-    print("ALERTA: SE AGOTÓ EL MARGEN DE USO DE LA IA")
+    print("ALERTA: SE AGOTÓ EL LÍMITE GRATUITO DIARIO DE LA IA" if gratuita
+          else "ALERTA: SE AGOTÓ EL MARGEN DE USO DE LA IA")
     print("!" * 70)
     print(describeAiError(errorType))
-    print("Se detuvo el envío de actas a la IA para no consumir más tokens de lo debido.")
+    print("Se detuvo la ejecución para no seguir enviando solicitudes a la IA.")
+    print("Lo extraído hasta ahora se guardará en el JSON.")
     print(f"Actas pendientes que no se alcanzaron a intentar: {notAttempted}")
-    print("\nQué puedes hacer:")
-    print("  - Esperar a que se restablezca la cuota (la diaria normalmente se renueva al día siguiente).")
-    print("  - O usar una API key con facturación activa en GEMINI_API_KEY (archivo .env).")
-    print("\nLas actas ya analizadas quedaron guardadas: al volver a ejecutar solo se enviarán las pendientes.")
+    if gratuita:
+        print("\nDebes esperar un día para que se restablezca el límite gratuito")
+        print("(normalmente se reinicia a medianoche, hora del Pacífico de EE. UU.) y volver a ejecutar.")
+    else:
+        print("\nEspera a que se restablezca la cuota o usa una API key con facturación activa en GEMINI_API_KEY (.env).")
+    print("Al reanudar solo se enviarán a la IA las actas pendientes; las ya analizadas no consumen tokens.")
     print("!" * 70)
 
 
@@ -166,6 +174,7 @@ def printAiFailureReport(registry, stopMessage, notAttempted):
 
 # ==============================================================================
 # MAIN: todo es automático
+# Devuelve el tipo de error de cuota si la IA se agotó (None si todo salió bien)
 # ==============================================================================
 def main():
     pdf_processor = PDFProcessor()
@@ -203,6 +212,7 @@ def main():
     stats = {"nuevas": 0, "ya_analizadas": 0, "sin_votos(sin IA)": 0, "fallidas": 0}
     consecutiveFailures = 0
     stopMessage = None
+    quotaStop = None
     notAttempted = 0
 
     for index, (aid, link, path) in enumerate(actas):
@@ -243,7 +253,8 @@ def main():
                 stopMessage = buildStopMessage(gaceta_processor, consecutiveFailures)
                 notAttempted = countPending(actas[index + 1:], registry, gaceta_processor)
                 if gaceta_processor.isQuotaError():
-                    printQuotaAlert(gaceta_processor.last_error_type, notAttempted)
+                    quotaStop = gaceta_processor.last_error_type
+                    printQuotaAlert(quotaStop, notAttempted)
                 break
             continue
 
@@ -273,7 +284,7 @@ def main():
         print("✓ Foliation completed.")
 
         # ==========================================================================
-        # PHASE 3: SAVE JSON
+        # PHASE 3: SAVE JSON (también cuando la ejecución se detuvo por el límite de la IA)
         # ==========================================================================
         os.makedirs(DATA_DIR, exist_ok=True)
         try:
@@ -286,6 +297,10 @@ def main():
     else:
         print("\nEl proceso terminó, pero no se extrajeron registros para guardar.")
 
+    return quotaStop
+
 
 if __name__ == '__main__':
-    main()
+    # Si se agotó el límite de la IA, se sale con un código especial para que app.py lo detecte
+    if main():
+        sys.exit(EXIT_CODE_QUOTA)
