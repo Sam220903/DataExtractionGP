@@ -45,16 +45,18 @@
             "total_año": 3
         },
         "sesiones_año_3": {
-            "sesiones_periodo_1 ": [],
+            "sesiones_periodo_1 ": [
+                "23/09/26"
+            ],
             "sesiones_receso_1 ": [],
-            "total_periodo_1": 0,
+            "total_periodo_1": 1,
             "sesiones_periodo_2 ": [],
             "sesiones_receso_2 ": [],
             "total_periodo_2": 0,
             "sesiones_periodo_3 ": [],
             "sesiones_receso_3 ": [],
             "total_periodo_3": 0,
-            "total_año": 0
+            "total_año": 1
         }
     },
     {
@@ -118,16 +120,18 @@
             "total_año": 10
         },
         "sesiones_año_3": {
-            "sesiones_periodo_1 ": [],
+            "sesiones_periodo_1 ": [
+                "24/09/26"
+            ],
             "sesiones_receso_1 ": [],
-            "total_periodo_1": 0,
+            "total_periodo_1": 1,
             "sesiones_periodo_2 ": [],
             "sesiones_receso_2 ": [],
             "total_periodo_2": 0,
             "sesiones_periodo_3 ": [],
             "sesiones_receso_3 ": [],
             "total_periodo_3": 0,
-            "total_año": 0
+            "total_año": 1
         }
     },
     {
@@ -189,16 +193,18 @@
             "total_año": 10
         },
         "sesiones_año_3": {
-            "sesiones_periodo_1 ": [],
+            "sesiones_periodo_1 ": [
+                "23/09/26"
+            ],
             "sesiones_receso_1 ": [],
-            "total_periodo_1": 0,
+            "total_periodo_1": 1,
             "sesiones_periodo_2 ": [],
             "sesiones_receso_2 ": [],
             "total_periodo_2": 0,
             "sesiones_periodo_3 ": [],
             "sesiones_receso_3 ": [],
             "total_periodo_3": 0,
-            "total_año": 0
+            "total_año": 1
         }
     },
     {
@@ -259,16 +265,18 @@
             "total_año": 11
         },
         "sesiones_año_3": {
-            "sesiones_periodo_1 ": [],
+            "sesiones_periodo_1 ": [
+                "24/09/26"
+            ],
             "sesiones_receso_1 ": [],
-            "total_periodo_1": 0,
+            "total_periodo_1": 1,
             "sesiones_periodo_2 ": [],
             "sesiones_receso_2 ": [],
             "total_periodo_2": 0,
             "sesiones_periodo_3 ": [],
             "sesiones_receso_3 ": [],
             "total_periodo_3": 0,
-            "total_año": 0
+            "total_año": 1
         }
     },
     {
@@ -316,16 +324,18 @@
             "total_año": 4
         },
         "sesiones_año_3": {
-            "sesiones_periodo_1 ": [],
+            "sesiones_periodo_1 ": [
+                "24/09/26"
+            ],
             "sesiones_receso_1 ": [],
-            "total_periodo_1": 0,
+            "total_periodo_1": 1,
             "sesiones_periodo_2 ": [],
             "sesiones_receso_2 ": [],
             "total_periodo_2": 0,
             "sesiones_periodo_3 ": [],
             "sesiones_receso_3 ": [],
             "total_periodo_3": 0,
-            "total_año": 0
+            "total_año": 1
         }
     },
     {
@@ -382,16 +392,19 @@
             "total_año": 9
         },
         "sesiones_año_3": {
-            "sesiones_periodo_1 ": [],
+            "sesiones_periodo_1 ": [
+                "13/10/26",
+                "23/09/26"
+            ],
             "sesiones_receso_1 ": [],
-            "total_periodo_1": 0,
+            "total_periodo_1": 2,
             "sesiones_periodo_2 ": [],
             "sesiones_receso_2 ": [],
             "total_periodo_2": 0,
             "sesiones_periodo_3 ": [],
             "sesiones_receso_3 ": [],
             "total_periodo_3": 0,
-            "total_año": 0
+            "total_año": 2
         }
     },
     {
@@ -454,16 +467,18 @@
             "total_año": 11
         },
         "sesiones_año_3": {
-            "sesiones_periodo_1 ": [],
+            "sesiones_periodo_1 ": [
+                "29/09/26"
+            ],
             "sesiones_receso_1 ": [],
-            "total_periodo_1": 0,
+            "total_periodo_1": 1,
             "sesiones_periodo_2 ": [],
             "sesiones_receso_2 ": [],
             "total_periodo_2": 0,
             "sesiones_periodo_3 ": [],
             "sesiones_receso_3 ": [],
             "total_periodo_3": 0,
-            "total_año": 0
+            "total_año": 1
         }
     },
     {
@@ -528,16 +543,19 @@
             "total_año": 13
         },
         "sesiones_año_3": {
-            "sesiones_periodo_1 ": [],
+            "sesiones_periodo_1 ": [
+                "08/10/26",
+                "25/09/26"
+            ],
             "sesiones_receso_1 ": [],
-            "total_periodo_1": 0,
+            "total_periodo_1": 2,
             "sesiones_periodo_2 ": [],
             "sesiones_receso_2 ": [],
             "total_periodo_2": 0,
             "sesiones_periodo_3 ": [],
             "sesiones_receso_3 ": [],
             "total_periodo_3": 0,
-            "total_año": 0
+            "total_año": 2
         }
     },
     {
@@ -604,16 +622,19 @@
             "total_año": 15
         },
         "sesiones_año_3": {
-            "sesiones_periodo_1 ": [],
+            "sesiones_periodo_1 ": [
+                "12/10/26",
+                "23/09/26"
+            ],
             "sesiones_receso_1 ": [],
-            "total_periodo_1": 0,
+            "total_periodo_1": 2,
             "sesiones_periodo_2 ": [],
             "sesiones_receso_2 ": [],
             "total_periodo_2": 0,
             "sesiones_periodo_3 ": [],
             "sesiones_receso_3 ": [],
             "total_periodo_3": 0,
-            "total_año": 0
+            "total_año": 2
         }
     },
     {
@@ -795,16 +816,18 @@
             "total_año": 6
         },
         "sesiones_año_3": {
-            "sesiones_periodo_1 ": [],
+            "sesiones_periodo_1 ": [
+                "08/10/26"
+            ],
             "sesiones_receso_1 ": [],
-            "total_periodo_1": 0,
+            "total_periodo_1": 1,
             "sesiones_periodo_2 ": [],
             "sesiones_receso_2 ": [],
             "total_periodo_2": 0,
             "sesiones_periodo_3 ": [],
             "sesiones_receso_3 ": [],
             "total_periodo_3": 0,
-            "total_año": 0
+            "total_año": 1
         }
     },
     {
@@ -1081,15 +1104,12 @@
                 "05/12/24",
                 "02/12/24",
                 "28/11/24",
-                "12/11/24",
-                "31/10/24",
-                "30/10/24",
-                "22/10/24"
+                "12/11/24"
             ],
             "sesiones_receso_1 ": [
                 "19/12/24"
             ],
-            "total_periodo_1": 9,
+            "total_periodo_1": 6,
             "sesiones_periodo_2 ": [
                 "15/03/25",
                 "10/03/25",
@@ -1119,7 +1139,7 @@
                 "27/08/25"
             ],
             "total_periodo_3": 11,
-            "total_año": 28
+            "total_año": 25
         },
         "sesiones_año_2": {
             "sesiones_periodo_1 ": [
@@ -1161,16 +1181,20 @@
             "total_año": 22
         },
         "sesiones_año_3": {
-            "sesiones_periodo_1 ": [],
+            "sesiones_periodo_1 ": [
+                "05/10/26",
+                "30/09/26",
+                "23/09/26"
+            ],
             "sesiones_receso_1 ": [],
-            "total_periodo_1": 0,
+            "total_periodo_1": 3,
             "sesiones_periodo_2 ": [],
             "sesiones_receso_2 ": [],
             "total_periodo_2": 0,
             "sesiones_periodo_3 ": [],
             "sesiones_receso_3 ": [],
             "total_periodo_3": 0,
-            "total_año": 0
+            "total_año": 3
         }
     },
     {
@@ -1243,16 +1267,19 @@
             "total_año": 17
         },
         "sesiones_año_3": {
-            "sesiones_periodo_1 ": [],
+            "sesiones_periodo_1 ": [
+                "30/09/26",
+                "25/09/26"
+            ],
             "sesiones_receso_1 ": [],
-            "total_periodo_1": 0,
+            "total_periodo_1": 2,
             "sesiones_periodo_2 ": [],
             "sesiones_receso_2 ": [],
             "total_periodo_2": 0,
             "sesiones_periodo_3 ": [],
             "sesiones_receso_3 ": [],
             "total_periodo_3": 0,
-            "total_año": 0
+            "total_año": 2
         }
     },
     {
@@ -1318,16 +1345,18 @@
             "total_año": 12
         },
         "sesiones_año_3": {
-            "sesiones_periodo_1 ": [],
+            "sesiones_periodo_1 ": [
+                "24/09/26"
+            ],
             "sesiones_receso_1 ": [],
-            "total_periodo_1": 0,
+            "total_periodo_1": 1,
             "sesiones_periodo_2 ": [],
             "sesiones_receso_2 ": [],
             "total_periodo_2": 0,
             "sesiones_periodo_3 ": [],
             "sesiones_receso_3 ": [],
             "total_periodo_3": 0,
-            "total_año": 0
+            "total_año": 1
         }
     },
     {
@@ -1443,16 +1472,18 @@
             "total_año": 9
         },
         "sesiones_año_3": {
-            "sesiones_periodo_1 ": [],
+            "sesiones_periodo_1 ": [
+                "24/09/26"
+            ],
             "sesiones_receso_1 ": [],
-            "total_periodo_1": 0,
+            "total_periodo_1": 1,
             "sesiones_periodo_2 ": [],
             "sesiones_receso_2 ": [],
             "total_periodo_2": 0,
             "sesiones_periodo_3 ": [],
             "sesiones_receso_3 ": [],
             "total_periodo_3": 0,
-            "total_año": 0
+            "total_año": 1
         }
     },
     {
@@ -1508,16 +1539,18 @@
             "total_año": 9
         },
         "sesiones_año_3": {
-            "sesiones_periodo_1 ": [],
+            "sesiones_periodo_1 ": [
+                "24/09/26"
+            ],
             "sesiones_receso_1 ": [],
-            "total_periodo_1": 0,
+            "total_periodo_1": 1,
             "sesiones_periodo_2 ": [],
             "sesiones_receso_2 ": [],
             "total_periodo_2": 0,
             "sesiones_periodo_3 ": [],
             "sesiones_receso_3 ": [],
             "total_periodo_3": 0,
-            "total_año": 0
+            "total_año": 1
         }
     },
     {
@@ -1649,16 +1682,18 @@
             "total_año": 12
         },
         "sesiones_año_3": {
-            "sesiones_periodo_1 ": [],
+            "sesiones_periodo_1 ": [
+                "23/09/26"
+            ],
             "sesiones_receso_1 ": [],
-            "total_periodo_1": 0,
+            "total_periodo_1": 1,
             "sesiones_periodo_2 ": [],
             "sesiones_receso_2 ": [],
             "total_periodo_2": 0,
             "sesiones_periodo_3 ": [],
             "sesiones_receso_3 ": [],
             "total_periodo_3": 0,
-            "total_año": 0
+            "total_año": 1
         }
     },
     {
@@ -1760,16 +1795,18 @@
             "total_año": 6
         },
         "sesiones_año_3": {
-            "sesiones_periodo_1 ": [],
+            "sesiones_periodo_1 ": [
+                "08/10/26"
+            ],
             "sesiones_receso_1 ": [],
-            "total_periodo_1": 0,
+            "total_periodo_1": 1,
             "sesiones_periodo_2 ": [],
             "sesiones_receso_2 ": [],
             "total_periodo_2": 0,
             "sesiones_periodo_3 ": [],
             "sesiones_receso_3 ": [],
             "total_periodo_3": 0,
-            "total_año": 0
+            "total_año": 1
         }
     },
     {
@@ -1833,16 +1870,18 @@
             "total_año": 12
         },
         "sesiones_año_3": {
-            "sesiones_periodo_1 ": [],
+            "sesiones_periodo_1 ": [
+                "23/09/26"
+            ],
             "sesiones_receso_1 ": [],
-            "total_periodo_1": 0,
+            "total_periodo_1": 1,
             "sesiones_periodo_2 ": [],
             "sesiones_receso_2 ": [],
             "total_periodo_2": 0,
             "sesiones_periodo_3 ": [],
             "sesiones_receso_3 ": [],
             "total_periodo_3": 0,
-            "total_año": 0
+            "total_año": 1
         }
     },
     {
@@ -1899,16 +1938,18 @@
             "total_año": 9
         },
         "sesiones_año_3": {
-            "sesiones_periodo_1 ": [],
+            "sesiones_periodo_1 ": [
+                "30/09/26"
+            ],
             "sesiones_receso_1 ": [],
-            "total_periodo_1": 0,
+            "total_periodo_1": 1,
             "sesiones_periodo_2 ": [],
             "sesiones_receso_2 ": [],
             "total_periodo_2": 0,
             "sesiones_periodo_3 ": [],
             "sesiones_receso_3 ": [],
             "total_periodo_3": 0,
-            "total_año": 0
+            "total_año": 1
         }
     },
     {
@@ -1971,16 +2012,18 @@
             "total_año": 12
         },
         "sesiones_año_3": {
-            "sesiones_periodo_1 ": [],
+            "sesiones_periodo_1 ": [
+                "24/09/26"
+            ],
             "sesiones_receso_1 ": [],
-            "total_periodo_1": 0,
+            "total_periodo_1": 1,
             "sesiones_periodo_2 ": [],
             "sesiones_receso_2 ": [],
             "total_periodo_2": 0,
             "sesiones_periodo_3 ": [],
             "sesiones_receso_3 ": [],
             "total_periodo_3": 0,
-            "total_año": 0
+            "total_año": 1
         }
     },
     {
@@ -2038,16 +2081,18 @@
             "total_año": 7
         },
         "sesiones_año_3": {
-            "sesiones_periodo_1 ": [],
+            "sesiones_periodo_1 ": [
+                "22/09/26"
+            ],
             "sesiones_receso_1 ": [],
-            "total_periodo_1": 0,
+            "total_periodo_1": 1,
             "sesiones_periodo_2 ": [],
             "sesiones_receso_2 ": [],
             "total_periodo_2": 0,
             "sesiones_periodo_3 ": [],
             "sesiones_receso_3 ": [],
             "total_periodo_3": 0,
-            "total_año": 0
+            "total_año": 1
         }
     },
     {
@@ -2165,16 +2210,18 @@
             "total_año": 13
         },
         "sesiones_año_3": {
-            "sesiones_periodo_1 ": [],
+            "sesiones_periodo_1 ": [
+                "30/09/26"
+            ],
             "sesiones_receso_1 ": [],
-            "total_periodo_1": 0,
+            "total_periodo_1": 1,
             "sesiones_periodo_2 ": [],
             "sesiones_receso_2 ": [],
             "total_periodo_2": 0,
             "sesiones_periodo_3 ": [],
             "sesiones_receso_3 ": [],
             "total_periodo_3": 0,
-            "total_año": 0
+            "total_año": 1
         }
     },
     {
@@ -2297,16 +2344,18 @@
             "total_año": 11
         },
         "sesiones_año_3": {
-            "sesiones_periodo_1 ": [],
+            "sesiones_periodo_1 ": [
+                "24/09/26"
+            ],
             "sesiones_receso_1 ": [],
-            "total_periodo_1": 0,
+            "total_periodo_1": 1,
             "sesiones_periodo_2 ": [],
             "sesiones_receso_2 ": [],
             "total_periodo_2": 0,
             "sesiones_periodo_3 ": [],
             "sesiones_receso_3 ": [],
             "total_periodo_3": 0,
-            "total_año": 0
+            "total_año": 1
         }
     },
     {
@@ -2366,16 +2415,18 @@
             "total_año": 10
         },
         "sesiones_año_3": {
-            "sesiones_periodo_1 ": [],
+            "sesiones_periodo_1 ": [
+                "24/09/26"
+            ],
             "sesiones_receso_1 ": [],
-            "total_periodo_1": 0,
+            "total_periodo_1": 1,
             "sesiones_periodo_2 ": [],
             "sesiones_receso_2 ": [],
             "total_periodo_2": 0,
             "sesiones_periodo_3 ": [],
             "sesiones_receso_3 ": [],
             "total_periodo_3": 0,
-            "total_año": 0
+            "total_año": 1
         }
     },
     {
@@ -2422,16 +2473,18 @@
             "total_año": 3
         },
         "sesiones_año_3": {
-            "sesiones_periodo_1 ": [],
+            "sesiones_periodo_1 ": [
+                "01/10/26"
+            ],
             "sesiones_receso_1 ": [],
-            "total_periodo_1": 0,
+            "total_periodo_1": 1,
             "sesiones_periodo_2 ": [],
             "sesiones_receso_2 ": [],
             "total_periodo_2": 0,
             "sesiones_periodo_3 ": [],
             "sesiones_receso_3 ": [],
             "total_periodo_3": 0,
-            "total_año": 0
+            "total_año": 1
         }
     },
     {
@@ -2680,16 +2733,18 @@
             "total_año": 7
         },
         "sesiones_año_3": {
-            "sesiones_periodo_1 ": [],
+            "sesiones_periodo_1 ": [
+                "01/10/26"
+            ],
             "sesiones_receso_1 ": [],
-            "total_periodo_1": 0,
+            "total_periodo_1": 1,
             "sesiones_periodo_2 ": [],
             "sesiones_receso_2 ": [],
             "total_periodo_2": 0,
             "sesiones_periodo_3 ": [],
             "sesiones_receso_3 ": [],
             "total_periodo_3": 0,
-            "total_año": 0
+            "total_año": 1
         }
     }
 ]

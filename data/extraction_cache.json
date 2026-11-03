@@ -14110,5 +14110,59 @@
             "Observaciones": "Se procedió con la instalación formal del Comité de Innovación y Tecnología y se dio cuenta de la inexistencia de asuntos turnados mediante oficio.",
             "Estado de extracción": "Completo"
         }
+    },
+    "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=65103": {
+        "status": "success",
+        "source": "PM",
+        "data": {
+            "Tipo": 3,
+            "Asunto abordado": "Se llevó a cabo la asistencia del C. Germán Díaz Hernández, quien realizó una exposición sobre los foros y festivales que se promueven a través de la Ruta de Ciencia y Tecnología 2050 ante la Comisión de Ciencia, Humanidades, Tecnología e Innovación.",
+            "Fecha de sesión en comisión / comité": "2026-09-23",
+            "Presentador": null,
+            "Partido": "N/A",
+            "Estatus": "N/A",
+            "Hora Programada": null,
+            "Inicio de la sesión": "12:52",
+            "Fin de la sesión": "13:19",
+            "Tiempo": 27,
+            "Observaciones": "No hay versión estenográfica, datos obtenidos del acta anterior",
+            "Estado de extracción": "Completo"
+        }
+    },
+    "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=65046": {
+        "status": "success",
+        "source": "PM",
+        "data": {
+            "Tipo": 1,
+            "Asunto abordado": "Se llevó a cabo la lectura, discusión y aprobación del proyecto de Dictamen con Minuta de Decreto por el cual se reforman diversas disposiciones de la Ley que Establece los Procedimientos de Entrega-Recepción en los Poderes Públicos, Ayuntamientos, Órganos Constitucionalmente Autónomos y Públicos Paraestatales de la Administración Pública del Estado de Puebla.",
+            "Fecha de sesión en comisión / comité": "2026-09-25",
+            "Presentador": null,
+            "Partido": null,
+            "Estatus": "Aprobado",
+            "Hora Programada": null,
+            "Inicio de la sesión": "10:18",
+            "Fin de la sesión": "10:46",
+            "Tiempo": 28,
+            "Observaciones": "No hay versión estenográfica, datos obtenidos del acta anterior",
+            "Estado de extracción": "Completo"
+        }
+    },
+    "https://www.congresopuebla.gob.mx/index.php?option=com_k2&view=item&task=download&id=65108": {
+        "status": "success",
+        "source": "PM",
+        "data": {
+            "Tipo": 1,
+            "Asunto abordado": "Se llevó a cabo la lectura, discusión y aprobación del proyecto de Dictamen con Minuta de Decreto por el que se reforman y adicionan diversas disposiciones de la Ley de Bibliotecas del Estado de Puebla, presentado para fortalecer el marco normativo de dichas instituciones culturales.",
+            "Fecha de sesión en comisión / comité": "2026-09-23",
+            "Presentador": null,
+            "Partido": null,
+            "Estatus": "Aprobado",
+            "Hora Programada": null,
+            "Inicio de la sesión": "16:03",
+            "Fin de la sesión": "17:47",
+            "Tiempo": 104,
+            "Observaciones": "No hay versión estenográfica, datos obtenidos del acta anterior",
+            "Estado de extracción": "Completo"
+        }
     }
 }
