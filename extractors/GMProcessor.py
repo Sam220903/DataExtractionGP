@@ -824,6 +824,38 @@ class GMProcessor:
                 totales[nombre] += 1
         return totales
 
+    # Un nombre de diputado solo tiene letras, espacios, puntos, apóstrofos y guiones
+    # (sin dígitos, comas, dos puntos, comillas ni paréntesis).
+    _ASIST_RE_NOMBRE = re.compile(r"^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ][A-Za-zÁÉÍÓÚÜÑáéíóúüñ'’.\- ]*$")
+
+    # Palabras que aparecen en el orden del día, el acta y los encabezados de la gaceta, pero
+    # nunca en el nombre de un diputado (normalizadas: minúsculas y sin acentos).
+    _ASIST_PALABRAS_NO_NOMBRE = frozenset({
+        "lectura", "acta", "actas", "iniciativa", "iniciativas", "acuerdo", "dictamen",
+        "dictamenes", "orden", "dia", "asuntos", "generales", "sesion", "congreso",
+        "legislatura", "legislativo", "presidente", "presidenta", "presidencia",
+        "secretario", "secretaria", "secretaria", "directiva", "comision", "comisiones",
+        "total", "asistencias", "asistencia", "pag", "pagina", "decreto", "oficios",
+        "extracto", "honorable", "estado", "gaceta",
+    })
+
+    @classmethod
+    def _asist_nombre_valido(cls, nombre: str) -> bool:
+        """
+        True si el texto parece el nombre de una persona. Filtra lo que no es un diputado y que
+        la regex de filas (\"12. ...\") puede confundir con una fila: puntos numerados del orden
+        del día (\"1. Lectura del Acta...\"), fragmentos del acta, encabezados y pies de página.
+        """
+        if not nombre or len(nombre) > 80:
+            return False
+        if not cls._ASIST_RE_NOMBRE.match(nombre):
+            return False
+        palabras = nombre.split()
+        if not 2 <= len(palabras) <= 10:
+            return False
+        normalizadas = {cls._asist_normalizar(p).strip(".'’-") for p in palabras}
+        return not (normalizadas & cls._ASIST_PALABRAS_NO_NOMBRE)
+
     def _asist_parse_fila(self, chunk: str):
         """
         chunk: texto de UNA fila (desde después de "N." hasta antes de la
@@ -855,6 +887,9 @@ class GMProcessor:
 
         nombre = re.sub(r'\s+', ' ', ' '.join(nombre_partes)).strip()
         if not nombre:
+            return None
+        if not self._asist_nombre_valido(nombre):
+            # No es una fila de diputado (punto del orden del día, texto del acta, etc.)
             return None
 
         if etiquetas:
@@ -909,8 +944,11 @@ class GMProcessor:
             else:
                 # Sin recuadro de totales: se acota al inicio del Acta o
                 # a un máximo razonable.
-                acta = re.search(r'ACTA\s+DE\s+LA\s+SESI[OÓ]N', resto, re.IGNORECASE)
-                tabla = resto[:acta.start()] if acta else resto[:15000]
+                # (también se corta en "ORDEN DEL DÍA": sus puntos numerados "1. Lectura..."
+                # parecen filas de la tabla)
+                fin_tabla = re.search(
+                    r'ACTA\s+DE\s+LA\s+SESI[OÓ]N|ORDEN\s+DEL\s+D[IÍ]A', resto, re.IGNORECASE)
+                tabla = resto[:fin_tabla.start()] if fin_tabla else resto[:15000]
 
             # Continuación de una lista previa que no había cerrado
             # (mismo tipo y fecha, y la anterior no trajo totales).
@@ -1137,6 +1175,10 @@ class GMProcessor:
         registros = []
         for lista in listas:
             registro = self._asist_armar_registro(lista)
+            if not registro["Asistencias"]:
+                print(f"  [AVISO] Sesión '{registro['Sesión']}' del {registro['Fecha']} "
+                      f"descartada: no se encontró ningún diputado en su lista.")
+                continue
             registros.append(registro)
             print(f"  Sesión '{registro['Sesión']}' del {registro['Fecha']}: "
                   f"{len(registro['Asistencias'])} diputados registrados")

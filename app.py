@@ -1,7 +1,9 @@
+import io
 import os
 import sys
 import runpy
 import subprocess
+from dotenv import dotenv_values
 from rich.console import Console
 from rich.panel import Panel
 from rich.prompt import IntPrompt
@@ -18,9 +20,6 @@ RUN_SCRIPT_FLAG = "--run-script"
 # (debe coincidir con EXIT_CODE_QUOTA de los scrappers)
 EXIT_CODE_QUOTA = 3
 
-# Los scripts hijos imprimen su progreso sin búfer, para que se vea en cuanto ocurre
-CHILD_ENV = dict(os.environ, PYTHONUNBUFFERED="1")
-
 
 def getAppDir():
     """Carpeta raíz de la aplicación: junto al .exe si está empaquetada, o junto a app.py en desarrollo."""
@@ -32,9 +31,45 @@ def getAppDir():
 # Obtener la ruta base absoluta donde se encuentra app.py (o el .exe)
 BASE_DIR = getAppDir()
 
+# Nombres aceptados para el archivo de configuración. ".env.txt" se acepta porque el Bloc de notas
+# de Windows lo crea así cuando las extensiones están ocultas (se ve como ".env" pero no lo es).
+ENV_FILE_NAMES = (".env", ".env.txt")
+
+
+def loadEnvFile():
+    """
+    Carga el .env que está junto al .exe (o junto a app.py en desarrollo), sin depender del
+    directorio desde el que se lanzó el programa. Tolera los problemas típicos de Windows:
+    UTF-8 con BOM (Bloc de notas) y UTF-16 (redirecciones de PowerShell).
+    Las variables del .env tienen prioridad sobre las que ya existan en el sistema.
+    Regresa la ruta cargada, o None si no existe ningún archivo .env.
+    """
+    for fileName in ENV_FILE_NAMES:
+        envPath = os.path.join(BASE_DIR, fileName)
+        if not os.path.isfile(envPath):
+            continue
+        with open(envPath, "rb") as envFile:
+            rawBytes = envFile.read()
+        if rawBytes.startswith((b"\xff\xfe", b"\xfe\xff")):
+            text = rawBytes.decode("utf-16")
+        else:
+            text = rawBytes.decode("utf-8-sig", errors="replace")
+        for key, value in dotenv_values(stream=io.StringIO(text)).items():
+            if key and value is not None:
+                os.environ[key.strip()] = value.strip()
+        return envPath
+    return None
+
+
+# Se carga antes de definir CHILD_ENV para que los scripts hijos hereden las variables del .env
+ENV_PATH = loadEnvFile()
+
+# Los scripts hijos imprimen su progreso sin búfer, para que se vea en cuanto ocurre
+CHILD_ENV = dict(os.environ, PYTHONUNBUFFERED="1")
+
 # Diccionario con los nombres de las bases de datos
-BASES_DE_DATOS = {1: "Perfiles", 2: "Votaciones (Necesita base 3)", 3: "Unidad y Participación", 4: "Asistencias", 5: "Comisiones y comites", 6: "Sesiones",
-                  7: "Iniciativas y Puntos de Acuerdo (Necesita bases 1 y 5)"}
+BASES_DE_DATOS = {1: "Perfiles", 2: "Votaciones", 3: "Unidad y Participación", 4: "Asistencias", 5: "Comisiones y comites", 6: "Sesiones",
+                  7: "Iniciativas y Puntos de Acuerdo"}
 
 def mostrar_menu():
     """Genera y muestra la tabla del menú principal."""
@@ -59,6 +94,18 @@ def ensureResultFolders():
     """Crea las carpetas de resultados junto al .exe para que el usuario siempre las encuentre."""
     os.makedirs(os.path.join(BASE_DIR, "data"), exist_ok=True)
     os.makedirs(os.path.join(BASE_DIR, "outputs"), exist_ok=True)
+
+
+def showEnvStatus():
+    """Avisa si el .env se encontró y si contiene la API key de Gemini (nunca imprime la clave)."""
+    if ENV_PATH is None:
+        console.print(f"[bold yellow]⚠ No se encontró el archivo .env en: {BASE_DIR}[/bold yellow]")
+        console.print("[yellow]  Créalo con la línea GEMINI_API_KEY=tu_clave "
+                      "(el nombre debe ser exactamente .env, no .venv ni .env.txt).[/yellow]")
+    elif not os.environ.get("GEMINI_API_KEY"):
+        console.print(f"[bold yellow]⚠ Se leyó {ENV_PATH}, pero no contiene GEMINI_API_KEY.[/bold yellow]")
+    else:
+        console.print(f"[dim]Archivo .env cargado: {ENV_PATH} (GEMINI_API_KEY detectada)[/dim]")
 
 
 def showResultsLocation():
@@ -158,6 +205,7 @@ def main():
     while True:
         mostrar_menu()
         showResultsLocation()
+        showEnvStatus()
 
         # Solicitar opción al usuario de forma segura con Rich
         opcion = IntPrompt.ask("\n[bold cyan]Selecciona una base de datos para extraer (0-7)[/bold cyan]", choices=[str(i) for i in range(8)])
